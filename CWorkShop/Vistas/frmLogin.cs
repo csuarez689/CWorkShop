@@ -15,6 +15,51 @@ namespace CWorkShop.Vistas
         public frmLogin()
         {
             InitializeComponent();
+            lblLogin.Focus();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void tbDNI_Enter(object sender, EventArgs e)
+        {
+            if (tbDNI.Text == "DNI")
+            {
+                tbDNI.Text = string.Empty;
+            }
+        }
+
+        private void tbDNI_Leave(object sender, EventArgs e)
+        {
+            if (tbDNI.Text==string.Empty)
+            {
+                tbDNI.Text = "DNI";
+            }
+        }
+
+        private void tbContraseña_Enter(object sender, EventArgs e)
+        {
+            if (tbContraseña.Text == "CONTRASEÑA")
+            {
+                tbContraseña.Text = string.Empty;
+                tbContraseña.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void tbContraseña_Leave(object sender, EventArgs e)
+        {
+            if (tbContraseña.Text == string.Empty)
+            {
+                tbContraseña.UseSystemPasswordChar = false;
+                tbContraseña.Text = "CONTRASEÑA"; 
+            }
         }
     }
 }

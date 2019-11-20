@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace CWorkShop.Clases
 {
-    class clsUsuario
+    class clsUsuario : clsPersona
     {
-        private int Id { get; }
-        private string Dni { get; set; }
-        private string Nombre { get; set; }
-        private string Apellido { get; set; }
-        private string Mail { get; set; }
-        private string Telefono { get; set; }
-        private string Direccion { get; set; }
+        private string Contraseña { get; set; }
         private string Rol { get; set; }
+
+        public bool Guardar()
+        {
+            return true;
+        }
     }
 }
