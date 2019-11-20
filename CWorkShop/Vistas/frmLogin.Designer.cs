@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.pbLogin = new System.Windows.Forms.PictureBox();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
@@ -42,7 +43,7 @@
             // 
             // pbLogin
             // 
-            this.pbLogin.Image = global::CWorkShop.Properties.Resources.login;
+            this.pbLogin.Image = ((System.Drawing.Image)(resources.GetObject("pbLogin.Image")));
             this.pbLogin.Location = new System.Drawing.Point(12, 30);
             this.pbLogin.Name = "pbLogin";
             this.pbLogin.Size = new System.Drawing.Size(150, 150);
@@ -84,7 +85,7 @@
             // 
             // tbDNI
             // 
-            this.tbDNI.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.tbDNI.BackColor = System.Drawing.Color.LightSteelBlue;
             this.tbDNI.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbDNI.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbDNI.ForeColor = System.Drawing.Color.DimGray;
@@ -98,7 +99,7 @@
             // 
             // tbContraseña
             // 
-            this.tbContraseña.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.tbContraseña.BackColor = System.Drawing.Color.LightSteelBlue;
             this.tbContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbContraseña.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbContraseña.ForeColor = System.Drawing.Color.DimGray;
@@ -125,6 +126,7 @@
             this.btnEntrar.TabIndex = 10;
             this.btnEntrar.Text = "ENTRAR";
             this.btnEntrar.UseVisualStyleBackColor = false;
+            this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
             // 
             // btnSalir
             // 
@@ -148,7 +150,7 @@
             this.lblLogin.AutoSize = true;
             this.lblLogin.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogin.ForeColor = System.Drawing.Color.DimGray;
-            this.lblLogin.Location = new System.Drawing.Point(292, 0);
+            this.lblLogin.Location = new System.Drawing.Point(282, 0);
             this.lblLogin.Name = "lblLogin";
             this.lblLogin.Size = new System.Drawing.Size(88, 28);
             this.lblLogin.TabIndex = 12;
@@ -158,7 +160,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(502, 240);
             this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.btnSalir);

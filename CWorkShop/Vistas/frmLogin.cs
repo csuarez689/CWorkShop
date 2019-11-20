@@ -61,5 +61,12 @@ namespace CWorkShop.Vistas
                 tbContraseña.Text = "CONTRASEÑA"; 
             }
         }
+
+        private void btnEntrar_Click(object sender, EventArgs e)
+        {
+            frmMain main = new frmMain(this);
+            main.Show();
+            this.Hide();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CWorkShop.Clases
 {
-    class clsPersona
+    abstract class clsPersona
     {
         private int Id { get; }
         private string Dni { get; set; }
@@ -16,5 +16,14 @@ namespace CWorkShop.Clases
         private string Telefono { get; set; }
         private string Direccion { get; set; }
 
+        public clsPersona(string Dni, string Nombre, string Apellido, string Mail, string Telefono, string Direccion)
+        {
+            this.Dni = Dni;
+            this.Nombre = Nombre;
+            this.Apellido = Apellido;
+            this.Mail = Mail;
+            this.Telefono = Telefono;
+            this.Direccion = Direccion;
+        }
     }
 }
