@@ -7,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CWorkShop.Clases;
 
 namespace CWorkShop.Vistas
 {
     public partial class frmLogin : Form
     {
+        
         public frmLogin()
         {
             InitializeComponent();
-            lblLogin.Focus();
+            pbLogin.Focus();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -64,9 +66,22 @@ namespace CWorkShop.Vistas
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            frmMain main = new frmMain(this);
-            main.Show();
-            this.Hide();
+            string msg = clsUsuario.Login(tbDNI.Text, tbContraseña.Text);
+            if (msg.Equals(string.Empty))
+            {
+                frmMain main = new frmMain(this, tbDNI.Text);
+                main.Show();
+                tbContraseña.Clear();
+                tbContraseña.Text = "CONTRASEÑA";
+                tbDNI.Clear();
+                tbDNI.Text = "DNI";
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
     }
 }

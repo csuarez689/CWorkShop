@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace CWorkShop.Clases
 {
-    class clsArchivo
+    class clsEquipo
     {
-
     }
 }
