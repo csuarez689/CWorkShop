@@ -46,12 +46,18 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.tbDni = new System.Windows.Forms.TextBox();
             this.lblDni = new System.Windows.Forms.Label();
+            this.pbCerrar = new System.Windows.Forms.PictureBox();
+            this.btnRegistrar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.pnlContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCerrar)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlContainer
             // 
             this.pnlContainer.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pnlContainer.Controls.Add(this.btnLimpiar);
+            this.pnlContainer.Controls.Add(this.btnRegistrar);
             this.pnlContainer.Controls.Add(this.btnCancelar);
             this.pnlContainer.Controls.Add(this.btnGuardar);
             this.pnlContainer.Controls.Add(this.lblTitulo);
@@ -76,22 +82,40 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(249, 382);
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.btnCancelar.FlatAppearance.BorderSize = 0;
+            this.btnCancelar.FlatAppearance.CheckedBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnCancelar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnCancelar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.ForeColor = System.Drawing.Color.White;
+            this.btnCancelar.Location = new System.Drawing.Point(301, 382);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(80, 23);
-            this.btnCancelar.TabIndex = 41;
+            this.btnCancelar.Size = new System.Drawing.Size(80, 26);
+            this.btnCancelar.TabIndex = 18;
             this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(150, 382);
+            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.btnGuardar.FlatAppearance.BorderSize = 0;
+            this.btnGuardar.FlatAppearance.CheckedBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnGuardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnGuardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuardar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardar.ForeColor = System.Drawing.Color.White;
+            this.btnGuardar.Location = new System.Drawing.Point(115, 382);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(75, 23);
-            this.btnGuardar.TabIndex = 40;
+            this.btnGuardar.Size = new System.Drawing.Size(75, 26);
+            this.btnGuardar.TabIndex = 16;
             this.btnGuardar.Text = "Guardar";
-            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // lblTitulo
@@ -104,9 +128,9 @@
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblTitulo.Location = new System.Drawing.Point(192, 10);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(90, 19);
-            this.lblTitulo.TabIndex = 39;
-            this.lblTitulo.Text = "MIS DATOS";
+            this.lblTitulo.Size = new System.Drawing.Size(57, 19);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "TITULO";
             // 
             // tbConfirmar
             // 
@@ -116,7 +140,7 @@
             this.tbConfirmar.Location = new System.Drawing.Point(115, 319);
             this.tbConfirmar.Name = "tbConfirmar";
             this.tbConfirmar.Size = new System.Drawing.Size(266, 23);
-            this.tbConfirmar.TabIndex = 38;
+            this.tbConfirmar.TabIndex = 14;
             // 
             // lblConfirmar
             // 
@@ -128,7 +152,7 @@
             this.lblConfirmar.Location = new System.Drawing.Point(8, 313);
             this.lblConfirmar.Name = "lblConfirmar";
             this.lblConfirmar.Size = new System.Drawing.Size(84, 34);
-            this.lblConfirmar.TabIndex = 37;
+            this.lblConfirmar.TabIndex = 13;
             this.lblConfirmar.Text = "Confirmar\r\nContraseña";
             this.lblConfirmar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -140,7 +164,7 @@
             this.tbContraseña.Location = new System.Drawing.Point(115, 278);
             this.tbContraseña.Name = "tbContraseña";
             this.tbContraseña.Size = new System.Drawing.Size(266, 23);
-            this.tbContraseña.TabIndex = 36;
+            this.tbContraseña.TabIndex = 12;
             // 
             // lblContraseña
             // 
@@ -152,7 +176,7 @@
             this.lblContraseña.Location = new System.Drawing.Point(8, 281);
             this.lblContraseña.Name = "lblContraseña";
             this.lblContraseña.Size = new System.Drawing.Size(84, 17);
-            this.lblContraseña.TabIndex = 35;
+            this.lblContraseña.TabIndex = 11;
             this.lblContraseña.Text = "Contraseña";
             // 
             // tbTelefono
@@ -163,7 +187,7 @@
             this.tbTelefono.Location = new System.Drawing.Point(115, 236);
             this.tbTelefono.Name = "tbTelefono";
             this.tbTelefono.Size = new System.Drawing.Size(266, 23);
-            this.tbTelefono.TabIndex = 34;
+            this.tbTelefono.TabIndex = 10;
             // 
             // lblTelefono
             // 
@@ -175,7 +199,7 @@
             this.lblTelefono.Location = new System.Drawing.Point(8, 239);
             this.lblTelefono.Name = "lblTelefono";
             this.lblTelefono.Size = new System.Drawing.Size(62, 17);
-            this.lblTelefono.TabIndex = 33;
+            this.lblTelefono.TabIndex = 9;
             this.lblTelefono.Text = "Telefono";
             // 
             // tbCorreo
@@ -186,7 +210,7 @@
             this.tbCorreo.Location = new System.Drawing.Point(115, 193);
             this.tbCorreo.Name = "tbCorreo";
             this.tbCorreo.Size = new System.Drawing.Size(266, 23);
-            this.tbCorreo.TabIndex = 32;
+            this.tbCorreo.TabIndex = 8;
             // 
             // lblCorreo
             // 
@@ -198,7 +222,7 @@
             this.lblCorreo.Location = new System.Drawing.Point(17, 196);
             this.lblCorreo.Name = "lblCorreo";
             this.lblCorreo.Size = new System.Drawing.Size(53, 17);
-            this.lblCorreo.TabIndex = 31;
+            this.lblCorreo.TabIndex = 7;
             this.lblCorreo.Text = "Correo";
             // 
             // tbApellido
@@ -209,7 +233,7 @@
             this.tbApellido.Location = new System.Drawing.Point(115, 151);
             this.tbApellido.Name = "tbApellido";
             this.tbApellido.Size = new System.Drawing.Size(266, 23);
-            this.tbApellido.TabIndex = 30;
+            this.tbApellido.TabIndex = 6;
             // 
             // lblApellido
             // 
@@ -221,7 +245,7 @@
             this.lblApellido.Location = new System.Drawing.Point(9, 154);
             this.lblApellido.Name = "lblApellido";
             this.lblApellido.Size = new System.Drawing.Size(61, 17);
-            this.lblApellido.TabIndex = 29;
+            this.lblApellido.TabIndex = 5;
             this.lblApellido.Text = "Apellido";
             // 
             // tbNombre
@@ -232,7 +256,7 @@
             this.tbNombre.Location = new System.Drawing.Point(115, 109);
             this.tbNombre.Name = "tbNombre";
             this.tbNombre.Size = new System.Drawing.Size(266, 23);
-            this.tbNombre.TabIndex = 28;
+            this.tbNombre.TabIndex = 4;
             // 
             // lblNombre
             // 
@@ -244,7 +268,7 @@
             this.lblNombre.Location = new System.Drawing.Point(9, 112);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(61, 17);
-            this.lblNombre.TabIndex = 27;
+            this.lblNombre.TabIndex = 3;
             this.lblNombre.Text = "Nombre";
             // 
             // tbDni
@@ -255,7 +279,7 @@
             this.tbDni.Location = new System.Drawing.Point(115, 70);
             this.tbDni.Name = "tbDni";
             this.tbDni.Size = new System.Drawing.Size(266, 23);
-            this.tbDni.TabIndex = 26;
+            this.tbDni.TabIndex = 2;
             // 
             // lblDni
             // 
@@ -267,8 +291,59 @@
             this.lblDni.Location = new System.Drawing.Point(39, 73);
             this.lblDni.Name = "lblDni";
             this.lblDni.Size = new System.Drawing.Size(31, 17);
-            this.lblDni.TabIndex = 25;
+            this.lblDni.TabIndex = 1;
             this.lblDni.Text = "DNI";
+            // 
+            // pbCerrar
+            // 
+            this.pbCerrar.Image = global::CWorkShop.Properties.Resources.close16x16;
+            this.pbCerrar.Location = new System.Drawing.Point(555, 3);
+            this.pbCerrar.Name = "pbCerrar";
+            this.pbCerrar.Size = new System.Drawing.Size(19, 20);
+            this.pbCerrar.TabIndex = 14;
+            this.pbCerrar.TabStop = false;
+            this.pbCerrar.Visible = false;
+            this.pbCerrar.Click += new System.EventHandler(this.pbCerrar_Click);
+            // 
+            // btnRegistrar
+            // 
+            this.btnRegistrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRegistrar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.btnRegistrar.FlatAppearance.BorderSize = 0;
+            this.btnRegistrar.FlatAppearance.CheckedBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRegistrar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRegistrar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRegistrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrar.ForeColor = System.Drawing.Color.White;
+            this.btnRegistrar.Location = new System.Drawing.Point(115, 382);
+            this.btnRegistrar.Name = "btnRegistrar";
+            this.btnRegistrar.Size = new System.Drawing.Size(75, 26);
+            this.btnRegistrar.TabIndex = 15;
+            this.btnRegistrar.Text = "Registrar";
+            this.btnRegistrar.UseVisualStyleBackColor = false;
+            this.btnRegistrar.Visible = false;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.btnLimpiar.FlatAppearance.BorderSize = 0;
+            this.btnLimpiar.FlatAppearance.CheckedBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiar.Location = new System.Drawing.Point(206, 382);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(80, 26);
+            this.btnLimpiar.TabIndex = 17;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Visible = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // frmMisDatos
             // 
@@ -276,14 +351,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.ClientSize = new System.Drawing.Size(577, 466);
+            this.Controls.Add(this.pbCerrar);
             this.Controls.Add(this.pnlContainer);
             this.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmMisDatos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMisDatos";
             this.pnlContainer.ResumeLayout(false);
             this.pnlContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCerrar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -308,5 +386,8 @@
         private System.Windows.Forms.Label lblDni;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.PictureBox pbCerrar;
+        private System.Windows.Forms.Button btnRegistrar;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

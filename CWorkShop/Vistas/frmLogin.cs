@@ -17,33 +17,18 @@ namespace CWorkShop.Vistas
         public frmLogin()
         {
             InitializeComponent();
-            pbLogin.Focus();
-        }
-
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void tbDNI_Enter(object sender, EventArgs e)
         {
             if (tbDNI.Text == "DNI")
-            {
                 tbDNI.Text = string.Empty;
-            }
         }
 
         private void tbDNI_Leave(object sender, EventArgs e)
         {
             if (tbDNI.Text==string.Empty)
-            {
                 tbDNI.Text = "DNI";
-            }
         }
 
         private void tbContraseña_Enter(object sender, EventArgs e)
@@ -71,17 +56,26 @@ namespace CWorkShop.Vistas
             {
                 frmMain main = new frmMain(this, tbDNI.Text);
                 main.Show();
-                tbContraseña.Clear();
-                tbContraseña.Text = "CONTRASEÑA";
                 tbDNI.Clear();
                 tbDNI.Text = "DNI";
+                tbDNI.Focus();
+                tbContraseña.Clear();
+                tbContraseña.Text = "CONTRASEÑA";
+                tbContraseña.UseSystemPasswordChar = false;
                 this.Hide();
             }
             else
-            {
                 MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+        }
 
+        private void pbCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnRegistrarse_Click(object sender, EventArgs e)
+        {
+            new frmMisDatos().ShowDialog();
         }
     }
 }

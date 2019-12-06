@@ -36,9 +36,11 @@
             this.tbDNI = new System.Windows.Forms.TextBox();
             this.tbContraseña = new System.Windows.Forms.TextBox();
             this.btnEntrar = new System.Windows.Forms.Button();
-            this.btnSalir = new System.Windows.Forms.Button();
+            this.btnRegistrarse = new System.Windows.Forms.Button();
             this.lblLogin = new System.Windows.Forms.Label();
+            this.pbCerrar = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCerrar)).BeginInit();
             this.SuspendLayout();
             // 
             // pbLogin
@@ -128,22 +130,22 @@
             this.btnEntrar.UseVisualStyleBackColor = false;
             this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
             // 
-            // btnSalir
+            // btnRegistrarse
             // 
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnSalir.FlatAppearance.BorderSize = 0;
-            this.btnSalir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalir.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnSalir.Location = new System.Drawing.Point(363, 188);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(127, 40);
-            this.btnSalir.TabIndex = 11;
-            this.btnSalir.Text = "SALIR";
-            this.btnSalir.UseVisualStyleBackColor = false;
-            this.btnSalir.Click += new System.EventHandler(this.button1_Click);
+            this.btnRegistrarse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRegistrarse.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarse.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRegistrarse.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnRegistrarse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarse.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarse.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnRegistrarse.Location = new System.Drawing.Point(341, 188);
+            this.btnRegistrarse.Name = "btnRegistrarse";
+            this.btnRegistrarse.Size = new System.Drawing.Size(127, 40);
+            this.btnRegistrarse.TabIndex = 11;
+            this.btnRegistrarse.Text = "REGISTRARSE";
+            this.btnRegistrarse.UseVisualStyleBackColor = false;
+            this.btnRegistrarse.Click += new System.EventHandler(this.btnRegistrarse_Click);
             // 
             // lblLogin
             // 
@@ -156,14 +158,25 @@
             this.lblLogin.TabIndex = 12;
             this.lblLogin.Text = "LOGIN";
             // 
+            // pbCerrar
+            // 
+            this.pbCerrar.Image = global::CWorkShop.Properties.Resources.close16x16;
+            this.pbCerrar.Location = new System.Drawing.Point(483, 3);
+            this.pbCerrar.Name = "pbCerrar";
+            this.pbCerrar.Size = new System.Drawing.Size(19, 20);
+            this.pbCerrar.TabIndex = 13;
+            this.pbCerrar.TabStop = false;
+            this.pbCerrar.Click += new System.EventHandler(this.pbCerrar_Click);
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.ClientSize = new System.Drawing.Size(502, 240);
+            this.Controls.Add(this.pbCerrar);
             this.Controls.Add(this.lblLogin);
-            this.Controls.Add(this.btnSalir);
+            this.Controls.Add(this.btnRegistrarse);
             this.Controls.Add(this.btnEntrar);
             this.Controls.Add(this.tbContraseña);
             this.Controls.Add(this.tbDNI);
@@ -177,6 +190,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             ((System.ComponentModel.ISupportInitialize)(this.pbLogin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCerrar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,7 +205,8 @@
         private System.Windows.Forms.TextBox tbDNI;
         private System.Windows.Forms.TextBox tbContraseña;
         private System.Windows.Forms.Button btnEntrar;
-        private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.Button btnRegistrarse;
         private System.Windows.Forms.Label lblLogin;
+        private System.Windows.Forms.PictureBox pbCerrar;
     }
 }

@@ -24,7 +24,6 @@ namespace CWorkShop.Vistas
             userLog = clsUsuario.Buscar(dniUsuario);
             btnDatos.Text = userLog.Nombre + " " + userLog.Apellido;
             btnClientes.Image = Properties.Resources.cliente32x32_blue;
-            btnUsuarios.Image = Properties.Resources.usuarios32x32;
             btnOrdenes.Image = Properties.Resources.ordenes32x32;
             btnEstadisticas.Image = Properties.Resources.estadisticas32x32;
             
@@ -37,8 +36,10 @@ namespace CWorkShop.Vistas
 
         private void pbCerrar_Click(object sender, EventArgs e)
         {
+            if(MessageBox.Show("Esta seguro que desea salir?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)==DialogResult.OK) { 
             this.Close();
             login.Show();
+            }
         }
 
         private void pbMinimizar_Click(object sender, EventArgs e)
@@ -51,6 +52,7 @@ namespace CWorkShop.Vistas
             pMarcador.Height = btnClientes.Height;
             pMarcador.Top = btnClientes.Top;
             pMarcador.Show();
+            openForm(new frmCliente());
         }
 
         private void btnOrdenes_Click(object sender, EventArgs e)
@@ -67,15 +69,6 @@ namespace CWorkShop.Vistas
             pMarcador.Show();
         }
 
-        private void btnUsuarios_Click(object sender, EventArgs e)
-        {
-            
-            pMarcador.Height = btnUsuarios.Height;
-            pMarcador.Top = btnUsuarios.Top;
-            pMarcador.Show();
-            openForm(new frmUsuario(userLog));
-        }
-
         private void btnDatos_Click(object sender, EventArgs e)
         {
             pMarcador.Hide();
@@ -86,7 +79,8 @@ namespace CWorkShop.Vistas
         internal void openForm(object frm)
         {
             if (this.pnlContenedor.Controls.Count > 0)
-                this.pnlContenedor.Controls.RemoveAt(0);
+                ((Form)this.pnlContenedor.Controls[0]).Dispose();
+                //this.pnlContenedor.Controls.RemoveAt(0);
             Form opcion = frm as Form;
             opcion.TopLevel = false;
             opcion.Dock = DockStyle.Fill;

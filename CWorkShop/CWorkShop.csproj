@@ -61,12 +61,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\frmClientes.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Vistas\frmClientes.Designer.cs">
-      <DependentUpon>frmClientes.cs</DependentUpon>
-    </Compile>
     <Compile Include="Vistas\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,19 +79,16 @@
     <Compile Include="Vistas\frmMisDatos.Designer.cs">
       <DependentUpon>frmMisDatos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\frmUsuario.cs">
+    <Compile Include="Vistas\frmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vistas\frmUsuario.Designer.cs">
-      <DependentUpon>frmUsuario.cs</DependentUpon>
+    <Compile Include="Vistas\frmCliente.Designer.cs">
+      <DependentUpon>frmCliente.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Vistas\frmClientes.resx">
-      <DependentUpon>frmClientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
@@ -108,8 +99,8 @@
     <EmbeddedResource Include="Vistas\frmMisDatos.resx">
       <DependentUpon>frmMisDatos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vistas\frmUsuario.resx">
-      <DependentUpon>frmUsuario.cs</DependentUpon>
+    <EmbeddedResource Include="Vistas\frmCliente.resx">
+      <DependentUpon>frmCliente.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

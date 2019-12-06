@@ -14,16 +14,14 @@ namespace CWorkShop.Clases
         private string apellido;
         private string mail;
         private string telefono;
-        private bool borrado;
 
-        public clsPersona(string Dni, string Nombre, string Apellido, string Mail, string Telefono,bool borrado=false)
+        public clsPersona(string Dni, string Nombre, string Apellido, string Mail, string Telefono)
         {
             this.Dni = Dni;
             this.Nombre = Nombre;
             this.Apellido = Apellido;
             this.Mail = Mail;
             this.Telefono = Telefono;
-            this.Borrado = borrado;
         }
 
         public int Id
@@ -101,19 +99,6 @@ namespace CWorkShop.Clases
             set
             {
                 telefono = value;
-            }
-        }
-
-        public bool Borrado
-        {
-            get
-            {
-                return borrado;
-            }
-
-            set
-            {
-                borrado = value;
             }
         }
     }

@@ -30,15 +30,14 @@
         {
             this.pMenu = new System.Windows.Forms.Panel();
             this.pMarcador = new System.Windows.Forms.Panel();
-            this.btnUsuarios = new System.Windows.Forms.Button();
             this.btnEstadisticas = new System.Windows.Forms.Button();
             this.btnOrdenes = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
             this.pHeader = new System.Windows.Forms.Panel();
-            this.pnlContenedor = new System.Windows.Forms.Panel();
             this.btnDatos = new System.Windows.Forms.Button();
             this.pbMinimizar = new System.Windows.Forms.PictureBox();
             this.pbCerrar = new System.Windows.Forms.PictureBox();
+            this.pnlContenedor = new System.Windows.Forms.Panel();
             this.pMenu.SuspendLayout();
             this.pHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMinimizar)).BeginInit();
@@ -47,8 +46,8 @@
             // 
             // pMenu
             // 
+            this.pMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.pMenu.Controls.Add(this.pMarcador);
-            this.pMenu.Controls.Add(this.btnUsuarios);
             this.pMenu.Controls.Add(this.btnEstadisticas);
             this.pMenu.Controls.Add(this.btnOrdenes);
             this.pMenu.Controls.Add(this.btnClientes);
@@ -67,27 +66,6 @@
             this.pMarcador.Size = new System.Drawing.Size(5, 80);
             this.pMarcador.TabIndex = 0;
             // 
-            // btnUsuarios
-            // 
-            this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.btnUsuarios.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnUsuarios.FlatAppearance.BorderSize = 0;
-            this.btnUsuarios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUsuarios.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUsuarios.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.btnUsuarios.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnUsuarios.ImageKey = "(ninguno)";
-            this.btnUsuarios.Location = new System.Drawing.Point(0, 270);
-            this.btnUsuarios.Name = "btnUsuarios";
-            this.btnUsuarios.Size = new System.Drawing.Size(127, 80);
-            this.btnUsuarios.TabIndex = 0;
-            this.btnUsuarios.Text = "USUARIOS";
-            this.btnUsuarios.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnUsuarios.UseVisualStyleBackColor = false;
-            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
-            // 
             // btnEstadisticas
             // 
             this.btnEstadisticas.Dock = System.Windows.Forms.DockStyle.Top;
@@ -103,6 +81,7 @@
             this.btnEstadisticas.Name = "btnEstadisticas";
             this.btnEstadisticas.Size = new System.Drawing.Size(127, 80);
             this.btnEstadisticas.TabIndex = 3;
+            this.btnEstadisticas.TabStop = false;
             this.btnEstadisticas.Text = "ESTADISTICAS";
             this.btnEstadisticas.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnEstadisticas.UseVisualStyleBackColor = true;
@@ -123,6 +102,7 @@
             this.btnOrdenes.Name = "btnOrdenes";
             this.btnOrdenes.Size = new System.Drawing.Size(127, 80);
             this.btnOrdenes.TabIndex = 2;
+            this.btnOrdenes.TabStop = false;
             this.btnOrdenes.Text = "ORDENES";
             this.btnOrdenes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnOrdenes.UseVisualStyleBackColor = true;
@@ -143,6 +123,7 @@
             this.btnClientes.Name = "btnClientes";
             this.btnClientes.Size = new System.Drawing.Size(127, 80);
             this.btnClientes.TabIndex = 1;
+            this.btnClientes.TabStop = false;
             this.btnClientes.Text = "CLIENTES";
             this.btnClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnClientes.UseVisualStyleBackColor = true;
@@ -161,14 +142,6 @@
             this.pHeader.Size = new System.Drawing.Size(1073, 30);
             this.pHeader.TabIndex = 4;
             // 
-            // pnlContenedor
-            // 
-            this.pnlContenedor.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlContenedor.Location = new System.Drawing.Point(127, 30);
-            this.pnlContenedor.Name = "pnlContenedor";
-            this.pnlContenedor.Size = new System.Drawing.Size(1073, 670);
-            this.pnlContenedor.TabIndex = 5;
-            // 
             // btnDatos
             // 
             this.btnDatos.AutoSize = true;
@@ -183,6 +156,7 @@
             this.btnDatos.Name = "btnDatos";
             this.btnDatos.Size = new System.Drawing.Size(150, 30);
             this.btnDatos.TabIndex = 3;
+            this.btnDatos.TabStop = false;
             this.btnDatos.Text = "btnDatos";
             this.btnDatos.UseVisualStyleBackColor = true;
             this.btnDatos.Click += new System.EventHandler(this.btnDatos_Click);
@@ -209,6 +183,14 @@
             this.pbCerrar.TabIndex = 1;
             this.pbCerrar.TabStop = false;
             this.pbCerrar.Click += new System.EventHandler(this.pbCerrar_Click);
+            // 
+            // pnlContenedor
+            // 
+            this.pnlContenedor.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlContenedor.Location = new System.Drawing.Point(127, 30);
+            this.pnlContenedor.Name = "pnlContenedor";
+            this.pnlContenedor.Size = new System.Drawing.Size(1073, 670);
+            this.pnlContenedor.TabIndex = 5;
             // 
             // frmMain
             // 
@@ -245,7 +227,6 @@
         private System.Windows.Forms.Button btnEstadisticas;
         private System.Windows.Forms.PictureBox pbCerrar;
         private System.Windows.Forms.PictureBox pbMinimizar;
-        private System.Windows.Forms.Button btnUsuarios;
         private System.Windows.Forms.Panel pMarcador;
         private System.Windows.Forms.Panel pHeader;
         private System.Windows.Forms.Panel pnlContenedor;
