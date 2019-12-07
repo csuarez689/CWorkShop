@@ -13,6 +13,7 @@ namespace CWorkShop.Clases
         private const string ARCHIVO = "clientes.dat";
         private const string DIR = "..\\Datos\\";
         private string direccion;
+        private List<clsEquipo> equipos;
 
         public clsCliente(string Dni, string Nombre, string Apellido, string Mail, string Telefono, string Direccion) :
             base(Dni, Nombre, Apellido, Mail, Telefono)
@@ -30,6 +31,19 @@ namespace CWorkShop.Clases
             set
             {
                 direccion = value;
+            }
+        }
+
+        public List<clsEquipo> Equipos
+        {
+            get
+            {
+                return equipos;
+            }
+
+            set
+            {
+                equipos = value;
             }
         }
 
@@ -91,15 +105,83 @@ namespace CWorkShop.Clases
             }
             return msg;
         }
-
-        //actualizar cliente
-        public string Actualizar() { return string.Empty; }
+        //Actualizar cliente
+        public string Actualizar()
+        {
+            string msg = string.Empty;
+            CheckFiles();
+            try
+            {
+                List<clsCliente> clientes = clsCliente.Listar();
+                int old = clientes.FindIndex(x => x.Dni == this.Dni);
+                if (msg.Equals(string.Empty))
+                {
+                    clientes[old] = this;
+                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                    {
+                        foreach (clsCliente x in clientes)
+                        {
+                            bw.Write(x.Id);
+                            bw.Write(x.Dni);
+                            bw.Write(x.Nombre);
+                            bw.Write(x.Apellido);
+                            bw.Write(x.Mail);
+                            bw.Write(x.Telefono);
+                            bw.Write(x.Direccion);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Ha ocurrio un error. " + ex.Message;
+            }
+            return msg;
+        }
 
         //Obtener id siguiente
         private static int ObtenerId()
         {
             List<clsCliente> lista = clsCliente.Listar();
             return (lista.Count > 0) ? lista.Last().Id++ : 1;
+        }
+
+        //Eliminar cliente
+        public static string Eliminar(string dni)
+        {
+            List<clsCliente> clientes = clsCliente.Listar();
+            try
+            {
+                string msg = (clientes.Find(x=>x.Dni==dni).Equipos!=null) ? "El cliente no se puede eliminar porque posee registros asociados." : string.Empty;
+                    if (msg.Equals(string.Empty))
+                    {
+                        using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                        {
+                            foreach(clsCliente cliente in clientes)
+                            {
+                                if (cliente.Dni.Equals(dni)) { continue; }
+                                bw.Write(cliente.Id);
+                                bw.Write(cliente.Dni);
+                                bw.Write(cliente.Nombre);
+                                bw.Write(cliente.Apellido);
+                                bw.Write(cliente.Mail);
+                                bw.Write(cliente.Telefono);
+                                bw.Write(cliente.Direccion);
+                            }
+                        }
+                    }
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                return "Ha ocurrido un error. " + ex.Message;
+            }
+
+        }
+
+        public static clsCliente Buscar(string dni)
+        {
+            return clsCliente.Listar().Find(x => x.Dni == dni);
         }
 
         //Chequeo archivos

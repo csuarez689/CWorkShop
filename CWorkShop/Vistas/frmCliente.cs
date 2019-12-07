@@ -30,6 +30,7 @@ namespace CWorkShop.Vistas
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            tbDni.Enabled = true;
             spcCliente.Panel2Collapsed = false;
             btnLimpiar.Show();
             spcCliente.Panel1.Enabled = false;
@@ -53,7 +54,7 @@ namespace CWorkShop.Vistas
                 clsCliente cliente = new clsCliente(tbDni.Text, tbNombre.Text, tbApellido.Text, tbCorreo.Text, tbTelefono.Text, tbDireccion.Text);
                 //Se esta guardando registro nuevo
                 //se esta actualizando registro, por lo tanto no esta disponible btnLimpiar
-                msg = (btnLimpiar.Visible) ? cliente.Guardar() : cliente.Actualizar();
+                msg = (btnLimpiar.Visible) ? cliente.Guardar() :  cliente.Actualizar();
                 if (msg.Equals(string.Empty))
                 {
                     dgvConfig();
@@ -79,6 +80,7 @@ namespace CWorkShop.Vistas
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            tbDni.Enabled = false;
             DataGridViewRow fila = dgvClientes.CurrentRow;
             bool sel = fila.Selected;
             string msg = (sel) ? string.Empty : "Debe seleccionar un registro.";
@@ -104,7 +106,13 @@ namespace CWorkShop.Vistas
             bool sel = fila.Selected;
             string msg = (sel) ? "¿Esta seguro que desea borrar el registro?" : "Debe seleccionar un registro.";
             MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            msg = string.Empty;
+            msg= clsCliente.Eliminar(fila.Cells["Dni"].Value.ToString());
+            if (msg.Equals(string.Empty))
+            {
+                dgvConfig();
+            }
+            else
+                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private string Validar()
