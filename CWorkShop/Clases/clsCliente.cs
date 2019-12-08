@@ -38,12 +38,8 @@ namespace CWorkShop.Clases
         {
             get
             {
+                this.equipos= clsEquipo.Listar().FindAll(x => x.IdCliente == this.Id);
                 return equipos;
-            }
-
-            set
-            {
-                equipos = value;
             }
         }
 
@@ -80,11 +76,11 @@ namespace CWorkShop.Clases
         {
             CheckFiles();
             int idAux = ObtenerId();
-            string msg = String.Empty;
+            string msg = string.Empty;
             try
             {
                 if (clsCliente.Listar().Find(x => x.Dni == this.Dni) == null)
-                {//si no existe el usuario
+                {//si no existe cliente
                     using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
                     {
                         bw.Write(idAux);
@@ -138,21 +134,19 @@ namespace CWorkShop.Clases
             }
             return msg;
         }
-
         //Obtener id siguiente
         private static int ObtenerId()
         {
             List<clsCliente> lista = clsCliente.Listar();
             return (lista.Count > 0) ? lista.Last().Id++ : 1;
         }
-
         //Eliminar cliente
         public static string Eliminar(string dni)
         {
             List<clsCliente> clientes = clsCliente.Listar();
             try
             {
-                string msg = (clientes.Find(x=>x.Dni==dni).Equipos!=null) ? "El cliente no se puede eliminar porque posee registros asociados." : string.Empty;
+                string msg = (clientes.Find(x=>x.Dni==dni).Equipos.Count>0) ? "El cliente no se puede eliminar porque posee registros asociados." : string.Empty;
                     if (msg.Equals(string.Empty))
                     {
                         using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
@@ -178,12 +172,16 @@ namespace CWorkShop.Clases
             }
 
         }
-
+        //Buscar por dni
         public static clsCliente Buscar(string dni)
         {
             return clsCliente.Listar().Find(x => x.Dni == dni);
         }
-
+        //Buscar por id
+        public static clsCliente Buscar(int id)
+        {
+            return clsCliente.Listar().Find(x => x.Id == id);
+        }
         //Chequeo archivos
         private static void CheckFiles()
         {

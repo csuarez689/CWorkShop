@@ -33,7 +33,7 @@
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.tbDNI = new System.Windows.Forms.TextBox();
+            this.tbDni = new System.Windows.Forms.TextBox();
             this.tbContraseña = new System.Windows.Forms.TextBox();
             this.btnEntrar = new System.Windows.Forms.Button();
             this.btnRegistrarse = new System.Windows.Forms.Button();
@@ -85,19 +85,19 @@
             this.lineShape1.Y1 = 75;
             this.lineShape1.Y2 = 75;
             // 
-            // tbDNI
+            // tbDni
             // 
-            this.tbDNI.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.tbDNI.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbDNI.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDNI.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.tbDNI.Location = new System.Drawing.Point(203, 55);
-            this.tbDNI.Name = "tbDNI";
-            this.tbDNI.Size = new System.Drawing.Size(265, 19);
-            this.tbDNI.TabIndex = 8;
-            this.tbDNI.Text = "DNI";
-            this.tbDNI.Enter += new System.EventHandler(this.tbDNI_Enter);
-            this.tbDNI.Leave += new System.EventHandler(this.tbDNI_Leave);
+            this.tbDni.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.tbDni.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbDni.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDni.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.tbDni.Location = new System.Drawing.Point(203, 55);
+            this.tbDni.Name = "tbDni";
+            this.tbDni.Size = new System.Drawing.Size(265, 19);
+            this.tbDni.TabIndex = 8;
+            this.tbDni.Text = "DNI";
+            this.tbDni.Enter += new System.EventHandler(this.tbDNI_Enter);
+            this.tbDni.Leave += new System.EventHandler(this.tbDNI_Leave);
             // 
             // tbContraseña
             // 
@@ -179,7 +179,7 @@
             this.Controls.Add(this.btnRegistrarse);
             this.Controls.Add(this.btnEntrar);
             this.Controls.Add(this.tbContraseña);
-            this.Controls.Add(this.tbDNI);
+            this.Controls.Add(this.tbDni);
             this.Controls.Add(this.pbLogin);
             this.Controls.Add(this.shapeContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -202,7 +202,7 @@
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
-        private System.Windows.Forms.TextBox tbDNI;
+        private System.Windows.Forms.TextBox tbDni;
         private System.Windows.Forms.TextBox tbContraseña;
         private System.Windows.Forms.Button btnEntrar;
         private System.Windows.Forms.Button btnRegistrarse;

@@ -8,5 +8,24 @@ namespace CWorkShop.Clases
 {
     class clsReparacion
     {
+        private int idEquipo;
+
+        public int IdEquipo
+        {
+            get
+            {
+                return idEquipo;
+            }
+
+            set
+            {
+                idEquipo = value;
+            }
+        }
+
+        public static List<clsReparacion> Listar()
+        {
+            return new List<clsReparacion>();
+        }
     }
 }

@@ -18,9 +18,11 @@ namespace CWorkShop.Clases
         private string nroSerie;
         private string descripcion;
         private int idCliente;
+        private List<clsReparacion> reparaciones;
 
-        public clsEquipo(string marca, string tipo, string nroSerie, string descripcion, int idCliente)
+        public clsEquipo(string marca, string tipo, string nroSerie, string descripcion, int idCliente, int id = 0)
         {
+            this.id = id;
             this.marca = marca;
             this.tipo = tipo;
             this.nroSerie = nroSerie;
@@ -104,15 +106,142 @@ namespace CWorkShop.Clases
                 idCliente = value;
             }
         }
+        //Listado de reparaciones correspondientes al equipo
+        public List<clsReparacion> Reparaciones
+        {
+            get { 
+                this.reparaciones=clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id);
+                return reparaciones;
+            }
+        }
+
         //Obtiene listado de equipos
         public static List<clsEquipo> Listar()
         {
-            return new List<clsEquipo>();
+            CheckFiles();
+            clsEquipo aux;
+            List<clsEquipo> equipos = new List<clsEquipo>();
+            int auxid;
+            try
+            {
+                using (BinaryReader br = new BinaryReader(new FileStream(DIR + ARCHIVO, FileMode.Open)))
+                {
+                    while (br.PeekChar() != -1)
+                    {
+                        auxid = br.ReadInt32();
+                        aux = new clsEquipo(br.ReadString(), br.ReadString(), br.ReadString(), br.ReadString(), br.ReadInt32());
+                        aux.Id = auxid;
+                        equipos.Add(aux);
+                    }
+                }
+                return equipos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ha ocurrio un error. " + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return equipos;
+            }
+
+        }
+        //Guardar equipo
+        public string Guardar()
+        {
+            CheckFiles();
+            int idAux = ObtenerId();
+            string msg = string.Empty;
+            try
+            {
+                if (clsEquipo.Listar().Find(x => x.nroSerie == this.nroSerie && x.idCliente==this.idCliente) == null)
+                {//si no existe un equipo registrado con mismo numero de serie y mismo id cliente 
+                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
+                    {
+                        bw.Write(idAux);
+                        bw.Write(this.Marca);
+                        bw.Write(this.Tipo);
+                        bw.Write(this.NroSerie);
+                        bw.Write(this.Descripcion);
+                        bw.Write(this.IdCliente);
+                    }
+                }
+                else
+                    msg = "El cliente ya tiene este equipo registrado.";
+            }
+            catch (Exception ex)
+            {
+                msg = "Error interno. " + ex.Message;
+            }
+            return msg;
+        }
+        //Actualizar equipo
+        public string Actualizar()
+        {
+            string msg;
+            CheckFiles();
+            try
+            {
+                List<clsEquipo> equipos = clsEquipo.Listar();
+                int old = equipos.FindIndex(x => x.Id == this.Id);
+                //si el usuario no posee ya un equipo registrado con este numero de serie
+                int otro = clsCliente.Buscar(this.IdCliente).Equipos.FindIndex(x => x.nroSerie == this.nroSerie);
+                msg = (otro != -1 && otro != old) ? "El cliente ya posee un equipo registrado con este numero de serie." : string.Empty;
+                if (msg.Equals(string.Empty))
+                {
+                    equipos[old] = this;
+                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                    {
+                        foreach (clsEquipo x in equipos)
+                        {
+                            bw.Write(x.Id);
+                            bw.Write(this.Marca);
+                            bw.Write(this.Tipo);
+                            bw.Write(this.NroSerie);
+                            bw.Write(this.Descripcion);
+                            bw.Write(this.IdCliente);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Ha ocurrio un error. " + ex.Message;
+            }
+            return msg;
+        }
+        //Eliminar cliente
+        public static string Eliminar(int id)
+        {
+            List<clsEquipo> equipos = clsEquipo.Listar();
+            try
+            {
+                string msg = (equipos.Find(x => x.Id == id).Reparaciones.Count > 0) ? "El equipo no se puede eliminar porque posee registros asociados." : string.Empty;
+                if (msg.Equals(string.Empty))
+                {
+                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                    {
+                        foreach (clsEquipo equipo in equipos)
+                        {
+                            if (equipo.Id == id) { continue; }
+                            bw.Write(equipo.Id);
+                            bw.Write(equipo.Marca);
+                            bw.Write(equipo.Tipo);
+                            bw.Write(equipo.NroSerie);
+                            bw.Write(equipo.Descripcion);
+                            bw.Write(equipo.IdCliente);
+                        }
+                    }
+                }
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                return "Ha ocurrido un error. " + ex.Message;
+            }
+
         }
         //Obtener id siguiente
         private static int ObtenerId()
         {
-            List<clsCliente> lista = clsCliente.Listar();
+            List<clsEquipo> lista = clsEquipo.Listar();
             return (lista.Count > 0) ? lista.Last().Id++ : 1;
         }
         //Chequeo archivos

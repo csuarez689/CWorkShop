@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CWorkShop.Clases;
+using System.Text.RegularExpressions;
 
 namespace CWorkShop.Vistas
 {
@@ -21,14 +22,14 @@ namespace CWorkShop.Vistas
 
         private void tbDNI_Enter(object sender, EventArgs e)
         {
-            if (tbDNI.Text == "DNI")
-                tbDNI.Text = string.Empty;
+            if (tbDni.Text == "DNI")
+                tbDni.Text = string.Empty;
         }
 
         private void tbDNI_Leave(object sender, EventArgs e)
         {
-            if (tbDNI.Text==string.Empty)
-                tbDNI.Text = "DNI";
+            if (tbDni.Text==string.Empty)
+                tbDni.Text = "DNI";
         }
 
         private void tbContraseña_Enter(object sender, EventArgs e)
@@ -51,21 +52,26 @@ namespace CWorkShop.Vistas
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            string msg = clsUsuario.Login(tbDNI.Text, tbContraseña.Text);
-            if (msg.Equals(string.Empty))
-            {
-                frmMain main = new frmMain(this, tbDNI.Text);
-                main.Show();
-                tbDNI.Clear();
-                tbDNI.Text = "DNI";
-                tbDNI.Focus();
-                tbContraseña.Clear();
-                tbContraseña.Text = "CONTRASEÑA";
-                tbContraseña.UseSystemPasswordChar = false;
-                this.Hide();
-            }
+            Regex dni = new Regex(@"^\d{8}(?:[-\s]\d{4})?$");
+            if (!dni.IsMatch(tbDni.Text)) { MessageBox.Show("Campo dni incorrecto.  Ingrese solo numeros.", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             else
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                string msg = clsUsuario.Login(tbDni.Text, tbContraseña.Text);
+                if (msg.Equals(string.Empty))
+                {
+                    frmMain main = new frmMain(this, tbDni.Text);
+                    main.Show();
+                    tbDni.Clear();
+                    tbDni.Text = "DNI";
+                    tbDni.Focus();
+                    tbContraseña.Clear();
+                    tbContraseña.Text = "CONTRASEÑA";
+                    tbContraseña.UseSystemPasswordChar = false;
+                    this.Hide();
+                }
+                else
+                    MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void pbCerrar_Click(object sender, EventArgs e)
