@@ -69,6 +69,14 @@ namespace CWorkShop.Vistas
             pMarcador.Show();
         }
 
+        private void btnRepuestos_Click(object sender, EventArgs e)
+        {
+            pMarcador.Height = btnRepuestos.Height;
+            pMarcador.Top = btnRepuestos.Top;
+            pMarcador.Show();
+            openForm(new frmRepuestos());
+        }
+
         private void btnDatos_Click(object sender, EventArgs e)
         {
             pMarcador.Hide();
@@ -98,6 +106,8 @@ namespace CWorkShop.Vistas
                     ((TextBox)x).Clear();
                 else if (x is ComboBox)
                     ((ComboBox)x).SelectedIndex = -1;
+                else if (x is NumericUpDown)
+                    ((NumericUpDown)x).Value = 0;
             }
         }
 
@@ -107,13 +117,6 @@ namespace CWorkShop.Vistas
             { xClick = e.X; yClick = e.Y; }
             else
             { this.Left = this.Left + (e.X - xClick); this.Top = this.Top + (e.Y - yClick); }
-        }
-        private void btnRepuestos_Click(object sender, EventArgs e)
-        {
-            pMarcador.Height = btnRepuestos.Height;
-            pMarcador.Top = btnRepuestos.Top;
-            pMarcador.Show();
-            Console.WriteLine(pMarcador.Top);
         }
 
         //Actualizar datos button

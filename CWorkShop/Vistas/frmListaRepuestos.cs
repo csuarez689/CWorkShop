@@ -14,7 +14,7 @@ namespace CWorkShop.Vistas
 {
     public partial class frmListaRepuestos : Form
     {
-        List<int> idSeleccionados;
+        List<int> idSeleccionados= new List<int>();
 
         public List<int> IdSeleccionados
         {
@@ -26,8 +26,11 @@ namespace CWorkShop.Vistas
 
         public frmListaRepuestos(bool fullView=false)
         {
+            if (fullView)
+            {
+                this.Padding =new System.Windows.Forms.Padding(10,10,10,10);
+            }
             InitializeComponent();
-            this.idSeleccionados = new List<int>();
             pnlBotonera.Visible = fullView;
             pnlTitulo.Visible = fullView;
             dgvRepuestos.MultiSelect = fullView;
@@ -43,8 +46,9 @@ namespace CWorkShop.Vistas
             foreach (clsRepuesto repuesto in lista)
             {
                 busqueda = (repuesto.Codigo + repuesto.Descripcion + repuesto.PrecioCompra.ToString() + repuesto.PrecioVenta.ToString() + repuesto.Stock.ToString()).ToUpper().Trim();
-                dgvRepuestos.Rows.Add(repuesto.Id, repuesto.Codigo, repuesto.Descripcion, repuesto.PrecioCompra, repuesto.PrecioVenta, repuesto.Stock,busqueda);
+                dgvRepuestos.Rows.Add(repuesto.Id, repuesto.Codigo, repuesto.Descripcion, repuesto.PrecioCompra, repuesto.PrecioVenta, repuesto.Stock, busqueda);
             }
+            tbBuscar.Clear();
         }
 
         private void tbBuscar_TextChanged(object sender, EventArgs e)
@@ -64,7 +68,7 @@ namespace CWorkShop.Vistas
             this.Dispose();
         }
 
-        private List<int> btnAceptar_Click(object sender, EventArgs e)
+        private void ObtenerSeleccionados()
         {
             DataGridViewSelectedRowCollection seleccionadas = dgvRepuestos.SelectedRows;
             if (seleccionadas != null)
@@ -76,7 +80,11 @@ namespace CWorkShop.Vistas
             }
             else
                 MessageBox.Show("Debe seleccionar algun repuesto del inventario.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return idSeleccionados;
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            ObtenerSeleccionados();
         }
     }
 }

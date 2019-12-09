@@ -19,13 +19,13 @@ namespace CWorkShop.Clases
         private double precioVenta;
         private int stock;
 
-        public clsRepuesto(string codigo, string descripcion, double precioCompra, double precioVenta, int stock, int id=0)
+        public clsRepuesto(string codigo, string descripcion, double precioCompra, double precioVenta, int stock, int id = 0)
         {
             this.id = id;
             this.codigo = codigo;
             this.descripcion = descripcion;
             this.precioCompra = precioCompra;
-            this.precioVenta = PrecioVenta;
+            this.precioVenta = precioVenta;
             this.stock = stock;
         }
 
@@ -146,7 +146,8 @@ namespace CWorkShop.Clases
                 msg = (stock < 0) ? "El stock no puede ser negativo." : string.Empty;
                 if (clsRepuesto.Listar().Find(x => x.Codigo == this.Codigo) == null)
                 {//si no existe un repuesto con el mismo numero de codigo
-                    if (msg.Equals(string.Empty)) {
+                    if (msg.Equals(string.Empty))
+                    {
                         using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
                         {
                             bw.Write(idAux);
@@ -202,39 +203,6 @@ namespace CWorkShop.Clases
             }
             return msg;
         }
-        //Actualizar stock
-        public string ActualizarStock(int cantidad)
-        {
-            string msg;
-            CheckFiles();
-            try
-            {
-                msg = (this.stock + cantidad < 0) ? "La cantidad ingresada supera las unidades en stock." : string.Empty;
-                List<clsRepuesto> repuestos = clsRepuesto.Listar();
-                int old = repuestos.FindIndex(x => x.Id == this.Id);
-                if (msg.Equals(string.Empty))
-                {
-                    repuestos[old] = this;
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
-                    {
-                        foreach (clsRepuesto x in repuestos)
-                        {
-                            bw.Write(x.Id);
-                            bw.Write(x.Codigo);
-                            bw.Write(x.Descripcion);
-                            bw.Write(x.PrecioCompra);
-                            bw.Write(x.PrecioVenta);
-                            bw.Write(x.Stock);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = "Ha ocurrio un error. " + ex.Message;
-            }
-            return msg;
-        }
         //Eliminar repuesto
         public static string Eliminar(int id)
         {
@@ -243,16 +211,19 @@ namespace CWorkShop.Clases
             try
             {
                 string msg = string.Empty;
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                {
+                    foreach (clsRepuesto repuesto in repuestos)
                     {
-                        foreach (clsRepuesto repuesto in repuestos)
-                        {
-                            if (repuesto.Id == id) { continue; }
-                            bw.Write(repuesto.Id);
-                            bw.Write(repuesto.Codigo);
-                            bw.Write(repuesto.Descripcion);
-                        }
+                        if (repuesto.Id == id) { continue; }
+                        bw.Write(repuesto.Id);
+                        bw.Write(repuesto.Codigo);
+                        bw.Write(repuesto.Descripcion);
+                        bw.Write(repuesto.PrecioCompra);
+                        bw.Write(repuesto.PrecioVenta);
+                        bw.Write(repuesto.Stock);
                     }
+                }
                 return msg;
             }
             catch (Exception ex)
