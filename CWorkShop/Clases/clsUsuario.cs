@@ -135,7 +135,7 @@ namespace CWorkShop.Clases
         private static int ObtenerId()
         {
             List<clsUsuario> lista = clsUsuario.Listar();
-            return (lista.Count > 0) ? lista.Last().Id++ : 1;
+            return (lista.Count > 0) ? lista.Last().Id+1 : 1;
         }
 
         //Chequeo archivos

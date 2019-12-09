@@ -152,7 +152,7 @@
             this.btnDatos.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDatos.ForeColor = System.Drawing.Color.RoyalBlue;
             this.btnDatos.Location = new System.Drawing.Point(806, 0);
-            this.btnDatos.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.btnDatos.Margin = new System.Windows.Forms.Padding(0);
             this.btnDatos.Name = "btnDatos";
             this.btnDatos.Size = new System.Drawing.Size(150, 30);
             this.btnDatos.TabIndex = 3;

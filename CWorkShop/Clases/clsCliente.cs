@@ -138,7 +138,7 @@ namespace CWorkShop.Clases
         private static int ObtenerId()
         {
             List<clsCliente> lista = clsCliente.Listar();
-            return (lista.Count > 0) ? lista.Last().Id++ : 1;
+            return (lista.Count > 0) ? lista.Last().Id+1 : 1;
         }
         //Eliminar cliente
         public static string Eliminar(string dni)

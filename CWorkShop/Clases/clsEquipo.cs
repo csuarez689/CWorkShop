@@ -16,16 +16,18 @@ namespace CWorkShop.Clases
         private string marca;
         private string tipo;
         private string nroSerie;
+        private string modelo;
         private string descripcion;
         private int idCliente;
         private List<clsReparacion> reparaciones;
 
-        public clsEquipo(string marca, string tipo, string nroSerie, string descripcion, int idCliente, int id = 0)
+        public clsEquipo(string marca, string tipo, string nroSerie, string modelo, string descripcion, int idCliente, int id = 0)
         {
             this.id = id;
             this.marca = marca;
             this.tipo = tipo;
             this.nroSerie = nroSerie;
+            this.modelo = modelo;
             this.descripcion = descripcion;
             this.idCliente = idCliente;
         }
@@ -115,6 +117,19 @@ namespace CWorkShop.Clases
             }
         }
 
+        public string Modelo
+        {
+            get
+            {
+                return modelo;
+            }
+
+            set
+            {
+                modelo = value;
+            }
+        }
+
         //Obtiene listado de equipos
         public static List<clsEquipo> Listar()
         {
@@ -129,7 +144,7 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsEquipo(br.ReadString(), br.ReadString(), br.ReadString(), br.ReadString(), br.ReadInt32());
+                        aux = new clsEquipo(br.ReadString(), br.ReadString(), br.ReadString(), br.ReadString(), br.ReadString(), br.ReadInt32());
                         aux.Id = auxid;
                         equipos.Add(aux);
                     }
@@ -159,12 +174,13 @@ namespace CWorkShop.Clases
                         bw.Write(this.Marca);
                         bw.Write(this.Tipo);
                         bw.Write(this.NroSerie);
+                        bw.Write(this.Modelo);
                         bw.Write(this.Descripcion);
                         bw.Write(this.IdCliente);
                     }
                 }
                 else
-                    msg = "El cliente ya tiene este equipo registrado.";
+                    msg = "El cliente ya posee un equipo con este numero de serie registrado.";
             }
             catch (Exception ex)
             {
@@ -182,7 +198,7 @@ namespace CWorkShop.Clases
                 List<clsEquipo> equipos = clsEquipo.Listar();
                 int old = equipos.FindIndex(x => x.Id == this.Id);
                 //si el usuario no posee ya un equipo registrado con este numero de serie
-                int otro = clsCliente.Buscar(this.IdCliente).Equipos.FindIndex(x => x.nroSerie == this.nroSerie);
+                int otro = equipos.FindIndex(x => this.IdCliente == x.IdCliente && this.NroSerie==x.NroSerie);
                 msg = (otro != -1 && otro != old) ? "El cliente ya posee un equipo registrado con este numero de serie." : string.Empty;
                 if (msg.Equals(string.Empty))
                 {
@@ -192,11 +208,12 @@ namespace CWorkShop.Clases
                         foreach (clsEquipo x in equipos)
                         {
                             bw.Write(x.Id);
-                            bw.Write(this.Marca);
-                            bw.Write(this.Tipo);
-                            bw.Write(this.NroSerie);
-                            bw.Write(this.Descripcion);
-                            bw.Write(this.IdCliente);
+                            bw.Write(x.Marca);
+                            bw.Write(x.Tipo);
+                            bw.Write(x.NroSerie);
+                            bw.Write(x.Modelo);
+                            bw.Write(x.Descripcion);
+                            bw.Write(x.IdCliente);
                         }
                     }
                 }
@@ -225,6 +242,7 @@ namespace CWorkShop.Clases
                             bw.Write(equipo.Marca);
                             bw.Write(equipo.Tipo);
                             bw.Write(equipo.NroSerie);
+                            bw.Write(equipo.Modelo);
                             bw.Write(equipo.Descripcion);
                             bw.Write(equipo.IdCliente);
                         }
@@ -242,7 +260,7 @@ namespace CWorkShop.Clases
         private static int ObtenerId()
         {
             List<clsEquipo> lista = clsEquipo.Listar();
-            return (lista.Count > 0) ? lista.Last().Id++ : 1;
+            return (lista.Count > 0) ? lista.Last().Id+1 : 1;
         }
         //Chequeo archivos
         private static void CheckFiles()

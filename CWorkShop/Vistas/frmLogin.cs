@@ -81,6 +81,8 @@ namespace CWorkShop.Vistas
 
         private void btnRegistrarse_Click(object sender, EventArgs e)
         {
+            tbContraseña.Clear();
+            tbDni.Clear();
             new frmMisDatos().ShowDialog();
         }
     }
