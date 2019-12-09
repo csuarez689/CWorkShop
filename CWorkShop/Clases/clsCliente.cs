@@ -143,6 +143,7 @@ namespace CWorkShop.Clases
         //Eliminar cliente
         public static string Eliminar(string dni)
         {
+            CheckFiles();
             List<clsCliente> clientes = clsCliente.Listar();
             try
             {

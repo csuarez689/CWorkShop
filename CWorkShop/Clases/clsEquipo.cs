@@ -227,6 +227,7 @@ namespace CWorkShop.Clases
         //Eliminar equipo
         public static string Eliminar(int id)
         {
+            CheckFiles();
             List<clsEquipo> equipos = clsEquipo.Listar();
             try
             {

@@ -8,21 +8,23 @@ using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    class clsRepuesto
+    class clsRepuestoUtilizado
     {
-        private const string ARCHIVO = "repuestos.dat";
+        private const string ARCHIVO = "repuestosUtilizados.dat";
         private const string DIR = "..\\Datos\\";
         private int id;
         private string codigo;
         private string descripcion;
         private double precio;
+        private int idReparacion;
 
-        public clsRepuesto(string codigo, string descripcion, double precio, int id=0)
+        public clsRepuestoUtilizado(string codigo, string descripcion, double precio, int idReparacion, int id = 0)
         {
             this.Id = id;
             this.Codigo = codigo;
             this.Descripcion = descripcion;
             this.Precio = precio;
+            this.idReparacion = idReparacion;
         }
 
         public int Id
@@ -76,12 +78,26 @@ namespace CWorkShop.Clases
                 precio = value;
             }
         }
+
+        public int IdReparacion
+        {
+            get
+            {
+                return idReparacion;
+            }
+
+            set
+            {
+                idReparacion = value;
+            }
+        }
+
         //Obtiene listado de repuestos
-        public static List<clsRepuesto> Listar()
+        public static List<clsRepuestoUtilizado> Listar()
         {
             CheckFiles();
-            clsRepuesto aux;
-            List<clsRepuesto> repuestos = new List<clsRepuesto>();
+            clsRepuestoUtilizado aux;
+            List<clsRepuestoUtilizado> repuestosUtilizados = new List<clsRepuestoUtilizado>();
             int auxid;
             try
             {
@@ -90,17 +106,17 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsRepuesto(br.ReadString(), br.ReadString(), br.ReadDouble());
+                        aux = new clsRepuestoUtilizado(br.ReadString(), br.ReadString(), br.ReadDouble(),br.ReadInt32());
                         aux.Id = auxid;
-                        repuestos.Add(aux);
+                        repuestosUtilizados.Add(aux);
                     }
                 }
-                return repuestos;
+                return repuestosUtilizados;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ha ocurrio un error. " + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return repuestos;
+                return repuestosUtilizados;
             }
 
         }
@@ -112,76 +128,39 @@ namespace CWorkShop.Clases
             string msg = string.Empty;
             try
             {
-                if (clsRepuesto.Listar().Find(x => x.Codigo == this.Codigo) == null)
-                {//si no existe un repuesto con el mismo numero de codigo
                     using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
                     {
                         bw.Write(idAux);
                         bw.Write(this.Codigo);
                         bw.Write(this.Descripcion);
                         bw.Write(this.Precio);
+                        bw.Write(this.IdReparacion);
                     }
                 }
-                else
-                    msg = "El codigo de este producto ya se encuentra registrado.";
-            }
             catch (Exception ex)
             {
                 msg = "Error interno. " + ex.Message;
             }
             return msg;
         }
-        //Actualizar repuesto
-        public string Actualizar()
-        {
-            string msg;
-            CheckFiles();
-            try
-            {
-                List<clsRepuesto> repuestos = clsRepuesto.Listar();
-                int old = repuestos.FindIndex(x => x.Id == this.Id);
-                //si no existe el mismo codigo de producto registrado
-                int otro = repuestos.FindIndex(x => this.Codigo == x.Codigo && this.Id != x.Id);
-                msg = (otro != -1 && otro != old) ? "El codigo ingresado ya se encuentra registrado." : string.Empty;
-                if (msg.Equals(string.Empty))
-                {
-                    repuestos[old] = this;
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
-                    {
-                        foreach (clsRepuesto x in repuestos)
-                        {
-                            bw.Write(x.Id);
-                            bw.Write(x.Codigo);
-                            bw.Write(x.Descripcion);
-                            bw.Write(x.Precio);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = "Ha ocurrio un error. " + ex.Message;
-            }
-            return msg;
-        }
         //Eliminar repuesto
         public static string Eliminar(int id)
         {
-            CheckFiles();
-            List<clsRepuesto> repuestos = clsRepuesto.Listar();
+            List<clsRepuestoUtilizado> repuestosUtilizados = clsRepuestoUtilizado.Listar();
             try
             {
                 string msg = string.Empty;
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                {
+                    foreach (clsRepuestoUtilizado repuesto in repuestosUtilizados)
                     {
-                        foreach (clsRepuesto repuesto in repuestos)
-                        {
-                            if (repuesto.Id == id) { continue; }
-                            bw.Write(repuesto.Id);
-                            bw.Write(repuesto.Codigo);
-                            bw.Write(repuesto.Descripcion);
-                        }
+                        if (repuesto.Id == id) { continue; }
+                        bw.Write(repuesto.Id);
+                        bw.Write(repuesto.Codigo);
+                        bw.Write(repuesto.Descripcion);
+                        bw.Write(repuesto.IdReparacion);
                     }
+                }
                 return msg;
             }
             catch (Exception ex)
@@ -190,10 +169,11 @@ namespace CWorkShop.Clases
             }
 
         }
+
         //Obtener id siguiente
         private static int ObtenerId()
         {
-            List<clsRepuesto> lista = clsRepuesto.Listar();
+            List<clsRepuestoUtilizado> lista = clsRepuestoUtilizado.Listar();
             return (lista.Count > 0) ? lista.Last().Id + 1 : 1;
         }
         //Chequeo archivos
@@ -223,7 +203,5 @@ namespace CWorkShop.Clases
             if (msg != string.Empty)
                 MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
     }
 }
