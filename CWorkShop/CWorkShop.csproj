@@ -75,6 +75,18 @@
     <Compile Include="Vistas\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\frmListaRepuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\frmListaRepuestos.Designer.cs">
+      <DependentUpon>frmListaRepuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\frmRepuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\frmRepuestos.Designer.cs">
+      <DependentUpon>frmRepuestos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\frmMisDatos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +109,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\frmListaRepuestos.resx">
+      <DependentUpon>frmListaRepuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\frmRepuestos.resx">
+      <DependentUpon>frmRepuestos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\frmMisDatos.resx">
       <DependentUpon>frmMisDatos.cs</DependentUpon>
@@ -125,6 +143,7 @@
     <Content Include="Img\login.png" />
     <Content Include="Img\min16x16.png" />
     <Content Include="Img\ordenes32x32.png" />
+    <None Include="Img\repuesto32x32.png" />
     <Content Include="Img\usuarios32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.pMenu = new System.Windows.Forms.Panel();
-            this.pMarcador = new System.Windows.Forms.Panel();
             this.btnEstadisticas = new System.Windows.Forms.Button();
             this.btnOrdenes = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
@@ -39,6 +38,7 @@
             this.pbCerrar = new System.Windows.Forms.PictureBox();
             this.pnlContenedor = new System.Windows.Forms.Panel();
             this.btnRepuestos = new System.Windows.Forms.Button();
+            this.pMarcador = new System.Windows.Forms.Panel();
             this.pMenu.SuspendLayout();
             this.pHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMinimizar)).BeginInit();
@@ -48,8 +48,8 @@
             // pMenu
             // 
             this.pMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pMenu.Controls.Add(this.btnRepuestos);
             this.pMenu.Controls.Add(this.pMarcador);
+            this.pMenu.Controls.Add(this.btnRepuestos);
             this.pMenu.Controls.Add(this.btnEstadisticas);
             this.pMenu.Controls.Add(this.btnOrdenes);
             this.pMenu.Controls.Add(this.btnClientes);
@@ -60,14 +60,6 @@
             this.pMenu.Size = new System.Drawing.Size(127, 700);
             this.pMenu.TabIndex = 0;
             this.pMenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
-            // 
-            // pMarcador
-            // 
-            this.pMarcador.BackColor = System.Drawing.Color.RoyalBlue;
-            this.pMarcador.Location = new System.Drawing.Point(122, 30);
-            this.pMarcador.Name = "pMarcador";
-            this.pMarcador.Size = new System.Drawing.Size(5, 80);
-            this.pMarcador.TabIndex = 0;
             // 
             // btnEstadisticas
             // 
@@ -216,6 +208,15 @@
             this.btnRepuestos.Text = "REPUESTOS";
             this.btnRepuestos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnRepuestos.UseVisualStyleBackColor = true;
+            this.btnRepuestos.Click += new System.EventHandler(this.btnRepuestos_Click);
+            // 
+            // pMarcador
+            // 
+            this.pMarcador.BackColor = System.Drawing.Color.RoyalBlue;
+            this.pMarcador.Location = new System.Drawing.Point(122, 30);
+            this.pMarcador.Name = "pMarcador";
+            this.pMarcador.Size = new System.Drawing.Size(5, 80);
+            this.pMarcador.TabIndex = 5;
             // 
             // frmMain
             // 
@@ -253,10 +254,10 @@
         private System.Windows.Forms.Button btnEstadisticas;
         private System.Windows.Forms.PictureBox pbCerrar;
         private System.Windows.Forms.PictureBox pbMinimizar;
-        private System.Windows.Forms.Panel pMarcador;
         private System.Windows.Forms.Panel pHeader;
         private System.Windows.Forms.Panel pnlContenedor;
         private System.Windows.Forms.Button btnDatos;
         private System.Windows.Forms.Button btnRepuestos;
+        private System.Windows.Forms.Panel pMarcador;
     }
 }

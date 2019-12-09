@@ -15,14 +15,18 @@ namespace CWorkShop.Clases
         private int id;
         private string codigo;
         private string descripcion;
-        private double precio;
+        private double precioCompra;
+        private double precioVenta;
+        private int stock;
 
-        public clsRepuesto(string codigo, string descripcion, double precio, int id=0)
+        public clsRepuesto(string codigo, string descripcion, double precioCompra, double precioVenta, int stock, int id=0)
         {
-            this.Id = id;
-            this.Codigo = codigo;
-            this.Descripcion = descripcion;
-            this.Precio = precio;
+            this.id = id;
+            this.codigo = codigo;
+            this.descripcion = descripcion;
+            this.precioCompra = precioCompra;
+            this.precioVenta = PrecioVenta;
+            this.stock = stock;
         }
 
         public int Id
@@ -64,18 +68,45 @@ namespace CWorkShop.Clases
             }
         }
 
-        public double Precio
+        public double PrecioCompra
         {
             get
             {
-                return precio;
+                return precioCompra;
             }
 
             set
             {
-                precio = value;
+                precioCompra = value;
             }
         }
+
+        public double PrecioVenta
+        {
+            get
+            {
+                return precioVenta;
+            }
+
+            set
+            {
+                precioVenta = value;
+            }
+        }
+
+        public int Stock
+        {
+            get
+            {
+                return stock;
+            }
+
+            set
+            {
+                stock = value;
+            }
+        }
+
         //Obtiene listado de repuestos
         public static List<clsRepuesto> Listar()
         {
@@ -90,7 +121,7 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsRepuesto(br.ReadString(), br.ReadString(), br.ReadDouble());
+                        aux = new clsRepuesto(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadDouble(), br.ReadInt32());
                         aux.Id = auxid;
                         repuestos.Add(aux);
                     }
@@ -112,14 +143,19 @@ namespace CWorkShop.Clases
             string msg = string.Empty;
             try
             {
+                msg = (stock < 0) ? "El stock no puede ser negativo." : string.Empty;
                 if (clsRepuesto.Listar().Find(x => x.Codigo == this.Codigo) == null)
                 {//si no existe un repuesto con el mismo numero de codigo
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
-                    {
-                        bw.Write(idAux);
-                        bw.Write(this.Codigo);
-                        bw.Write(this.Descripcion);
-                        bw.Write(this.Precio);
+                    if (msg.Equals(string.Empty)) {
+                        using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
+                        {
+                            bw.Write(idAux);
+                            bw.Write(this.Codigo);
+                            bw.Write(this.Descripcion);
+                            bw.Write(this.PrecioCompra);
+                            bw.Write(this.PrecioVenta);
+                            bw.Write(this.Stock);
+                        }
                     }
                 }
                 else
@@ -153,7 +189,42 @@ namespace CWorkShop.Clases
                             bw.Write(x.Id);
                             bw.Write(x.Codigo);
                             bw.Write(x.Descripcion);
-                            bw.Write(x.Precio);
+                            bw.Write(x.PrecioCompra);
+                            bw.Write(x.PrecioVenta);
+                            bw.Write(x.Stock);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Ha ocurrio un error. " + ex.Message;
+            }
+            return msg;
+        }
+        //Actualizar stock
+        public string ActualizarStock(int cantidad)
+        {
+            string msg;
+            CheckFiles();
+            try
+            {
+                msg = (this.stock + cantidad < 0) ? "La cantidad ingresada supera las unidades en stock." : string.Empty;
+                List<clsRepuesto> repuestos = clsRepuesto.Listar();
+                int old = repuestos.FindIndex(x => x.Id == this.Id);
+                if (msg.Equals(string.Empty))
+                {
+                    repuestos[old] = this;
+                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
+                    {
+                        foreach (clsRepuesto x in repuestos)
+                        {
+                            bw.Write(x.Id);
+                            bw.Write(x.Codigo);
+                            bw.Write(x.Descripcion);
+                            bw.Write(x.PrecioCompra);
+                            bw.Write(x.PrecioVenta);
+                            bw.Write(x.Stock);
                         }
                     }
                 }

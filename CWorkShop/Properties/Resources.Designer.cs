@@ -123,6 +123,16 @@ namespace CWorkShop.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap repuesto32x32 {
+            get {
+                object obj = ResourceManager.GetObject("repuesto32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap usuarios32x32 {
             get {
                 object obj = ResourceManager.GetObject("usuarios32x32", resourceCulture);

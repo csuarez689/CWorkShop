@@ -26,7 +26,7 @@ namespace CWorkShop.Vistas
             btnClientes.Image = Properties.Resources.cliente32x32_blue;
             btnOrdenes.Image = Properties.Resources.ordenes32x32;
             btnEstadisticas.Image = Properties.Resources.estadisticas32x32;
-            
+            btnRepuestos.Image = Properties.Resources.repuesto32x32;
             if (userLog == null)
             {
                 MessageBox.Show("Ha ocurrido un error.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -107,6 +107,13 @@ namespace CWorkShop.Vistas
             { xClick = e.X; yClick = e.Y; }
             else
             { this.Left = this.Left + (e.X - xClick); this.Top = this.Top + (e.Y - yClick); }
+        }
+        private void btnRepuestos_Click(object sender, EventArgs e)
+        {
+            pMarcador.Height = btnRepuestos.Height;
+            pMarcador.Top = btnRepuestos.Top;
+            pMarcador.Show();
+            Console.WriteLine(pMarcador.Top);
         }
 
         //Actualizar datos button

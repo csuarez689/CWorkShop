@@ -63,7 +63,10 @@ namespace CWorkShop.Vistas
                 fila.Visible = (fila.Cells["Busqueda"].Value.ToString().ToUpper().Trim().Contains(texto));
             }
 
+            dgvClientes.ClearSelection();
+
         }
+
         private void btnAgregarCliente_Click(object sender, EventArgs e)
         {
             tbDni.Enabled = true;
@@ -125,8 +128,13 @@ namespace CWorkShop.Vistas
         private void dgvClientes_SelectionChanged(object sender, EventArgs e)
         {
             DataGridViewRow fila = dgvClientes.CurrentRow;
-            int clienteSelecionado = int.Parse(fila.Cells["IdCliente"].Value.ToString());
-            dgvEquipoConfig(clienteSelecionado);
+            if (fila != null)
+            {
+                int clienteSelecionado = int.Parse(fila.Cells["IdCliente"].Value.ToString());
+                dgvEquipoConfig(clienteSelecionado);
+            }
+            else
+                dgvEquipos.Rows.Clear();
         }
         //------------------------------------
 

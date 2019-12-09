@@ -15,15 +15,17 @@ namespace CWorkShop.Clases
         private int id;
         private string codigo;
         private string descripcion;
-        private double precio;
+        private double precioCompra;
+        private double precioVenta;
         private int idReparacion;
 
-        public clsRepuestoUtilizado(string codigo, string descripcion, double precio, int idReparacion, int id = 0)
+        public clsRepuestoUtilizado(string codigo, string descripcion, double precioCompra, double precioVenta, int idReparacion, int id = 0)
         {
-            this.Id = id;
-            this.Codigo = codigo;
-            this.Descripcion = descripcion;
-            this.Precio = precio;
+            this.id = id;
+            this.codigo = codigo;
+            this.descripcion = descripcion;
+            this.precioCompra = precioCompra;
+            this.precioVenta = precioVenta;
             this.idReparacion = idReparacion;
         }
 
@@ -66,16 +68,16 @@ namespace CWorkShop.Clases
             }
         }
 
-        public double Precio
+        public double PrecioCompra
         {
             get
             {
-                return precio;
+                return precioCompra;
             }
 
             set
             {
-                precio = value;
+                precioCompra = value;
             }
         }
 
@@ -89,6 +91,19 @@ namespace CWorkShop.Clases
             set
             {
                 idReparacion = value;
+            }
+        }
+
+        public double PrecioVenta
+        {
+            get
+            {
+                return precioVenta;
+            }
+
+            set
+            {
+                precioVenta = value;
             }
         }
 
@@ -106,7 +121,7 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsRepuestoUtilizado(br.ReadString(), br.ReadString(), br.ReadDouble(),br.ReadInt32());
+                        aux = new clsRepuestoUtilizado(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadDouble(), br.ReadInt32());
                         aux.Id = auxid;
                         repuestosUtilizados.Add(aux);
                     }
@@ -128,15 +143,16 @@ namespace CWorkShop.Clases
             string msg = string.Empty;
             try
             {
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
-                    {
-                        bw.Write(idAux);
-                        bw.Write(this.Codigo);
-                        bw.Write(this.Descripcion);
-                        bw.Write(this.Precio);
-                        bw.Write(this.IdReparacion);
-                    }
+                using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
+                {
+                    bw.Write(idAux);
+                    bw.Write(this.Codigo);
+                    bw.Write(this.Descripcion);
+                    bw.Write(this.PrecioCompra);
+                    bw.Write(this.PrecioVenta);
+                    bw.Write(this.IdReparacion);
                 }
+            }
             catch (Exception ex)
             {
                 msg = "Error interno. " + ex.Message;
@@ -146,6 +162,7 @@ namespace CWorkShop.Clases
         //Eliminar repuesto
         public static string Eliminar(int id)
         {
+            CheckFiles();
             List<clsRepuestoUtilizado> repuestosUtilizados = clsRepuestoUtilizado.Listar();
             try
             {
@@ -158,6 +175,8 @@ namespace CWorkShop.Clases
                         bw.Write(repuesto.Id);
                         bw.Write(repuesto.Codigo);
                         bw.Write(repuesto.Descripcion);
+                        bw.Write(repuesto.PrecioCompra);
+                        bw.Write(repuesto.precioVenta);
                         bw.Write(repuesto.IdReparacion);
                     }
                 }
