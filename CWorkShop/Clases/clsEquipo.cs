@@ -224,7 +224,7 @@ namespace CWorkShop.Clases
             }
             return msg;
         }
-        //Eliminar cliente
+        //Eliminar equipo
         public static string Eliminar(int id)
         {
             List<clsEquipo> equipos = clsEquipo.Listar();

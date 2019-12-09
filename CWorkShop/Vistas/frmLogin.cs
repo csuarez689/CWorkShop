@@ -14,7 +14,7 @@ namespace CWorkShop.Vistas
 {
     public partial class frmLogin : Form
     {
-        
+        public int xClick = 0, yClick = 0;
         public frmLogin()
         {
             InitializeComponent();
@@ -79,11 +79,19 @@ namespace CWorkShop.Vistas
             this.Close();
         }
 
+        private void frmLogin_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            { xClick = e.X; yClick = e.Y; }
+            else
+            { this.Left = this.Left + (e.X - xClick); this.Top = this.Top + (e.Y - yClick); }
+        }
+
         private void btnRegistrarse_Click(object sender, EventArgs e)
         {
             tbContraseña.Clear();
             tbDni.Clear();
-            new frmMisDatos().ShowDialog();
+            new frmMisDatos().Show();
         }
     }
 }

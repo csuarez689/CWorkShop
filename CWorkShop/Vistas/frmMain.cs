@@ -15,7 +15,7 @@ namespace CWorkShop.Vistas
     {
         frmLogin login;
         clsUsuario userLog;
-
+        public int xClick = 0, yClick = 0;
         public frmMain(frmLogin login, string dniUsuario)
         {
             InitializeComponent();
@@ -100,7 +100,15 @@ namespace CWorkShop.Vistas
                     ((ComboBox)x).SelectedIndex = -1;
             }
         }
-        
+
+        private void frmMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            { xClick = e.X; yClick = e.Y; }
+            else
+            { this.Left = this.Left + (e.X - xClick); this.Top = this.Top + (e.Y - yClick); }
+        }
+
         //Actualizar datos button
         public void ActualizarBtnDatos(clsUsuario userLog)
         {

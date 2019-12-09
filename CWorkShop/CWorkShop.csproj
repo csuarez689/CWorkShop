@@ -53,6 +53,8 @@
     <Compile Include="Clases\clsEquipo.cs" />
     <Compile Include="Clases\clsPersona.cs" />
     <Compile Include="Clases\clsReparacion.cs" />
+    <Compile Include="Clases\clsRepuesto.cs" />
+    <Compile Include="Clases\clsRepuestosUsados.cs" />
     <Compile Include="Clases\clsUsuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

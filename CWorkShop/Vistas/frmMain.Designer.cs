@@ -38,6 +38,7 @@
             this.pbMinimizar = new System.Windows.Forms.PictureBox();
             this.pbCerrar = new System.Windows.Forms.PictureBox();
             this.pnlContenedor = new System.Windows.Forms.Panel();
+            this.btnRepuestos = new System.Windows.Forms.Button();
             this.pMenu.SuspendLayout();
             this.pHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMinimizar)).BeginInit();
@@ -47,6 +48,7 @@
             // pMenu
             // 
             this.pMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.pMenu.Controls.Add(this.btnRepuestos);
             this.pMenu.Controls.Add(this.pMarcador);
             this.pMenu.Controls.Add(this.btnEstadisticas);
             this.pMenu.Controls.Add(this.btnOrdenes);
@@ -57,6 +59,7 @@
             this.pMenu.Padding = new System.Windows.Forms.Padding(0, 30, 0, 0);
             this.pMenu.Size = new System.Drawing.Size(127, 700);
             this.pMenu.TabIndex = 0;
+            this.pMenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             // 
             // pMarcador
             // 
@@ -141,6 +144,7 @@
             this.pHeader.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.pHeader.Size = new System.Drawing.Size(1073, 30);
             this.pHeader.TabIndex = 4;
+            this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             // 
             // btnDatos
             // 
@@ -191,6 +195,27 @@
             this.pnlContenedor.Name = "pnlContenedor";
             this.pnlContenedor.Size = new System.Drawing.Size(1073, 670);
             this.pnlContenedor.TabIndex = 5;
+            this.pnlContenedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
+            // 
+            // btnRepuestos
+            // 
+            this.btnRepuestos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRepuestos.FlatAppearance.BorderSize = 0;
+            this.btnRepuestos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnRepuestos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnRepuestos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRepuestos.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRepuestos.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btnRepuestos.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnRepuestos.ImageKey = "(ninguno)";
+            this.btnRepuestos.Location = new System.Drawing.Point(0, 270);
+            this.btnRepuestos.Name = "btnRepuestos";
+            this.btnRepuestos.Size = new System.Drawing.Size(127, 80);
+            this.btnRepuestos.TabIndex = 4;
+            this.btnRepuestos.TabStop = false;
+            this.btnRepuestos.Text = "REPUESTOS";
+            this.btnRepuestos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRepuestos.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -210,6 +235,7 @@
             this.Name = "frmMain";
             this.Opacity = 0.98D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.pMenu.ResumeLayout(false);
             this.pHeader.ResumeLayout(false);
             this.pHeader.PerformLayout();
@@ -231,5 +257,6 @@
         private System.Windows.Forms.Panel pHeader;
         private System.Windows.Forms.Panel pnlContenedor;
         private System.Windows.Forms.Button btnDatos;
+        private System.Windows.Forms.Button btnRepuestos;
     }
 }

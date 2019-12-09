@@ -43,10 +43,13 @@ namespace CWorkShop.Vistas
         //Cargar grilla de equipos
         private void dgvEquipoConfig(int clienteSeleccionado)
         {
+            clsCliente cliente = clsCliente.Buscar(clienteSeleccionado);
             dgvEquipos.Rows.Clear();
-            foreach (clsEquipo equipo in clsCliente.Buscar(clienteSeleccionado).Equipos)
-            {
-                dgvEquipos.Rows.Add(equipo.Id, equipo.NroSerie, equipo.Modelo, equipo.Marca, equipo.Tipo, equipo.Descripcion, equipo.IdCliente);
+            if (cliente != null) { 
+                foreach (clsEquipo equipo in cliente.Equipos)
+                {
+                    dgvEquipos.Rows.Add(equipo.Id, equipo.NroSerie, equipo.Modelo, equipo.Marca, equipo.Tipo, equipo.Descripcion, equipo.IdCliente);
+                }
             }
         }
 
@@ -157,6 +160,7 @@ namespace CWorkShop.Vistas
                 {
                     dgvClienteConfig();
                     btnFormClienteCancelar.PerformClick();
+                    tbBuscar.Clear();
                 }
                 else
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
