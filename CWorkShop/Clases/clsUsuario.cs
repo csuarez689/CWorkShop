@@ -101,6 +101,15 @@ namespace CWorkShop.Clases
             return clsUsuario.Listar().Find(x => x.Dni == dni);
         }
 
+        //Buscar por id
+        public static clsUsuario Buscar(int id)
+        {
+            clsUsuario usuario=clsUsuario.Listar().Find(x => x.Id == id);
+            if (usuario != null) { usuario.Contraseña = ""; }
+            return usuario;
+        }
+
+        //Actualizar usuario
         public string Actualizar()
         {
             string msg = string.Empty;

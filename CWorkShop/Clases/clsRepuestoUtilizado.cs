@@ -188,7 +188,6 @@ namespace CWorkShop.Clases
             }
 
         }
-
         //Obtener id siguiente
         private static int ObtenerId()
         {

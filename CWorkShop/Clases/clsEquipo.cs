@@ -108,14 +108,6 @@ namespace CWorkShop.Clases
                 idCliente = value;
             }
         }
-        //Listado de reparaciones correspondientes al equipo
-        public List<clsReparacion> Reparaciones
-        {
-            get { 
-                this.reparaciones=clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id);
-                return reparaciones;
-            }
-        }
 
         public string Modelo
         {
@@ -130,6 +122,19 @@ namespace CWorkShop.Clases
             }
         }
 
+        //Listado de reparaciones correspondientes al equipo
+        public List<clsReparacion> Reparaciones
+        {
+            get { 
+                this.reparaciones=clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id);
+                return reparaciones;
+            }
+        }
+        //Buscar equipo por id
+        public static clsEquipo Buscar(int id)
+        {
+            return clsEquipo.Listar().Find(x => x.Id == id);
+        }
         //Obtiene listado de equipos
         public static List<clsEquipo> Listar()
         {
@@ -156,7 +161,6 @@ namespace CWorkShop.Clases
                 MessageBox.Show("Ha ocurrio un error. " + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return equipos;
             }
-
         }
         //Guardar equipo
         public string Guardar()
@@ -197,7 +201,7 @@ namespace CWorkShop.Clases
             {
                 List<clsEquipo> equipos = clsEquipo.Listar();
                 int old = equipos.FindIndex(x => x.Id == this.Id);
-                //si el usuario no posee ya un equipo registrado con este numero de serie
+                //si el cliente no posee ya un equipo registrado con este numero de serie
                 int otro = equipos.FindIndex(x => this.IdCliente == x.IdCliente && this.NroSerie==x.NroSerie);
                 msg = (otro != -1 && otro != old) ? "El cliente ya posee un equipo registrado con este numero de serie." : string.Empty;
                 if (msg.Equals(string.Empty))

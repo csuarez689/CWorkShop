@@ -47,7 +47,7 @@
             this.Correo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Direccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Busqueda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnlTop = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tbBuscar = new System.Windows.Forms.TextBox();
             this.lblBuscar = new System.Windows.Forms.Label();
             this.pnlBotonera = new System.Windows.Forms.Panel();
@@ -99,14 +99,6 @@
             this.lblModelo = new System.Windows.Forms.Label();
             this.tbNroSerie = new System.Windows.Forms.TextBox();
             this.lblNroSerie = new System.Windows.Forms.Label();
-            this.pnlBuscar = new System.Windows.Forms.Panel();
-            this.pnlOrden = new System.Windows.Forms.Panel();
-            this.pnlTecnico = new System.Windows.Forms.Panel();
-            this.cboTecnico = new System.Windows.Forms.ComboBox();
-            this.lblTenico = new System.Windows.Forms.Label();
-            this.rbEnTaller = new System.Windows.Forms.RadioButton();
-            this.rbEstado = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.spcMain)).BeginInit();
             this.spcMain.Panel1.SuspendLayout();
             this.spcMain.Panel2.SuspendLayout();
@@ -116,7 +108,7 @@
             this.spcDatos.Panel2.SuspendLayout();
             this.spcDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
-            this.pnlTop.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.pnlBotonera.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEquipos)).BeginInit();
@@ -124,9 +116,6 @@
             this.spcForms.Panel1.SuspendLayout();
             this.spcForms.Panel2.SuspendLayout();
             this.spcForms.SuspendLayout();
-            this.pnlBuscar.SuspendLayout();
-            this.pnlOrden.SuspendLayout();
-            this.pnlTecnico.SuspendLayout();
             this.SuspendLayout();
             // 
             // spcMain
@@ -160,7 +149,7 @@
             // spcDatos.Panel1
             // 
             this.spcDatos.Panel1.Controls.Add(this.dgvClientes);
-            this.spcDatos.Panel1.Controls.Add(this.pnlTop);
+            this.spcDatos.Panel1.Controls.Add(this.panel2);
             this.spcDatos.Panel1.Controls.Add(this.pnlBotonera);
             // 
             // spcDatos.Panel2
@@ -210,7 +199,7 @@
             this.dgvClientes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvClientes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvClientes.EnableHeadersVisualStyles = false;
-            this.dgvClientes.Location = new System.Drawing.Point(0, 101);
+            this.dgvClientes.Location = new System.Drawing.Point(0, 39);
             this.dgvClientes.MultiSelect = false;
             this.dgvClientes.Name = "dgvClientes";
             this.dgvClientes.ReadOnly = true;
@@ -232,7 +221,7 @@
             this.dgvClientes.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvClientes.RowTemplate.Height = 24;
             this.dgvClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvClientes.Size = new System.Drawing.Size(842, 165);
+            this.dgvClientes.Size = new System.Drawing.Size(842, 227);
             this.dgvClientes.TabIndex = 5;
             this.dgvClientes.TabStop = false;
             this.dgvClientes.SelectionChanged += new System.EventHandler(this.dgvClientes_SelectionChanged);
@@ -295,27 +284,25 @@
             this.Busqueda.Visible = false;
             this.Busqueda.Width = 96;
             // 
-            // pnlTop
+            // panel2
             // 
-            this.pnlTop.Controls.Add(this.pnlTecnico);
-            this.pnlTop.Controls.Add(this.pnlOrden);
-            this.pnlTop.Controls.Add(this.pnlBuscar);
-            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTop.Location = new System.Drawing.Point(0, 0);
-            this.pnlTop.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlTop.Size = new System.Drawing.Size(842, 101);
-            this.pnlTop.TabIndex = 4;
+            this.panel2.Controls.Add(this.tbBuscar);
+            this.panel2.Controls.Add(this.lblBuscar);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(842, 39);
+            this.panel2.TabIndex = 4;
             // 
             // tbBuscar
             // 
             this.tbBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbBuscar.Location = new System.Drawing.Point(92, 19);
+            this.tbBuscar.Location = new System.Drawing.Point(293, 7);
             this.tbBuscar.Name = "tbBuscar";
-            this.tbBuscar.Size = new System.Drawing.Size(199, 23);
+            this.tbBuscar.Size = new System.Drawing.Size(321, 23);
             this.tbBuscar.TabIndex = 5;
             this.tbBuscar.TextChanged += new System.EventHandler(this.tbBuscar_TextChanged);
             // 
@@ -327,7 +314,7 @@
             this.lblBuscar.AutoSize = true;
             this.lblBuscar.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBuscar.ForeColor = System.Drawing.Color.White;
-            this.lblBuscar.Location = new System.Drawing.Point(28, 19);
+            this.lblBuscar.Location = new System.Drawing.Point(229, 7);
             this.lblBuscar.Name = "lblBuscar";
             this.lblBuscar.Size = new System.Drawing.Size(58, 20);
             this.lblBuscar.TabIndex = 4;
@@ -1065,102 +1052,6 @@
             this.lblNroSerie.TabIndex = 2;
             this.lblNroSerie.Text = "Numero de Serie";
             // 
-            // pnlBuscar
-            // 
-            this.pnlBuscar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlBuscar.Controls.Add(this.lblBuscar);
-            this.pnlBuscar.Controls.Add(this.tbBuscar);
-            this.pnlBuscar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlBuscar.Location = new System.Drawing.Point(10, 10);
-            this.pnlBuscar.Name = "pnlBuscar";
-            this.pnlBuscar.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlBuscar.Size = new System.Drawing.Size(337, 81);
-            this.pnlBuscar.TabIndex = 6;
-            // 
-            // pnlOrden
-            // 
-            this.pnlOrden.Controls.Add(this.radioButton3);
-            this.pnlOrden.Controls.Add(this.rbEstado);
-            this.pnlOrden.Controls.Add(this.rbEnTaller);
-            this.pnlOrden.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlOrden.Location = new System.Drawing.Point(685, 10);
-            this.pnlOrden.Name = "pnlOrden";
-            this.pnlOrden.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlOrden.Size = new System.Drawing.Size(147, 81);
-            this.pnlOrden.TabIndex = 8;
-            // 
-            // pnlTecnico
-            // 
-            this.pnlTecnico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTecnico.Controls.Add(this.cboTecnico);
-            this.pnlTecnico.Controls.Add(this.lblTenico);
-            this.pnlTecnico.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTecnico.Location = new System.Drawing.Point(347, 10);
-            this.pnlTecnico.Name = "pnlTecnico";
-            this.pnlTecnico.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlTecnico.Size = new System.Drawing.Size(338, 81);
-            this.pnlTecnico.TabIndex = 9;
-            // 
-            // cboTecnico
-            // 
-            this.cboTecnico.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboTecnico.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTecnico.FormattingEnabled = true;
-            this.cboTecnico.Location = new System.Drawing.Point(97, 19);
-            this.cboTecnico.Name = "cboTecnico";
-            this.cboTecnico.Size = new System.Drawing.Size(202, 25);
-            this.cboTecnico.TabIndex = 6;
-            // 
-            // lblTenico
-            // 
-            this.lblTenico.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTenico.AutoSize = true;
-            this.lblTenico.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTenico.ForeColor = System.Drawing.Color.White;
-            this.lblTenico.Location = new System.Drawing.Point(25, 19);
-            this.lblTenico.Name = "lblTenico";
-            this.lblTenico.Size = new System.Drawing.Size(66, 20);
-            this.lblTenico.TabIndex = 5;
-            this.lblTenico.Text = "Tecnico";
-            // 
-            // rbEnTaller
-            // 
-            this.rbEnTaller.AutoSize = true;
-            this.rbEnTaller.ForeColor = System.Drawing.Color.White;
-            this.rbEnTaller.Location = new System.Drawing.Point(14, 4);
-            this.rbEnTaller.Name = "rbEnTaller";
-            this.rbEnTaller.Size = new System.Drawing.Size(77, 21);
-            this.rbEnTaller.TabIndex = 0;
-            this.rbEnTaller.TabStop = true;
-            this.rbEnTaller.Text = "En Taller";
-            this.rbEnTaller.UseVisualStyleBackColor = true;
-            // 
-            // rbEstado
-            // 
-            this.rbEstado.AutoSize = true;
-            this.rbEstado.Location = new System.Drawing.Point(14, 27);
-            this.rbEstado.Name = "rbEstado";
-            this.rbEstado.Size = new System.Drawing.Size(109, 21);
-            this.rbEstado.TabIndex = 1;
-            this.rbEstado.TabStop = true;
-            this.rbEstado.Text = "radioButton2";
-            this.rbEstado.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(14, 51);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(109, 21);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "radioButton3";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
             // frmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -1184,7 +1075,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.spcDatos)).EndInit();
             this.spcDatos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).EndInit();
-            this.pnlTop.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.pnlBotonera.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEquipos)).EndInit();
@@ -1194,12 +1086,6 @@
             this.spcForms.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spcForms)).EndInit();
             this.spcForms.ResumeLayout(false);
-            this.pnlBuscar.ResumeLayout(false);
-            this.pnlBuscar.PerformLayout();
-            this.pnlOrden.ResumeLayout(false);
-            this.pnlOrden.PerformLayout();
-            this.pnlTecnico.ResumeLayout(false);
-            this.pnlTecnico.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1251,7 +1137,7 @@
         private System.Windows.Forms.Button btnAgregarOrden;
         private System.Windows.Forms.TextBox tbTipoEquipo;
         private System.Windows.Forms.TextBox tbMarca;
-        private System.Windows.Forms.Panel pnlTop;
+        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel pnlBotonera;
         private System.Windows.Forms.Button btnEquipos;
         private System.Windows.Forms.Button btnEliminarCliente;
@@ -1269,13 +1155,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Correo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Direccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Busqueda;
-        private System.Windows.Forms.Panel pnlBuscar;
-        private System.Windows.Forms.Panel pnlTecnico;
-        private System.Windows.Forms.ComboBox cboTecnico;
-        private System.Windows.Forms.Label lblTenico;
-        private System.Windows.Forms.Panel pnlOrden;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton rbEstado;
-        private System.Windows.Forms.RadioButton rbEnTaller;
     }
 }
