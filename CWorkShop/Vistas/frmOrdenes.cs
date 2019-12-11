@@ -25,10 +25,10 @@ namespace CWorkShop.Vistas
             dgvReparaciones.Columns["Cliente"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvReparaciones.Columns["Tecnico"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvRepuestos.Columns["Descripcion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CargarCombo();
             reparaciones = clsReparacion.Listar();
             dgvReparacionesConfig(reparaciones);
             if (idEquipo > 0) { AgregarNuevaOrden(); }
+            CargarCombo();
         }
 
 
@@ -44,7 +44,7 @@ namespace CWorkShop.Vistas
                 string modeloEquipo = reparacion.Equipo.Modelo;
                 string tecnico = reparacion.Tecnico.Apellido + " " + reparacion.Tecnico.Nombre;
                 busqueda = (cliente + modeloEquipo + tecnico + reparacion.Estado + reparacion.FechaIngreso + reparacion.FechaEntrega + reparacion.CostoTotal).ToUpper();
-                dgvReparaciones.Rows.Add(reparacion.Id, cliente, modeloEquipo, tecnico, reparacion.Estado, reparacion.FechaIngreso, reparacion.FechaEntrega, reparacion.CostoTotal, reparacion.IdTecnico, reparacion.IdEquipo,busqueda);
+                dgvReparaciones.Rows.Add(reparacion.Id, cliente, modeloEquipo, tecnico, reparacion.Estado, reparacion.FechaIngreso, reparacion.FechaEntrega, reparacion.CostoTotal, reparacion.IdTecnico, reparacion.IdEquipo, busqueda);
             }
         }
         //Cargar grilla de repuestos utilizados
@@ -124,7 +124,7 @@ namespace CWorkShop.Vistas
                     string fechaEntrega = string.Empty;
                     if (cboEstado.SelectedItem.Equals("ENTREGADO")) { fechaEntrega = DateTime.Today.ToShortDateString(); }
                     clsReparacion reparacion = new clsReparacion(rtbAccesorios.Text, rtbDiagnostico.Text, double.Parse(nudCostoManoObra.Value.ToString()), int.Parse(fila.Cells["IdEq"].Value.ToString()), padre.UserLog.Id, cboEstado.SelectedItem.ToString(), fila.Cells["FechaIngreso"].Value.ToString(), fechaEntrega, false, int.Parse(fila.Cells["IdReparacion"].Value.ToString()));
-                    msg=reparacion.Actualizar();
+                    msg = reparacion.Actualizar();
                     if (msg.Equals(string.Empty))
                     {
                         GuardarRepuestos(int.Parse(fila.Cells["IdReparacion"].Value.ToString()));
@@ -200,6 +200,7 @@ namespace CWorkShop.Vistas
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             tbBuscar.Clear();
+            rbFechaIngreso.Checked = true;
             cboTecnico.SelectedIndex = 0;
             cboBusquedaEstado.SelectedIndex = 0;
             dtpDesde.Value = dtpDesde.MinDate;
@@ -308,29 +309,6 @@ namespace CWorkShop.Vistas
 
         }
 
-        private void tbBuscar_TextChanged(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow fila in dgvReparaciones.Rows)
-            {
-                fila.Visible = (fila.Cells["Busqueda"].Value.ToString().ToUpper().Trim().Contains(tbBuscar.Text));
-            }
-        }
-        private void cboTecnico_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Filtrar();
-        }
-        private void cboBusquedaEstado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Filtrar();
-        }
-        private void dtpDesde_ValueChanged(object sender, EventArgs e)
-        {
-            Filtrar();
-        }
-        private void dtpHasta_ValueChanged(object sender, EventArgs e)
-        {
-            Filtrar();
-        }
         private void dgvReparacion_SelectionChanged(object sender, EventArgs e)
         {
             DataGridViewRow fila = dgvReparaciones.CurrentRow;
@@ -359,7 +337,7 @@ namespace CWorkShop.Vistas
         {
             foreach (DataGridViewRow fila in seleccionadas)
             {
-                dgvRepuestos.Rows.Add(fila.Cells["Id"].Value, fila.Cells["Codigo"].Value, fila.Cells["Descripcion"].Value, fila.Cells["PrecioCompra"].Value, fila.Cells["PrecioVenta"].Value,0);
+                dgvRepuestos.Rows.Add(fila.Cells["Id"].Value, fila.Cells["Codigo"].Value, fila.Cells["Descripcion"].Value, fila.Cells["PrecioCompra"].Value, fila.Cells["PrecioVenta"].Value, 0);
             }
         }
 
@@ -385,35 +363,76 @@ namespace CWorkShop.Vistas
         //------------------------------------
 
 
+
+
+        //Filtrar grilla de reparaciones ----------------
+        private void Filtrar()
+        {
+            if (reparaciones != null)
+            {
+                List<clsReparacion> filtrar = reparaciones;
+                //filtro de tecnicos
+                if (Convert.ToInt32(cboTecnico.SelectedValue) != 0) { filtrar = filtrar.FindAll(x => x.IdTecnico == Convert.ToInt32(cboTecnico.SelectedValue)); }
+                //filtro de estados de reparacion
+                if (!cboBusquedaEstado.SelectedItem.Equals("TODOS")) { filtrar = filtrar.FindAll(x => x.Estado.Equals(cboBusquedaEstado.SelectedItem)); }
+                //filtro de fechas
+                if (rbFechaEntrega.Checked) {
+                    //Elimino aquellas entradas que no estan entregadas
+                    filtrar = filtrar.FindAll(x => x.FechaEntrega != "");
+                    filtrar = filtrar.FindAll(x => Convert.ToDateTime(x.FechaEntrega) >= dtpDesde.Value && Convert.ToDateTime(x.FechaEntrega) <= dtpHasta.Value);
+                }
+                else
+                    filtrar = filtrar.FindAll(x => Convert.ToDateTime(x.FechaIngreso) >= dtpDesde.Value && Convert.ToDateTime(x.FechaIngreso) <= dtpHasta.Value); 
+                //actualizo la grilla de reparaciones
+                dgvReparacionesConfig(filtrar);
+                tbBuscar.Clear();
+            }            
+        }
+        private void tbBuscar_TextChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow fila in dgvReparaciones.Rows)
+            {
+                fila.Visible = (fila.Cells["Busqueda"].Value.ToString().ToUpper().Trim().Contains(tbBuscar.Text));
+            }
+        }
+        private void cboTecnico_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Filtrar();
+        }
+        private void cboBusquedaEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Filtrar();
+        }
+        private void dtpDesde_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpDesde.Value > dtpHasta.Value) { MessageBox.Show("La fecha de inicio no puede ser superior que la fecha de fin", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            else
+                Filtrar();
+        }
+        private void dtpHasta_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpHasta.Value > dtpHasta.Value) { MessageBox.Show("La fecha de fin no puede ser inferior que la fecha de inicio", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            else
+                Filtrar();
+        }
+        private void rbFechaIngreso_CheckedChanged(object sender, EventArgs e)
+        {
+            Filtrar();
+        }
+        //------------------------------------
+
         //Calculo de costo total
         private double CalcularCostoTotal()
         {
             double costo = 0;
             costo += double.Parse(nudCostoManoObra.Value.ToString());
-            foreach(DataGridViewRow fila in dgvRepuestos.Rows)
+            foreach (DataGridViewRow fila in dgvRepuestos.Rows)
             {
                 costo += double.Parse(fila.Cells["PrecioVenta"].Value.ToString());
             }
-            tbCostoTotal.Text = string.Format("{0:C2}",costo);
+            tbCostoTotal.Text = string.Format("{0:C2}", costo);
 
             return costo;
-        }
-
-        //Filtrar
-        private void Filtrar()
-        {
-            if (reparaciones != null) { 
-                List<clsReparacion> filtrar = reparaciones;
-                //filtrar = filtrar.FindAll(x => (Convert.ToDateTime(x.FechaIngreso) > dtpDesde.Value) && (Convert.ToDateTime(x.FechaEntrega) < dtpDesde.Value));
-                if (Convert.ToInt32(cboTecnico.SelectedValue)!=0) { filtrar = filtrar.FindAll(x => x.IdTecnico == Convert.ToInt32(cboTecnico.SelectedValue)); } 
-                if (cboBusquedaEstado.SelectedItem != null) { if (!cboBusquedaEstado.SelectedItem.Equals("TODOS")) { filtrar = filtrar.FindAll(x => x.Estado.Equals(cboBusquedaEstado.SelectedItem)); } }
-                if (filtrar == null) { dgvReparacionesConfig(new List<clsReparacion>()); }
-                else
-                    dgvReparacionesConfig(filtrar);
-                tbBuscar.Clear();
-            }
-
-
         }
 
         //Guardar items repuestos
@@ -452,7 +471,5 @@ namespace CWorkShop.Vistas
         {
             CalcularCostoTotal();
         }
-
-
     }
 }

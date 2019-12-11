@@ -32,19 +32,32 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.spcMain = new System.Windows.Forms.SplitContainer();
             this.spcDatos = new System.Windows.Forms.SplitContainer();
             this.dgvReparaciones = new System.Windows.Forms.DataGridView();
+            this.IdReparacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ModeloEquipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tecnico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FechaEntrega = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CostoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdTecnico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdEq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Busqueda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlFiltroFecha = new System.Windows.Forms.Panel();
+            this.rbFechaEntrega = new System.Windows.Forms.RadioButton();
+            this.rbFechaIngreso = new System.Windows.Forms.RadioButton();
             this.btnLimpiarFiltros = new System.Windows.Forms.Button();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.lblHasta = new System.Windows.Forms.Label();
@@ -100,17 +113,6 @@
             this.tbTecnico = new System.Windows.Forms.TextBox();
             this.lblEstado = new System.Windows.Forms.Label();
             this.lblDiagnostico = new System.Windows.Forms.Label();
-            this.IdReparacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ModeloEquipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tecnico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaEntrega = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CostoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdTecnico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdEq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Busqueda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.spcMain)).BeginInit();
             this.spcMain.Panel1.SuspendLayout();
             this.spcMain.Panel2.SuspendLayout();
@@ -268,9 +270,104 @@
             this.dgvReparaciones.TabStop = false;
             this.dgvReparaciones.SelectionChanged += new System.EventHandler(this.dgvReparacion_SelectionChanged);
             // 
+            // IdReparacion
+            // 
+            this.IdReparacion.HeaderText = "IdReparacion";
+            this.IdReparacion.Name = "IdReparacion";
+            this.IdReparacion.ReadOnly = true;
+            this.IdReparacion.Visible = false;
+            this.IdReparacion.Width = 120;
+            // 
+            // Cliente
+            // 
+            this.Cliente.HeaderText = "Cliente";
+            this.Cliente.Name = "Cliente";
+            this.Cliente.ReadOnly = true;
+            this.Cliente.Width = 77;
+            // 
+            // ModeloEquipo
+            // 
+            this.ModeloEquipo.HeaderText = "Modelo Equipo";
+            this.ModeloEquipo.Name = "ModeloEquipo";
+            this.ModeloEquipo.ReadOnly = true;
+            this.ModeloEquipo.Width = 129;
+            // 
+            // Tecnico
+            // 
+            this.Tecnico.HeaderText = "Tecnico";
+            this.Tecnico.Name = "Tecnico";
+            this.Tecnico.ReadOnly = true;
+            this.Tecnico.Width = 80;
+            // 
+            // Estado
+            // 
+            this.Estado.HeaderText = "Estado";
+            this.Estado.Name = "Estado";
+            this.Estado.ReadOnly = true;
+            this.Estado.Width = 75;
+            // 
+            // FechaIngreso
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "g";
+            dataGridViewCellStyle3.NullValue = null;
+            this.FechaIngreso.DefaultCellStyle = dataGridViewCellStyle3;
+            this.FechaIngreso.HeaderText = "Fecha Ingreso";
+            this.FechaIngreso.Name = "FechaIngreso";
+            this.FechaIngreso.ReadOnly = true;
+            this.FechaIngreso.Width = 120;
+            // 
+            // FechaEntrega
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "g";
+            dataGridViewCellStyle4.NullValue = null;
+            this.FechaEntrega.DefaultCellStyle = dataGridViewCellStyle4;
+            this.FechaEntrega.HeaderText = "Fecha Entrega";
+            this.FechaEntrega.Name = "FechaEntrega";
+            this.FechaEntrega.ReadOnly = true;
+            this.FechaEntrega.Width = 124;
+            // 
+            // CostoTotal
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = "0";
+            this.CostoTotal.DefaultCellStyle = dataGridViewCellStyle5;
+            this.CostoTotal.HeaderText = "Costo Total";
+            this.CostoTotal.Name = "CostoTotal";
+            this.CostoTotal.ReadOnly = true;
+            this.CostoTotal.Width = 105;
+            // 
+            // IdTecnico
+            // 
+            this.IdTecnico.HeaderText = "IdTecnico";
+            this.IdTecnico.Name = "IdTecnico";
+            this.IdTecnico.ReadOnly = true;
+            this.IdTecnico.Visible = false;
+            this.IdTecnico.Width = 94;
+            // 
+            // IdEq
+            // 
+            this.IdEq.HeaderText = "IdEq";
+            this.IdEq.Name = "IdEq";
+            this.IdEq.ReadOnly = true;
+            this.IdEq.Visible = false;
+            this.IdEq.Width = 61;
+            // 
+            // Busqueda
+            // 
+            this.Busqueda.HeaderText = "Busqueda";
+            this.Busqueda.Name = "Busqueda";
+            this.Busqueda.ReadOnly = true;
+            this.Busqueda.Visible = false;
+            this.Busqueda.Width = 96;
+            // 
             // pnlFiltroFecha
             // 
             this.pnlFiltroFecha.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlFiltroFecha.Controls.Add(this.rbFechaEntrega);
+            this.pnlFiltroFecha.Controls.Add(this.rbFechaIngreso);
             this.pnlFiltroFecha.Controls.Add(this.btnLimpiarFiltros);
             this.pnlFiltroFecha.Controls.Add(this.dtpHasta);
             this.pnlFiltroFecha.Controls.Add(this.lblHasta);
@@ -283,6 +380,37 @@
             this.pnlFiltroFecha.Padding = new System.Windows.Forms.Padding(5);
             this.pnlFiltroFecha.Size = new System.Drawing.Size(771, 65);
             this.pnlFiltroFecha.TabIndex = 0;
+            // 
+            // rbFechaEntrega
+            // 
+            this.rbFechaEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbFechaEntrega.AutoSize = true;
+            this.rbFechaEntrega.ForeColor = System.Drawing.Color.White;
+            this.rbFechaEntrega.Location = new System.Drawing.Point(51, 33);
+            this.rbFechaEntrega.Name = "rbFechaEntrega";
+            this.rbFechaEntrega.Size = new System.Drawing.Size(119, 21);
+            this.rbFechaEntrega.TabIndex = 1;
+            this.rbFechaEntrega.Text = "Fecha Entrega";
+            this.rbFechaEntrega.UseVisualStyleBackColor = true;
+            // 
+            // rbFechaIngreso
+            // 
+            this.rbFechaIngreso.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbFechaIngreso.AutoSize = true;
+            this.rbFechaIngreso.Checked = true;
+            this.rbFechaIngreso.ForeColor = System.Drawing.Color.White;
+            this.rbFechaIngreso.Location = new System.Drawing.Point(51, 8);
+            this.rbFechaIngreso.Name = "rbFechaIngreso";
+            this.rbFechaIngreso.Size = new System.Drawing.Size(115, 21);
+            this.rbFechaIngreso.TabIndex = 0;
+            this.rbFechaIngreso.TabStop = true;
+            this.rbFechaIngreso.Text = "Fecha Ingreso";
+            this.rbFechaIngreso.UseVisualStyleBackColor = true;
+            this.rbFechaIngreso.CheckedChanged += new System.EventHandler(this.rbFechaIngreso_CheckedChanged);
             // 
             // btnLimpiarFiltros
             // 
@@ -298,56 +426,52 @@
             this.btnLimpiarFiltros.Location = new System.Drawing.Point(653, 21);
             this.btnLimpiarFiltros.Name = "btnLimpiarFiltros";
             this.btnLimpiarFiltros.Size = new System.Drawing.Size(113, 26);
-            this.btnLimpiarFiltros.TabIndex = 4;
+            this.btnLimpiarFiltros.TabIndex = 6;
             this.btnLimpiarFiltros.Text = "Limpiar Filtros";
             this.btnLimpiarFiltros.UseVisualStyleBackColor = false;
             this.btnLimpiarFiltros.Click += new System.EventHandler(this.btnLimpiarFiltros_Click);
             // 
             // dtpHasta
             // 
-            this.dtpHasta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpHasta.Location = new System.Drawing.Point(362, 21);
+            this.dtpHasta.Location = new System.Drawing.Point(531, 21);
             this.dtpHasta.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpHasta.Name = "dtpHasta";
             this.dtpHasta.Size = new System.Drawing.Size(116, 23);
-            this.dtpHasta.TabIndex = 3;
+            this.dtpHasta.TabIndex = 5;
             this.dtpHasta.ValueChanged += new System.EventHandler(this.dtpHasta_ValueChanged);
             // 
             // lblHasta
             // 
-            this.lblHasta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblHasta.AutoSize = true;
             this.lblHasta.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHasta.ForeColor = System.Drawing.Color.White;
-            this.lblHasta.Location = new System.Drawing.Point(300, 21);
+            this.lblHasta.Location = new System.Drawing.Point(475, 23);
             this.lblHasta.Name = "lblHasta";
             this.lblHasta.Size = new System.Drawing.Size(50, 20);
-            this.lblHasta.TabIndex = 2;
+            this.lblHasta.TabIndex = 4;
             this.lblHasta.Text = "Hasta";
             // 
             // dtpDesde
             // 
-            this.dtpDesde.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDesde.Location = new System.Drawing.Point(74, 21);
+            this.dtpDesde.Location = new System.Drawing.Point(334, 21);
             this.dtpDesde.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpDesde.Name = "dtpDesde";
             this.dtpDesde.Size = new System.Drawing.Size(116, 23);
-            this.dtpDesde.TabIndex = 1;
+            this.dtpDesde.TabIndex = 3;
             this.dtpDesde.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpDesde.ValueChanged += new System.EventHandler(this.dtpDesde_ValueChanged);
             // 
             // lblDesde
             // 
-            this.lblDesde.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDesde.AutoSize = true;
             this.lblDesde.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDesde.ForeColor = System.Drawing.Color.White;
-            this.lblDesde.Location = new System.Drawing.Point(12, 21);
+            this.lblDesde.Location = new System.Drawing.Point(272, 23);
             this.lblDesde.Name = "lblDesde";
             this.lblDesde.Size = new System.Drawing.Size(56, 20);
-            this.lblDesde.TabIndex = 0;
+            this.lblDesde.TabIndex = 2;
             this.lblDesde.Text = "Desde";
             // 
             // pnlTop
@@ -1074,99 +1198,6 @@
             this.lblDiagnostico.TabIndex = 7;
             this.lblDiagnostico.Text = "Diagnostico";
             // 
-            // IdReparacion
-            // 
-            this.IdReparacion.HeaderText = "IdReparacion";
-            this.IdReparacion.Name = "IdReparacion";
-            this.IdReparacion.ReadOnly = true;
-            this.IdReparacion.Visible = false;
-            this.IdReparacion.Width = 118;
-            // 
-            // Cliente
-            // 
-            this.Cliente.HeaderText = "Cliente";
-            this.Cliente.Name = "Cliente";
-            this.Cliente.ReadOnly = true;
-            this.Cliente.Width = 77;
-            // 
-            // ModeloEquipo
-            // 
-            this.ModeloEquipo.HeaderText = "Modelo Equipo";
-            this.ModeloEquipo.Name = "ModeloEquipo";
-            this.ModeloEquipo.ReadOnly = true;
-            this.ModeloEquipo.Width = 129;
-            // 
-            // Tecnico
-            // 
-            this.Tecnico.HeaderText = "Tecnico";
-            this.Tecnico.Name = "Tecnico";
-            this.Tecnico.ReadOnly = true;
-            this.Tecnico.Width = 80;
-            // 
-            // Estado
-            // 
-            this.Estado.HeaderText = "Estado";
-            this.Estado.Name = "Estado";
-            this.Estado.ReadOnly = true;
-            this.Estado.Width = 75;
-            // 
-            // FechaIngreso
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "g";
-            dataGridViewCellStyle3.NullValue = null;
-            this.FechaIngreso.DefaultCellStyle = dataGridViewCellStyle3;
-            this.FechaIngreso.HeaderText = "Fecha Ingreso";
-            this.FechaIngreso.Name = "FechaIngreso";
-            this.FechaIngreso.ReadOnly = true;
-            this.FechaIngreso.Width = 120;
-            // 
-            // FechaEntrega
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "g";
-            dataGridViewCellStyle4.NullValue = null;
-            this.FechaEntrega.DefaultCellStyle = dataGridViewCellStyle4;
-            this.FechaEntrega.HeaderText = "Fecha Entrega";
-            this.FechaEntrega.Name = "FechaEntrega";
-            this.FechaEntrega.ReadOnly = true;
-            this.FechaEntrega.Width = 124;
-            // 
-            // CostoTotal
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "C2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.CostoTotal.DefaultCellStyle = dataGridViewCellStyle5;
-            this.CostoTotal.HeaderText = "Costo Total";
-            this.CostoTotal.Name = "CostoTotal";
-            this.CostoTotal.ReadOnly = true;
-            this.CostoTotal.Width = 105;
-            // 
-            // IdTecnico
-            // 
-            this.IdTecnico.HeaderText = "IdTecnico";
-            this.IdTecnico.Name = "IdTecnico";
-            this.IdTecnico.ReadOnly = true;
-            this.IdTecnico.Visible = false;
-            this.IdTecnico.Width = 92;
-            // 
-            // IdEq
-            // 
-            this.IdEq.HeaderText = "IdEq";
-            this.IdEq.Name = "IdEq";
-            this.IdEq.ReadOnly = true;
-            this.IdEq.Visible = false;
-            this.IdEq.Width = 59;
-            // 
-            // Busqueda
-            // 
-            this.Busqueda.HeaderText = "Busqueda";
-            this.Busqueda.Name = "Busqueda";
-            this.Busqueda.ReadOnly = true;
-            this.Busqueda.Visible = false;
-            this.Busqueda.Width = 94;
-            // 
             // frmOrdenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -1280,5 +1311,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IdTecnico;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdEq;
         private System.Windows.Forms.DataGridViewTextBoxColumn Busqueda;
+        private System.Windows.Forms.RadioButton rbFechaEntrega;
+        private System.Windows.Forms.RadioButton rbFechaIngreso;
     }
 }
