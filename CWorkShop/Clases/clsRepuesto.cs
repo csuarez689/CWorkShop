@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    class clsRepuesto
+    public class clsRepuesto
     {
         private const string ARCHIVO = "repuestos.dat";
         private const string DIR = "..\\Datos\\";
@@ -231,6 +231,11 @@ namespace CWorkShop.Clases
                 return "Ha ocurrido un error. " + ex.Message;
             }
 
+        }
+        //Buscar repuesto por id
+        public static clsReparacion Buscar(int id)
+        {
+            return clsReparacion.Listar().Find(x => x.Id == id);
         }
         //Obtener id siguiente
         private static int ObtenerId()

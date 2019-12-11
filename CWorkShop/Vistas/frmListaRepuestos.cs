@@ -14,23 +14,17 @@ namespace CWorkShop.Vistas
 {
     public partial class frmListaRepuestos : Form
     {
-        List<int> idSeleccionados= new List<int>();
+        Form padre;
 
-        public List<int> IdSeleccionados
+        public frmListaRepuestos(Form padre, bool fullView=false)
         {
-            get
-            {
-                return idSeleccionados;
-            }
-        }
-
-        public frmListaRepuestos(bool fullView=false)
-        {
+            InitializeComponent();
+            this.padre = padre;
             if (fullView)
             {
-                this.Padding =new System.Windows.Forms.Padding(10,10,10,10);
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                this.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
             }
-            InitializeComponent();
             pnlBotonera.Visible = fullView;
             pnlTitulo.Visible = fullView;
             dgvRepuestos.MultiSelect = fullView;
@@ -68,23 +62,16 @@ namespace CWorkShop.Vistas
             this.Dispose();
         }
 
-        private void ObtenerSeleccionados()
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
             DataGridViewSelectedRowCollection seleccionadas = dgvRepuestos.SelectedRows;
             if (seleccionadas != null)
             {
-                foreach (DataGridViewRow fila in seleccionadas)
-                {
-                    idSeleccionados.Add(int.Parse(fila.Cells["Id"].Value.ToString()));
-                }
+                ((frmOrdenes)padre).CargarRepuestos(seleccionadas);
+                this.Dispose();
             }
             else
                 MessageBox.Show("Debe seleccionar algun repuesto del inventario.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnAceptar_Click(object sender, EventArgs e)
-        {
-            ObtenerSeleccionados();
         }
     }
 }

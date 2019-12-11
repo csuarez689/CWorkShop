@@ -35,6 +35,14 @@ namespace CWorkShop.Clases
                 contraseña = value;
             }
         }
+        //Reparaciones del usuario
+        public List<clsReparacion> Reparaciones
+        {
+            get
+            {
+                return clsReparacion.Listar().FindAll(x => this.Id == x.IdTecnico);
+            }
+        }
 
         //Guardar usuario
         public string Guardar()

@@ -14,6 +14,7 @@ namespace CWorkShop.Vistas
 {
     public partial class frmLogin : Form
     {
+        //Variables para ubicacion y movimiento de form
         public int xClick = 0, yClick = 0;
         public frmLogin()
         {
@@ -52,11 +53,9 @@ namespace CWorkShop.Vistas
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            Regex dni = new Regex(@"^\d{8}(?:[-\s]\d{4})?$");
-            if (!dni.IsMatch(tbDni.Text)) { MessageBox.Show("Campo dni incorrecto.  Ingrese solo numeros.", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-            else
-            {
-                string msg = clsUsuario.Login(tbDni.Text, tbContraseña.Text);
+            string msg = Validar();
+            if (msg.Equals(string.Empty)) { 
+                msg = clsUsuario.Login(tbDni.Text, tbContraseña.Text);
                 if (msg.Equals(string.Empty))
                 {
                     frmMain main = new frmMain(this, tbDni.Text);
@@ -72,6 +71,8 @@ namespace CWorkShop.Vistas
                 else
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            else
+              MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void pbCerrar_Click(object sender, EventArgs e)
@@ -79,6 +80,7 @@ namespace CWorkShop.Vistas
             this.Close();
         }
 
+        //Comportamiento para darle movimiento al formulario mediante el mouse
         private void frmLogin_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -89,9 +91,18 @@ namespace CWorkShop.Vistas
 
         private void btnRegistrarse_Click(object sender, EventArgs e)
         {
-            tbContraseña.Clear();
-            tbDni.Clear();
+            tbContraseña.Text="CONTRASEÑA";
+            tbDni.Text="DNI";
             new frmMisDatos().Show();
+        }
+
+        //Validacion campos del formulario
+        private string Validar()
+        {
+            Regex dni = new Regex(@"^\d{8}(?:[-\s]\d{4})?$");
+            if (!dni.IsMatch(tbDni.Text)) { return "Campo dni incorrecto.  Ingrese solo numeros."; }
+            if(tbContraseña.Text=="CONTRASEÑA" || tbContraseña.Text == string.Empty) { return "Debe ingresar su contraseña."; }
+            return string.Empty;
         }
     }
 }

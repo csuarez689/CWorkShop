@@ -61,7 +61,7 @@
             this.lineShape3,
             this.lineShape1});
             this.shapeContainer1.Size = new System.Drawing.Size(502, 240);
-            this.shapeContainer1.TabIndex = 7;
+            this.shapeContainer1.TabIndex = 0;
             this.shapeContainer1.TabStop = false;
             // 
             // lineShape3
@@ -92,9 +92,10 @@
             this.tbDni.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbDni.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.tbDni.Location = new System.Drawing.Point(203, 55);
+            this.tbDni.MaxLength = 8;
             this.tbDni.Name = "tbDni";
             this.tbDni.Size = new System.Drawing.Size(265, 19);
-            this.tbDni.TabIndex = 8;
+            this.tbDni.TabIndex = 2;
             this.tbDni.Text = "DNI";
             this.tbDni.Enter += new System.EventHandler(this.tbDNI_Enter);
             this.tbDni.Leave += new System.EventHandler(this.tbDNI_Leave);
@@ -106,9 +107,10 @@
             this.tbContraseña.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbContraseña.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.tbContraseña.Location = new System.Drawing.Point(203, 107);
+            this.tbContraseña.MaxLength = 16;
             this.tbContraseña.Name = "tbContraseña";
             this.tbContraseña.Size = new System.Drawing.Size(265, 19);
-            this.tbContraseña.TabIndex = 9;
+            this.tbContraseña.TabIndex = 3;
             this.tbContraseña.Text = "CONTRASEÑA";
             this.tbContraseña.Enter += new System.EventHandler(this.tbContraseña_Enter);
             this.tbContraseña.Leave += new System.EventHandler(this.tbContraseña_Leave);
@@ -125,7 +127,7 @@
             this.btnEntrar.Location = new System.Drawing.Point(177, 188);
             this.btnEntrar.Name = "btnEntrar";
             this.btnEntrar.Size = new System.Drawing.Size(127, 40);
-            this.btnEntrar.TabIndex = 10;
+            this.btnEntrar.TabIndex = 4;
             this.btnEntrar.Text = "ENTRAR";
             this.btnEntrar.UseVisualStyleBackColor = false;
             this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
@@ -142,7 +144,7 @@
             this.btnRegistrarse.Location = new System.Drawing.Point(341, 188);
             this.btnRegistrarse.Name = "btnRegistrarse";
             this.btnRegistrarse.Size = new System.Drawing.Size(127, 40);
-            this.btnRegistrarse.TabIndex = 11;
+            this.btnRegistrarse.TabIndex = 5;
             this.btnRegistrarse.Text = "REGISTRARSE";
             this.btnRegistrarse.UseVisualStyleBackColor = false;
             this.btnRegistrarse.Click += new System.EventHandler(this.btnRegistrarse_Click);
@@ -155,7 +157,7 @@
             this.lblLogin.Location = new System.Drawing.Point(282, 0);
             this.lblLogin.Name = "lblLogin";
             this.lblLogin.Size = new System.Drawing.Size(88, 28);
-            this.lblLogin.TabIndex = 12;
+            this.lblLogin.TabIndex = 1;
             this.lblLogin.Text = "LOGIN";
             // 
             // pbCerrar

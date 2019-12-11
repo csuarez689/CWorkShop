@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    class clsEquipo
+    public class clsEquipo
     {
         private const string ARCHIVO = "equipos.dat";
         private const string DIR = "..\\Datos\\";
@@ -121,12 +121,28 @@ namespace CWorkShop.Clases
                 modelo = value;
             }
         }
-
+        //Cliente correspondiente al equipo
+        public clsCliente Cliente
+        {
+            get
+            {
+                return clsCliente.Buscar(this.IdCliente);
+            }
+        }
         //Listado de reparaciones correspondientes al equipo
         public List<clsReparacion> Reparaciones
         {
             get { 
                 this.reparaciones=clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id);
+                return reparaciones;
+            }
+        }
+        //Historico de ordenes concluidas del equipo
+        public List<clsReparacion> Historico
+        {
+            get
+            {
+                this.reparaciones = clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id && x.Estado=="ENTREGADO");
                 return reparaciones;
             }
         }
@@ -235,7 +251,7 @@ namespace CWorkShop.Clases
             List<clsEquipo> equipos = clsEquipo.Listar();
             try
             {
-                string msg = (equipos.Find(x => x.Id == id).Reparaciones.Count > 0) ? "El equipo no se puede eliminar porque posee registros asociados." : string.Empty;
+                string msg = (equipos.Find(x => x.Id == id).Reparaciones.Count > 0) ? "El equipo no se puede eliminar porque posee reparaciones asociadas." : string.Empty;
                 if (msg.Equals(string.Empty))
                 {
                     using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))

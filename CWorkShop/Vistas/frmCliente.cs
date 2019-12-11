@@ -197,7 +197,7 @@ namespace CWorkShop.Vistas
             {
                 tbNroSerie.Text = fila.Cells["NumeroDeSerie"].Value.ToString();
                 tbModelo.Text = fila.Cells["Modelo"].Value.ToString();
-                tbDescripcion.Text = fila.Cells["Descripcion"].Value.ToString();
+                rtbDescripcion.Text = fila.Cells["Descripcion"].Value.ToString();
                 tbMarca.Text = fila.Cells["Marca"].Value.ToString();
                 tbTipoEquipo.Text = fila.Cells["TipoDeEquipo"].Value.ToString();
                 btnFormEquipoLimpiar.Hide();
@@ -230,11 +230,18 @@ namespace CWorkShop.Vistas
 
         private void btnAgregarOrden_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Desea agregar una orden de trabajo sobre este equipo?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            DataGridViewRow fila = dgvEquipos.CurrentRow;
+            if (fila != null && fila.Selected)
             {
-                ((Button)((Panel)this.ParentForm.Controls["pMenu"]).Controls["btnOrdenes"]).PerformClick();
-                this.Dispose();
+                if (MessageBox.Show("Desea agregar una orden de trabajo sobre este equipo?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                {
+                    frmMain padre = (frmMain)ParentForm;
+                    padre.AgregarOrden(int.Parse(fila.Cells["IdEquipo"].Value.ToString()));
+                    this.Dispose();
+                }
             }
+            else
+                MessageBox.Show("Debe seleccionar un equipo al cual agregar una nueva orden de trabajo.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         //------------------------------------
 
@@ -264,10 +271,10 @@ namespace CWorkShop.Vistas
                 int clienteSeleccionado = int.Parse(dgvClientes.CurrentRow.Cells["IdCliente"].Value.ToString());
                 //Se esta guardando registro nuevo
                 //se esta actualizando registro, por lo tanto no esta disponible btnLimpiar
-                string descripcion = (tbDescripcion.Text.Trim().Equals(string.Empty)) ? "Sin Descripcion" : tbDescripcion.Text.Trim();
+                string descripcion = (rtbDescripcion.Text.Trim().Equals(string.Empty)) ? "Sin Descripcion" : rtbDescripcion.Text.Trim();
                 if (btnFormEquipoLimpiar.Visible == true)
                 {//Guardar nueva entrada
-                    clsEquipo equipo = new clsEquipo(tbMarca.Text, tbTipoEquipo.Text, tbNroSerie.Text, tbModelo.Text, tbDescripcion.Text, clienteSeleccionado);
+                    clsEquipo equipo = new clsEquipo(tbMarca.Text, tbTipoEquipo.Text, tbNroSerie.Text, tbModelo.Text, rtbDescripcion.Text, clienteSeleccionado);
                     msg = equipo.Guardar();
                 }
                 else
@@ -313,7 +320,7 @@ namespace CWorkShop.Vistas
         private string ValidarEquipo()
         {
             Regex nroSerie = new Regex(@"^[A-Z0-9]([A-Z0-9]){4,20}$");
-            Regex modelo = new Regex(@"^[A-Z0-9]([A-Z0-9\-]){4,20}$");
+            Regex modelo = new Regex(@"^[a-zA-Z0-9]+(([a-zA-Z0-9\-\s])?[a-zA-Z0-9]*)*$");
             Regex marcaTipo= new Regex(@"^[A-Z]+[A-Z ]{1,19}$");
             if (!nroSerie.IsMatch(tbNroSerie.Text)) { return "Campo numero de serie incorrecto. (Min 4, Max 20)."; }
             if (!modelo.IsMatch(tbModelo.Text)) { return "Campo modelo incorrecto."; }

@@ -150,7 +150,6 @@
   <ItemGroup>
     <Content Include="Img\cliente32x32-blue.png" />
     <Content Include="Img\close16x16.png" />
-    <Content Include="Img\estadisticas32x32.png" />
     <Content Include="Img\login.png" />
     <Content Include="Img\min16x16.png" />
     <Content Include="Img\ordenes32x32.png" />

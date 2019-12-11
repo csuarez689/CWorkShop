@@ -14,8 +14,17 @@ namespace CWorkShop.Vistas
     public partial class frmMain : Form
     {
         frmLogin login;
-        clsUsuario userLog;
+        private clsUsuario userLog;
         public int xClick = 0, yClick = 0;
+
+        public clsUsuario UserLog
+        {
+            get
+            {
+                return userLog;
+            }
+        }
+
         public frmMain(frmLogin login, string dniUsuario)
         {
             InitializeComponent();
@@ -25,7 +34,6 @@ namespace CWorkShop.Vistas
             btnDatos.Text = userLog.Nombre + " " + userLog.Apellido;
             btnClientes.Image = Properties.Resources.cliente32x32_blue;
             btnOrdenes.Image = Properties.Resources.ordenes32x32;
-            btnEstadisticas.Image = Properties.Resources.estadisticas32x32;
             btnRepuestos.Image = Properties.Resources.repuesto32x32;
             if (userLog == null)
             {
@@ -38,7 +46,6 @@ namespace CWorkShop.Vistas
         {
             if(MessageBox.Show("Esta seguro que desea salir?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)==DialogResult.OK) { 
             this.Close();
-            login.Show();
             }
         }
 
@@ -60,13 +67,7 @@ namespace CWorkShop.Vistas
             pMarcador.Height = btnOrdenes.Height;
             pMarcador.Top = btnOrdenes.Top;
             pMarcador.Show();
-        }
-
-        private void btnEstadisticas_Click(object sender, EventArgs e)
-        {
-            pMarcador.Height = btnEstadisticas.Height;
-            pMarcador.Top = btnEstadisticas.Top;
-            pMarcador.Show();
+            openForm(new frmOrdenes(this));
         }
 
         private void btnRepuestos_Click(object sender, EventArgs e)
@@ -84,6 +85,13 @@ namespace CWorkShop.Vistas
             openForm(misDatos);
         }
 
+        public void AgregarOrden(int idEquipo)
+        {
+            pMarcador.Height = btnRepuestos.Height;
+            pMarcador.Top = btnRepuestos.Top;
+            pMarcador.Show();
+            openForm(new frmOrdenes(this,idEquipo));
+        }
         internal void openForm(object frm)
         {
             if (this.pnlContenedor.Controls.Count > 0)
@@ -108,6 +116,8 @@ namespace CWorkShop.Vistas
                     ((ComboBox)x).SelectedIndex = -1;
                 else if (x is NumericUpDown)
                     ((NumericUpDown)x).Value = 0;
+                else if (x is RichTextBox)
+                    ((RichTextBox)x).Clear();
             }
         }
 
@@ -117,6 +127,11 @@ namespace CWorkShop.Vistas
             { xClick = e.X; yClick = e.Y; }
             else
             { this.Left = this.Left + (e.X - xClick); this.Top = this.Top + (e.Y - yClick); }
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            login.Show();
         }
 
         //Actualizar datos button

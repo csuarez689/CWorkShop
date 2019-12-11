@@ -40,7 +40,7 @@ namespace CWorkShop.Vistas
                 if (msg.Equals(string.Empty))
                 {
                     tbCodigo.Text = fila.Cells["Codigo"].Value.ToString();
-                    tbDescipcion.Text = fila.Cells["Descripcion"].Value.ToString();
+                    rtbDescripcion.Text = fila.Cells["Descripcion"].Value.ToString();
                     nudPrecioCompra.Value = decimal.Parse(fila.Cells["PrecioCompra"].Value.ToString());
                     nudPrecioVenta.Value = decimal.Parse(fila.Cells["PrecioVenta"].Value.ToString());
                     nudStock.Value = int.Parse(fila.Cells["Stock"].Value.ToString());
@@ -52,7 +52,7 @@ namespace CWorkShop.Vistas
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-                MessageBox.Show("No existe registros para editar.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Debe seleccionar un repuesto.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void btnEliminarCliente_Click(object sender, EventArgs e)
         {
@@ -72,6 +72,7 @@ namespace CWorkShop.Vistas
             else
                 MessageBox.Show("Debe seleccionar un cliente.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         //------------------------------------
 
         //Botonera formulario repuestos ---------
@@ -92,7 +93,7 @@ namespace CWorkShop.Vistas
             string msg = this.Validar();
             if (msg.Equals(string.Empty))
             {
-                clsRepuesto repuesto = new clsRepuesto(tbCodigo.Text, tbDescipcion.Text, double.Parse(nudPrecioCompra.Value.ToString()), double.Parse(nudPrecioVenta.Value.ToString()), int.Parse(nudStock.Value.ToString()));
+                clsRepuesto repuesto = new clsRepuesto(tbCodigo.Text, rtbDescripcion.Text, double.Parse(nudPrecioCompra.Value.ToString()), double.Parse(nudPrecioVenta.Value.ToString()), int.Parse(nudStock.Value.ToString()));
                 //Se esta guardando registro nuevo
                 //se esta actualizando registro, por lo tanto no esta disponible btnLimpiar
                 if (btnLimpiar.Visible)
@@ -120,7 +121,7 @@ namespace CWorkShop.Vistas
         //Carga de grilla de repuestos
         private void CargaFrmListaRepuestos()
         {
-            hijo= new frmListaRepuestos(false);
+            hijo= new frmListaRepuestos(this,false);
             hijo.TopLevel = false;
             hijo.Dock = DockStyle.Fill;
             this.spcCont.Panel1.Controls.Add(hijo);
@@ -132,7 +133,8 @@ namespace CWorkShop.Vistas
         {
             Regex codigo = new Regex(@"^[A-Z0-9]([A-Z0-9]){4,20}$");
             if (!codigo.IsMatch(tbCodigo.Text)) { return "Campo codigo de producto incorrecto. (Min 4, Max 20)."; }
-            if (tbDescipcion.Text.Equals(string.Empty)) { return "La descripcion no puede estar vacia."; }
+            if (rtbDescripcion.Text.Equals(string.Empty)) { return "La descripcion no puede estar vacia."; }
+            if(nudPrecioCompra.Value > nudPrecioVenta.Value) { return "El precio de venta no puede ser menor que el precio de compra."; }
             return string.Empty;
         }
     }

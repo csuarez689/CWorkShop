@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    class clsRepuestoUtilizado
+    public class clsRepuestoUtilizado
     {
         private const string ARCHIVO = "repuestosUtilizados.dat";
         private const string DIR = "..\\Datos\\";
@@ -134,6 +134,11 @@ namespace CWorkShop.Clases
                 return repuestosUtilizados;
             }
 
+        }
+        //Buscar repuesto por id
+        public static clsRepuestoUtilizado Buscar(int id)
+        {
+            return clsRepuestoUtilizado.Listar().Find(x => x.Id == id);
         }
         //Guardar repuesto
         public string Guardar()

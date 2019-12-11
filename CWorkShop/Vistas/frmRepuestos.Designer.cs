@@ -33,28 +33,28 @@
             this.btnEliminarCliente = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
+            this.rtbDescripcion = new System.Windows.Forms.RichTextBox();
+            this.nudPrecioVenta = new System.Windows.Forms.NumericUpDown();
+            this.nudPrecioCompra = new System.Windows.Forms.NumericUpDown();
             this.nudStock = new System.Windows.Forms.NumericUpDown();
             this.lblRepuesto = new System.Windows.Forms.Label();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.tbDescipcion = new System.Windows.Forms.TextBox();
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.lblStock = new System.Windows.Forms.Label();
             this.lblPrecioCompra = new System.Windows.Forms.Label();
             this.lbPrecioVenta = new System.Windows.Forms.Label();
             this.tbCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
-            this.nudPrecioCompra = new System.Windows.Forms.NumericUpDown();
-            this.nudPrecioVenta = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.spcCont)).BeginInit();
             this.spcCont.Panel1.SuspendLayout();
             this.spcCont.Panel2.SuspendLayout();
             this.spcCont.SuspendLayout();
             this.pnlBotonera.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudStock)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrecioCompra)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrecioVenta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPrecioCompra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudStock)).BeginInit();
             this.SuspendLayout();
             // 
             // spcCont
@@ -72,6 +72,7 @@
             // 
             // spcCont.Panel2
             // 
+            this.spcCont.Panel2.Controls.Add(this.rtbDescripcion);
             this.spcCont.Panel2.Controls.Add(this.nudPrecioVenta);
             this.spcCont.Panel2.Controls.Add(this.nudPrecioCompra);
             this.spcCont.Panel2.Controls.Add(this.nudStock);
@@ -79,7 +80,6 @@
             this.spcCont.Panel2.Controls.Add(this.btnLimpiar);
             this.spcCont.Panel2.Controls.Add(this.btnCancelar);
             this.spcCont.Panel2.Controls.Add(this.btnGuardar);
-            this.spcCont.Panel2.Controls.Add(this.tbDescipcion);
             this.spcCont.Panel2.Controls.Add(this.lblDescripcion);
             this.spcCont.Panel2.Controls.Add(this.lblStock);
             this.spcCont.Panel2.Controls.Add(this.lblPrecioCompra);
@@ -157,6 +157,61 @@
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
+            // rtbDescripcion
+            // 
+            this.rtbDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbDescripcion.Location = new System.Drawing.Point(135, 311);
+            this.rtbDescripcion.MaxLength = 200;
+            this.rtbDescripcion.Name = "rtbDescripcion";
+            this.rtbDescripcion.Size = new System.Drawing.Size(214, 82);
+            this.rtbDescripcion.TabIndex = 10;
+            this.rtbDescripcion.Text = "";
+            // 
+            // nudPrecioVenta
+            // 
+            this.nudPrecioVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudPrecioVenta.DecimalPlaces = 2;
+            this.nudPrecioVenta.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudPrecioVenta.Location = new System.Drawing.Point(133, 222);
+            this.nudPrecioVenta.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudPrecioVenta.Name = "nudPrecioVenta";
+            this.nudPrecioVenta.Size = new System.Drawing.Size(216, 23);
+            this.nudPrecioVenta.TabIndex = 6;
+            this.nudPrecioVenta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // nudPrecioCompra
+            // 
+            this.nudPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudPrecioCompra.DecimalPlaces = 2;
+            this.nudPrecioCompra.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudPrecioCompra.Location = new System.Drawing.Point(135, 182);
+            this.nudPrecioCompra.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudPrecioCompra.Name = "nudPrecioCompra";
+            this.nudPrecioCompra.Size = new System.Drawing.Size(216, 23);
+            this.nudPrecioCompra.TabIndex = 4;
+            this.nudPrecioCompra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // nudStock
             // 
@@ -242,17 +297,6 @@
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
-            // tbDescipcion
-            // 
-            this.tbDescipcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDescipcion.Location = new System.Drawing.Point(135, 308);
-            this.tbDescipcion.MaxLength = 1000;
-            this.tbDescipcion.Multiline = true;
-            this.tbDescipcion.Name = "tbDescipcion";
-            this.tbDescipcion.Size = new System.Drawing.Size(214, 79);
-            this.tbDescipcion.TabIndex = 10;
-            // 
             // lblDescripcion
             // 
             this.lblDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -312,6 +356,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbCodigo.Location = new System.Drawing.Point(135, 142);
+            this.tbCodigo.MaxLength = 20;
             this.tbCodigo.Name = "tbCodigo";
             this.tbCodigo.Size = new System.Drawing.Size(214, 23);
             this.tbCodigo.TabIndex = 2;
@@ -328,50 +373,6 @@
             this.lblCodigo.Size = new System.Drawing.Size(58, 17);
             this.lblCodigo.TabIndex = 1;
             this.lblCodigo.Text = "Codigo";
-            // 
-            // nudPrecioCompra
-            // 
-            this.nudPrecioCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudPrecioCompra.DecimalPlaces = 2;
-            this.nudPrecioCompra.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.nudPrecioCompra.Location = new System.Drawing.Point(135, 182);
-            this.nudPrecioCompra.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.nudPrecioCompra.Name = "nudPrecioCompra";
-            this.nudPrecioCompra.Size = new System.Drawing.Size(216, 23);
-            this.nudPrecioCompra.TabIndex = 4;
-            this.nudPrecioCompra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // nudPrecioVenta
-            // 
-            this.nudPrecioVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudPrecioVenta.DecimalPlaces = 2;
-            this.nudPrecioVenta.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.nudPrecioVenta.Location = new System.Drawing.Point(133, 222);
-            this.nudPrecioVenta.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.nudPrecioVenta.Name = "nudPrecioVenta";
-            this.nudPrecioVenta.Size = new System.Drawing.Size(216, 23);
-            this.nudPrecioVenta.TabIndex = 6;
-            this.nudPrecioVenta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmRepuestos
             // 
@@ -393,9 +394,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.spcCont)).EndInit();
             this.spcCont.ResumeLayout(false);
             this.pnlBotonera.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudStock)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrecioCompra)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrecioVenta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPrecioCompra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudStock)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -412,7 +413,6 @@
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.TextBox tbDescipcion;
         private System.Windows.Forms.Label lblDescripcion;
         private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.Label lblPrecioCompra;
@@ -421,5 +421,6 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.NumericUpDown nudPrecioVenta;
         private System.Windows.Forms.NumericUpDown nudPrecioCompra;
+        private System.Windows.Forms.RichTextBox rtbDescripcion;
     }
 }

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    class clsCliente : clsPersona
+    public class clsCliente : clsPersona
     {
         private const string ARCHIVO = "clientes.dat";
         private const string DIR = "..\\Datos\\";
@@ -147,7 +147,7 @@ namespace CWorkShop.Clases
             List<clsCliente> clientes = clsCliente.Listar();
             try
             {
-                string msg = (clientes.Find(x=>x.Dni==dni).Equipos.Count>0) ? "El cliente no se puede eliminar porque posee registros asociados." : string.Empty;
+                string msg = (clientes.Find(x=>x.Dni==dni).Equipos.Count>0) ? "El cliente no se puede eliminar porque posee equipos asociados." : string.Empty;
                     if (msg.Equals(string.Empty))
                     {
                         using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))

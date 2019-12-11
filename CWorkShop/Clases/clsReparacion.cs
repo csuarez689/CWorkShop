@@ -8,13 +8,13 @@ using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    class clsReparacion
+    public class clsReparacion
     {
         private const string ARCHIVO = "reparaciones.dat";
         private const string DIR = "..\\Datos\\";
         private int id;
-        private DateTime fechaIngreso;
-        private DateTime fechaEntrega;
+        private string fechaIngreso;
+        private string fechaEntrega;
         private bool anulada;
         private string accesorios;
         private string diagnostico;
@@ -23,7 +23,7 @@ namespace CWorkShop.Clases
         private int idTecnico;
         private string estado;
 
-        public clsReparacion(string accesorios, string diagnostico, double costoManoObra, int idEquipo, int idTecnico, string estado, bool anulada = false, int id = 0)
+        public clsReparacion(string accesorios, string diagnostico, double costoManoObra, int idEquipo, int idTecnico, string estado, string fechaIngreso, string fechaEntrega, bool anulada = false, int id = 0)
         {
             this.id = id;
             this.anulada = anulada;
@@ -33,6 +33,8 @@ namespace CWorkShop.Clases
             this.idEquipo = idEquipo;
             this.idTecnico = idTecnico;
             this.estado = estado;
+            this.fechaIngreso = fechaIngreso;
+            this.fechaEntrega = fechaEntrega;
         }
 
         public int Id
@@ -48,20 +50,27 @@ namespace CWorkShop.Clases
             }
         }
 
-        public DateTime FechaIngreso
+        public string FechaIngreso
         {
             get
             {
                 return fechaIngreso;
             }
-
+            set
+            {
+                fechaIngreso = value;
+            }
         }
 
-        public DateTime FechaEntrega
+        public string FechaEntrega
         {
             get
             {
                 return fechaEntrega;
+            }
+            set
+            {
+                fechaEntrega = value;
             }
         }
 
@@ -160,7 +169,8 @@ namespace CWorkShop.Clases
         {
             get
             {
-                return clsCliente.Buscar(Equipo.IdCliente);
+                clsCliente cliente=clsCliente.Buscar(this.Equipo.IdCliente);
+                return cliente;
             }
         }
         //Equipo al cual le corresponde la reparacion
@@ -184,7 +194,8 @@ namespace CWorkShop.Clases
         {
             get
             {
-                return clsRepuestoUtilizado.Listar().FindAll(x => x.IdReparacion == this.id);
+                List<clsRepuestoUtilizado> res= clsRepuestoUtilizado.Listar().FindAll(x => x.IdReparacion == this.id);
+                return res;
             }
         }
         //Calcula costo total de la reparacion
@@ -219,7 +230,7 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsReparacion(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadInt32(), br.ReadInt32(), br.ReadString(), br.ReadBoolean(), auxid);
+                        aux = new clsReparacion(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadInt32(), br.ReadInt32(), br.ReadString(), br.ReadString(), br.ReadString(), br.ReadBoolean(), auxid);
                         reparacion.Add(aux);
                     }
                 }
@@ -252,6 +263,8 @@ namespace CWorkShop.Clases
                         bw.Write(x.IdEquipo);
                         bw.Write(x.IdTecnico);
                         bw.Write(x.Estado);
+                        bw.Write(x.FechaIngreso);
+                        bw.Write(x.FechaEntrega);
                         bw.Write(x.Anulada);
                     }
                 }
@@ -270,7 +283,7 @@ namespace CWorkShop.Clases
             string msg = string.Empty;
             try
             {   //si el equipo ya posee una reparacion sin concluir 
-                msg = (clsReparacion.Listar().Find(x => x.IdEquipo == this.IdEquipo && (this.Estado != "ENTREGADO" && x.Anulada)) == null) ? "Este equipo ya posee una reparación sin concluir." : string.Empty;
+                msg = (clsReparacion.Listar().Find(x => x.IdEquipo == this.IdEquipo && (this.Estado != "ENTREGADO" && x.Anulada)) != null) ? "Este equipo ya posee una reparación sin concluir." : string.Empty;
                 if (msg.Equals(string.Empty))
                 {
                     using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
@@ -282,8 +295,11 @@ namespace CWorkShop.Clases
                         bw.Write(this.IdEquipo);
                         bw.Write(this.IdTecnico);
                         bw.Write(this.Estado);
+                        bw.Write(this.FechaIngreso);
+                        bw.Write(string.Empty);
                         bw.Write(this.Anulada);
                     }
+                    msg = idAux.ToString();
                 }
             }
             catch (Exception ex)
@@ -293,7 +309,7 @@ namespace CWorkShop.Clases
             return msg;
         }
         //Eliminar reparacion
-        public static string Anular(int id)
+        public static string Eliminar(int id)
         {
             string msg = string.Empty;
             CheckFiles();
@@ -312,6 +328,8 @@ namespace CWorkShop.Clases
                         bw.Write(reparacion.IdEquipo);
                         bw.Write(reparacion.IdTecnico);
                         bw.Write(reparacion.Estado);
+                        bw.Write(reparacion.FechaIngreso);
+                        bw.Write(reparacion.FechaEntrega);
                         bw.Write(reparacion.Anulada);
                     }
                 }
@@ -322,6 +340,12 @@ namespace CWorkShop.Clases
                 return "Ha ocurrido un error. " + ex.Message;
             }
 
+        }
+        //Buscar reparacion por id
+        public static clsReparacion Buscar(int idBuscar)
+        {
+            clsReparacion res= clsReparacion.Listar().Find(x => x.Id == idBuscar);
+            return res;
         }
         //Obtener id siguiente
         private static int ObtenerId()

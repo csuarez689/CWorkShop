@@ -101,6 +101,8 @@ namespace CWorkShop.Vistas
                 MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        //Validacion campos del formulario
         private string Validar()
         {
             Regex nameApellido = new Regex(@"^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$");
