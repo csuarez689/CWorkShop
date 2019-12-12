@@ -468,19 +468,7 @@ namespace CWorkShop.Vistas
         //Validacion campos form reparacion
         private string Validar()
         {
-            //Regex nameApellido = new Regex(@"^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$");
-            //Regex dni = new Regex(@"^\d{8}(?:[-\s]\d{4})?$");
-            //Regex mail = new Regex(@"^[^@]+@[^@]+\.[a-zA-Z]{2,}$");
-            //Regex telefono = new Regex(@"^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$");
-            //Regex contraseña = new Regex(@"^(?=\w*\d)(?=\w*[a-z])\S{5,16}$");
-            //Regex direccion = new Regex(@"[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)");
-            //if (!dni.IsMatch(tbCliente.Text)) { return "Campo dni incorrecto. Ingrese solo numeros."; }
-            //if (!nameApellido.IsMatch(tbModeloEquipo.Text)) { return "Campo nombre incorrecto."; }
-            //if (!nameApellido.IsMatch(tbTecnico.Text)) { return "Campo apellido incorrecto."; }
-            //if (!mail.IsMatch(tbCorreo.Text)) { return "Campo correo incorrecto."; }
-            //if (!telefono.IsMatch(tbTelefono.Text)) { return "Campo telefono incorrecto."; }
-            //if (!direccion.IsMatch(tbDireccion.Text)) { return "Campo direccion incorrecto."; }
-
+            if (rtbDiagnostico.Text.Equals(string.Empty)) { return "Debe incluir un diagnostico de la reparación."; }
             return string.Empty;
         }
     }

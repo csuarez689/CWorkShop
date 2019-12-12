@@ -2,31 +2,31 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CWorkShop.Clases
 {
-    public class clsRepuesto
+    public class clsRepuestoUtilizado
     {
-        private const string ARCHIVO = "repuestos.dat";
+        private const string ARCHIVO = "repuestosUtilizados.dat";
         private const string DIR = "..\\Datos\\";
         private int id;
         private string codigo;
         private string descripcion;
         private double precioCompra;
         private double precioVenta;
-        private int stock;
+        private int cantidad;
+        private int idReparacion;
 
-        public clsRepuesto(string codigo, string descripcion, double precioCompra, double precioVenta, int stock, int id = 0)
+        public clsRepuestoUtilizado(string codigo, string descripcion, double precioCompra, double precioVenta, int cantidad, int idReparacion, int id = 0)
         {
             this.id = id;
             this.codigo = codigo;
             this.descripcion = descripcion;
             this.precioCompra = precioCompra;
             this.precioVenta = precioVenta;
-            this.stock = stock;
+            this.cantidad = cantidad;
+            this.idReparacion = idReparacion;
         }
 
         public int Id
@@ -81,6 +81,19 @@ namespace CWorkShop.Clases
             }
         }
 
+        public int IdReparacion
+        {
+            get
+            {
+                return idReparacion;
+            }
+
+            set
+            {
+                idReparacion = value;
+            }
+        }
+
         public double PrecioVenta
         {
             get
@@ -94,25 +107,25 @@ namespace CWorkShop.Clases
             }
         }
 
-        public int Stock
+        public int Cantidad
         {
             get
             {
-                return stock;
+                return cantidad;
             }
 
             set
             {
-                stock = value;
+                cantidad = value;
             }
         }
 
         //Obtiene listado de repuestos
-        public static List<clsRepuesto> Listar()
+        public static List<clsRepuestoUtilizado> Listar()
         {
             CheckFiles();
-            clsRepuesto aux;
-            List<clsRepuesto> repuestos = new List<clsRepuesto>();
+            clsRepuestoUtilizado aux;
+            List<clsRepuestoUtilizado> repuestosUtilizados = new List<clsRepuestoUtilizado>();
             int auxid;
             try
             {
@@ -121,19 +134,23 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsRepuesto(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadDouble(), br.ReadInt32());
-                        aux.Id = auxid;
-                        repuestos.Add(aux);
+                        aux = new clsRepuestoUtilizado(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadDouble(), br.ReadInt32(), br.ReadInt32(), auxid);
+                        repuestosUtilizados.Add(aux);
                     }
                 }
-                return repuestos;
+                return repuestosUtilizados;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ha ocurrio un error. " + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return repuestos;
+                return repuestosUtilizados;
             }
 
+        }
+        //Buscar repuesto por id
+        public static clsRepuestoUtilizado Buscar(int id)
+        {
+            return clsRepuestoUtilizado.Listar().Find(x => x.Id == id);
         }
         //Guardar repuesto
         public string Guardar()
@@ -143,24 +160,20 @@ namespace CWorkShop.Clases
             string msg = string.Empty;
             try
             {
-                msg = (stock < 0) ? "El stock no puede ser negativo." : string.Empty;
-                if (clsRepuesto.Listar().Find(x => x.Codigo == this.Codigo) == null)
-                {//si no existe un repuesto con el mismo numero de codigo
-                    if (msg.Equals(string.Empty))
-                    {
-                        using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
-                        {
-                            bw.Write(idAux);
-                            bw.Write(this.Codigo);
-                            bw.Write(this.Descripcion);
-                            bw.Write(this.PrecioCompra);
-                            bw.Write(this.PrecioVenta);
-                            bw.Write(this.Stock);
-                        }
-                    }
+                using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
+                {
+                    bw.Write(idAux);
+                    bw.Write(this.Codigo);
+                    bw.Write(this.Descripcion);
+                    bw.Write(this.PrecioCompra);
+                    bw.Write(this.PrecioVenta);
+                    bw.Write(this.cantidad);
+                    bw.Write(this.IdReparacion);
                 }
-                else
-                    msg = "El codigo de este producto ya se encuentra registrado.";
+                //Busco el repuesto del inventario y actualizo su stock con la cantidad del repuesto utilizado
+                clsRepuesto repuesto = clsRepuesto.Buscar(this.codigo);
+                repuesto.Stock -= this.cantidad;
+                msg= repuesto.Actualizar();
             }
             catch (Exception ex)
             {
@@ -168,79 +181,52 @@ namespace CWorkShop.Clases
             }
             return msg;
         }
-        //Actualizar repuesto
-        public string Actualizar()
-        {
-            string msg;
-            CheckFiles();
-            try
-            {
-                List<clsRepuesto> repuestos = clsRepuesto.Listar();
-                int old = repuestos.FindIndex(x => x.Id == this.Id);
-                //si no existe el mismo codigo de producto registrado
-                int otro = repuestos.FindIndex(x => this.Codigo == x.Codigo && this.Id != x.Id);
-                msg = (otro != -1 && otro != old) ? "El codigo ingresado ya se encuentra registrado." : string.Empty;
-                if (msg.Equals(string.Empty))
-                {
-                    repuestos[old] = this;
-                    using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
-                    {
-                        foreach (clsRepuesto x in repuestos)
-                        {
-                            bw.Write(x.Id);
-                            bw.Write(x.Codigo);
-                            bw.Write(x.Descripcion);
-                            bw.Write(x.PrecioCompra);
-                            bw.Write(x.PrecioVenta);
-                            bw.Write(x.Stock);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = "Ha ocurrio un error. " + ex.Message;
-            }
-            return msg;
-        }
         //Eliminar repuesto
         public static string Eliminar(int id)
         {
             CheckFiles();
-            List<clsRepuesto> repuestos = clsRepuesto.Listar();
+            List<clsRepuestoUtilizado> repuestosUtilizados = clsRepuestoUtilizado.Listar();
+            string msg = string.Empty;
             try
             {
-                string msg = string.Empty;
+                //para actualizar a posterior el stock
+                clsRepuestoUtilizado repEliminado = clsRepuestoUtilizado.Buscar(id);
                 using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
                 {
-                    foreach (clsRepuesto repuesto in repuestos)
+                    foreach (clsRepuestoUtilizado repuesto in repuestosUtilizados)
                     {
                         if (repuesto.Id == id) { continue; }
                         bw.Write(repuesto.Id);
                         bw.Write(repuesto.Codigo);
                         bw.Write(repuesto.Descripcion);
                         bw.Write(repuesto.PrecioCompra);
-                        bw.Write(repuesto.PrecioVenta);
-                        bw.Write(repuesto.Stock);
+                        bw.Write(repuesto.precioVenta);
+                        bw.Write(repuesto.cantidad);
+                        bw.Write(repuesto.IdReparacion);
                     }
                 }
-                return msg;
+                //Busco el repuesto utilizado a eliminar y lo utilizo para actualizar el stock del inventario
+                
+                clsRepuesto rep = clsRepuesto.Buscar(repEliminado.Codigo);
+                rep.Stock += repEliminado.Cantidad;
+                rep.Actualizar();
+                
             }
             catch (Exception ex)
             {
                 return "Ha ocurrido un error. " + ex.Message;
             }
-
+            return msg;
         }
-        //Buscar repuesto por codigo
-        public static clsRepuesto Buscar(string codigo)
+        //Buscar repuestos por idReparacion
+        public static List<clsRepuestoUtilizado> BuscarTodos(int idReparacion)
         {
-            return clsRepuesto.Listar().Find(x => x.Codigo.Equals(codigo));
+            return clsRepuestoUtilizado.Listar().FindAll(x => x.IdReparacion == idReparacion);
         }
         //Obtener id siguiente
-        private int ObtenerId()
+        private static int ObtenerId()
         {
-            List<clsRepuesto> lista = clsRepuesto.Listar();
+            List<clsRepuestoUtilizado> lista = clsRepuestoUtilizado.Listar();
             return (lista.Count > 0) ? lista.Last().Id + 1 : 1;
         }
         //Chequeo archivos
@@ -270,7 +256,5 @@ namespace CWorkShop.Clases
             if (msg != string.Empty)
                 MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
     }
 }
