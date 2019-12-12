@@ -57,6 +57,7 @@ namespace CWorkShop.Vistas
         //Botonera grilla clientes ---------
         private void tbBuscar_TextChanged(object sender, EventArgs e)
         {
+            dgvEquipos.Rows.Clear();
             string texto = tbBuscar.Text.ToUpper().Trim();
             foreach (DataGridViewRow fila in dgvClientes.Rows)
             {
@@ -81,9 +82,7 @@ namespace CWorkShop.Vistas
         {
             tbDni.Enabled = false;
             DataGridViewRow fila = dgvClientes.CurrentRow;
-            bool sel = fila.Selected;
-            string msg = (sel) ? string.Empty : "Debe seleccionar un cliente.";
-            if (msg.Equals(string.Empty))
+            if(fila!=null && fila.Selected)
             {
                 tbDni.Text = fila.Cells["Dni"].Value.ToString();
                 tbApellido.Text = fila.Cells["Apellido"].Value.ToString();
@@ -98,13 +97,13 @@ namespace CWorkShop.Vistas
                 spcMain.Panel1.Enabled = false;
             }
             else
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);   
+                MessageBox.Show("Debe seleccionar un cliente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);   
         }
 
         private void btnEliminarCliente_Click(object sender, EventArgs e)
         {
             DataGridViewRow fila = dgvClientes.CurrentRow;
-            if (fila.Selected)
+            if (fila!=null && fila.Selected)
             {
                 if(MessageBox.Show("¿Esta seguro que desea borrar el cliente?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                 {

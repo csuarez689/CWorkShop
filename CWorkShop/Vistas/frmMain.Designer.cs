@@ -139,7 +139,7 @@
             this.pHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pHeader.Location = new System.Drawing.Point(121, 0);
             this.pHeader.Name = "pHeader";
-            this.pHeader.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.pHeader.Padding = new System.Windows.Forms.Padding(0, 5, 0, 10);
             this.pHeader.Size = new System.Drawing.Size(1079, 30);
             this.pHeader.TabIndex = 0;
             this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
@@ -170,7 +170,7 @@
             this.pbMinimizar.Location = new System.Drawing.Point(1022, 5);
             this.pbMinimizar.Margin = new System.Windows.Forms.Padding(100, 3, 30, 3);
             this.pbMinimizar.Name = "pbMinimizar";
-            this.pbMinimizar.Size = new System.Drawing.Size(32, 25);
+            this.pbMinimizar.Size = new System.Drawing.Size(32, 15);
             this.pbMinimizar.TabIndex = 2;
             this.pbMinimizar.TabStop = false;
             this.pbMinimizar.Click += new System.EventHandler(this.pbMinimizar_Click);
@@ -181,7 +181,7 @@
             this.pbCerrar.Image = global::CWorkShop.Properties.Resources.close16x16;
             this.pbCerrar.Location = new System.Drawing.Point(1054, 5);
             this.pbCerrar.Name = "pbCerrar";
-            this.pbCerrar.Size = new System.Drawing.Size(25, 25);
+            this.pbCerrar.Size = new System.Drawing.Size(25, 15);
             this.pbCerrar.TabIndex = 1;
             this.pbCerrar.TabStop = false;
             this.pbCerrar.Click += new System.EventHandler(this.pbCerrar_Click);
@@ -213,6 +213,7 @@
             this.Name = "frmMain";
             this.Opacity = 0.98D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "CWorkShop";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseMove);
             this.pMenu.ResumeLayout(false);

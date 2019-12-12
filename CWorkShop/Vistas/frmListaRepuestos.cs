@@ -22,12 +22,12 @@ namespace CWorkShop.Vistas
             this.padre = padre;
             if (fullView)
             {
-                this.FormBorderStyle = FormBorderStyle.FixedSingle;
-                this.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+                this.Padding = new Padding(10);
+                this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             }
             pnlBotonera.Visible = fullView;
             pnlTitulo.Visible = fullView;
-            dgvRepuestos.MultiSelect = fullView;
+            pnlCantidad.Visible = fullView;
             dgvRepuestos.Columns["Descripcion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvRepuestoConfig();
         }
@@ -59,19 +59,40 @@ namespace CWorkShop.Vistas
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            this.Close();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            DataGridViewSelectedRowCollection seleccionadas = dgvRepuestos.SelectedRows;
-            if (seleccionadas != null)
+            DataGridViewRow fila = dgvRepuestos.CurrentRow;
+            if (fila!=null)
             {
-                ((frmOrdenes)padre).CargarRepuestos(seleccionadas);
-                this.Dispose();
+                ((frmOrdenes)padre).GuardarRepuesto(fila, Convert.ToInt32(nudCantidad.Value));
+                this.Close();
             }
             else
                 MessageBox.Show("Debe seleccionar algun repuesto del inventario.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void dgvRepuestos_SelectionChanged(object sender, EventArgs e)
+        {
+            DataGridViewRow fila = dgvRepuestos.CurrentRow;
+            if(fila!=null && fila.Selected)
+            {
+                if (int.Parse(fila.Cells["Stock"].Value.ToString()) == 0)
+                {
+                    btnAceptar.Enabled = false;
+                    nudCantidad.Enabled = false;
+                    lblSinStock.Show();
+                }
+                else
+                {
+                    btnAceptar.Enabled = true;
+                    nudCantidad.Enabled = true;
+                    nudCantidad.Maximum = int.Parse(fila.Cells["Stock"].Value.ToString());
+                    lblSinStock.Hide();
+                }
+            }
         }
     }
 }

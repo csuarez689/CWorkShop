@@ -8,10 +8,12 @@ namespace CWorkShop.Vistas
     public partial class frmOrdenes : Form
     {
         List<clsReparacion> reparaciones;
+        int idReparacionTemp; //para trabajar sobre los repuestos
         int idEquipo;
         frmMain padre;
         public frmOrdenes(frmMain padre, int idEquipo = 0)
         {
+            this.idReparacionTemp = 0;
             this.padre = padre;
             this.idEquipo = idEquipo;
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace CWorkShop.Vistas
             reparaciones = clsReparacion.Listar();
             dgvReparacionesConfig(reparaciones);
             if (idEquipo > 0) { AgregarNuevaOrden(); }
-            CargarCombo();
+            CargarComboTecnicos();
         }
 
 
@@ -50,30 +52,42 @@ namespace CWorkShop.Vistas
         //Cargar grilla de repuestos utilizados
         private void dgvRepuestosConfig(int reparacionSeleccionada)
         {
-            clsReparacion reparacion = clsReparacion.Buscar(reparacionSeleccionada);
-            dgvRepuestos.Rows.Clear();
-            if (reparacion != null)
-            {
-                foreach (clsRepuestoUtilizado repuestoUtilizado in reparacion.Repuestos)
+           dgvRepuestos.Rows.Clear();
+                foreach (clsRepuestoUtilizado repuestoUtilizado in clsRepuestoUtilizado.BuscarTodos(reparacionSeleccionada))
                 {
-                    dgvRepuestos.Rows.Add(repuestoUtilizado.Id, repuestoUtilizado.Codigo, repuestoUtilizado.Descripcion, repuestoUtilizado.PrecioCompra, repuestoUtilizado.PrecioVenta);
+                    dgvRepuestos.Rows.Add(repuestoUtilizado.Id, repuestoUtilizado.Codigo, repuestoUtilizado.Descripcion, repuestoUtilizado.PrecioCompra, repuestoUtilizado.PrecioVenta,repuestoUtilizado.Cantidad,repuestoUtilizado.IdReparacion);
                 }
-            }
         }
         //Agregar nueva orden
         private void AgregarNuevaOrden()
         {
-            cboEstado.Enabled = false;
+            //obtengo el id de la siguente orden para poder referenciar los repuestos
+            this.idReparacionTemp=clsReparacion.ObtenerId();
+            cboEstado.SelectedIndex = 0;
+            lblCostoTotalRes.Text = string.Format("{0:C2}", 0);
+            lblFechaIngresoRes.Text = DateTime.Today.ToShortDateString();
             dgvRepuestos.Rows.Clear();
             tbTecnico.Text = padre.UserLog.Apellido + " " + padre.UserLog.Nombre;
             clsEquipo equipoOrden = clsEquipo.Buscar(idEquipo);
             tbModeloEquipo.Text = equipoOrden.Modelo;
             tbCliente.Text = equipoOrden.Cliente.Apellido + " " + equipoOrden.Cliente.Nombre;
-            cboEstado.SelectedIndex = 0;
             spcMain.Panel2Collapsed = false;
             spcDatos.Panel2Collapsed = false;
             btnLimpiar.Show();
             spcDatos.Panel1Collapsed = true;
+        }
+        //Carga de ComboBox Tecnicos
+        private void CargarComboTecnicos()
+        {
+            Dictionary<int, string> source = new Dictionary<int, string>();
+            source.Add(0, "TODOS");
+            foreach (clsUsuario usuario in clsUsuario.Listar())
+            {
+                source.Add(usuario.Id, (usuario.Apellido + " " + usuario.Nombre).ToUpper());
+            }
+            cboTecnico.DataSource = new BindingSource(source, null);
+            cboTecnico.DisplayMember = "Value";
+            cboTecnico.ValueMember = "Key";
         }
 
 
@@ -82,6 +96,8 @@ namespace CWorkShop.Vistas
         //Botonera formulario reparacion ---------
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            if (btnLimpiar.Visible) { RollBackRepuestos(); }//Si se estaba trabajando con una nueva orden y se cancelo, 
+                                                            //hago rollback de los repuestos para mantener consistencia de stock.
             spcMain.Panel2Collapsed = true;
             spcDatos.Panel2Collapsed = true;
             btnLimpiar.Show();
@@ -101,15 +117,13 @@ namespace CWorkShop.Vistas
             string msg = this.Validar();
             if (msg.Equals(string.Empty))
             {
-                //Se esta guardando registro nuevo
-                //se esta actualizando registro, por lo tanto no esta disponible btnLimpiar
+                //si se esta actualizando registro, por lo tanto no esta disponible btnLimpiar
                 if (btnLimpiar.Visible)
                 {
-                    clsReparacion reparacion = new clsReparacion(rtbAccesorios.Text, rtbDiagnostico.Text, double.Parse(nudCostoManoObra.Value.ToString()), idEquipo, padre.UserLog.Id, cboEstado.SelectedItem.ToString(), DateTime.Today.ToShortDateString(), string.Empty);
+                    clsReparacion reparacion = new clsReparacion(rtbAccesorios.Text, rtbDiagnostico.Text, double.Parse(nudCostoManoObra.Value.ToString()), idEquipo, padre.UserLog.Id, cboEstado.SelectedItem.ToString(), lblFechaIngresoRes.Text, lblFechaEntregaRes.Text);
                     msg = reparacion.Guardar();
-                    if (msg.Length < 5)//si se guardo la reparacion procedo a guardar los imtems de repuestos
+                    if (msg.Equals(string.Empty))
                     {
-                        GuardarRepuestos(int.Parse(msg));
                         reparaciones = clsReparacion.Listar();
                         dgvReparacionesConfig(reparaciones);
                         btnCancelar.PerformClick();
@@ -122,12 +136,10 @@ namespace CWorkShop.Vistas
                 {
                     DataGridViewRow fila = dgvReparaciones.CurrentRow;
                     string fechaEntrega = string.Empty;
-                    if (cboEstado.SelectedItem.Equals("ENTREGADO")) { fechaEntrega = DateTime.Today.ToShortDateString(); }
-                    clsReparacion reparacion = new clsReparacion(rtbAccesorios.Text, rtbDiagnostico.Text, double.Parse(nudCostoManoObra.Value.ToString()), int.Parse(fila.Cells["IdEq"].Value.ToString()), padre.UserLog.Id, cboEstado.SelectedItem.ToString(), fila.Cells["FechaIngreso"].Value.ToString(), fechaEntrega, false, int.Parse(fila.Cells["IdReparacion"].Value.ToString()));
+                    clsReparacion reparacion = new clsReparacion(rtbAccesorios.Text, rtbDiagnostico.Text, Convert.ToDouble(nudCostoManoObra.Value), Convert.ToInt32(fila.Cells["IdEq"].Value), padre.UserLog.Id, cboEstado.SelectedItem.ToString(), lblFechaIngresoRes.Text, lblFechaEntregaRes.Text, this.idReparacionTemp);
                     msg = reparacion.Actualizar();
                     if (msg.Equals(string.Empty))
                     {
-                        GuardarRepuestos(int.Parse(fila.Cells["IdReparacion"].Value.ToString()));
                         reparaciones = clsReparacion.Listar();
                         dgvReparacionesConfig(reparaciones);
                         btnCancelar.PerformClick();
@@ -147,7 +159,7 @@ namespace CWorkShop.Vistas
             btnVolver.Visible = false;
             rtbAccesorios.ReadOnly = false;
             rtbDiagnostico.ReadOnly = false;
-            cboEstado.Enabled = true;
+            tbCliente.Enabled = true;
             nudCostoManoObra.Enabled = true;
             btnGuardar.Show();
             btnLimpiar.Show();
@@ -163,38 +175,29 @@ namespace CWorkShop.Vistas
             CalcularCostoTotal();
         }
 
+        private void cboEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblFechaEntregaRes.Text = (cboEstado.SelectedIndex == 2) ? DateTime.Today.ToShortDateString() : string.Empty;
+        }
         //------------------------------------
 
 
 
 
-        //Botonera grilla reparaciones ---------
-        private void CargarCombo()
-        {
-            Dictionary<int, string> source = new Dictionary<int, string>();
-            source.Add(0, "TODOS");
-            foreach (clsUsuario usuario in clsUsuario.Listar())
-            {
-                source.Add(usuario.Id, (usuario.Apellido + " " + usuario.Nombre).ToUpper());
-            }
-            cboTecnico.DataSource = new BindingSource(source, null);
-            cboTecnico.DisplayMember = "Value";
-            cboTecnico.ValueMember = "Key";
-        }
-
+        //Botonera grilla reparaciones --------
         private void CargarInfoFormulario(DataGridViewRow fila)
         {
             clsReparacion reparacion = clsReparacion.Buscar(int.Parse(fila.Cells["IdReparacion"].Value.ToString()));
-            tbCliente.Text = fila.Cells["Cliente"].Value.ToString();
-            tbModeloEquipo.Text = fila.Cells["ModeloEquipo"].Value.ToString();
-            tbTecnico.Text = fila.Cells["Tecnico"].Value.ToString();
+            tbCliente.Text = reparacion.Cliente.Apellido+" "+reparacion.Cliente.Nombre;
+            tbModeloEquipo.Text = reparacion.Equipo.Modelo;
+            tbTecnico.Text = reparacion.Tecnico.Apellido +" "+reparacion.Tecnico.Nombre;
             rtbDiagnostico.Text = reparacion.Diagnostico;
             rtbAccesorios.Text = reparacion.Accesorios;
             cboEstado.SelectedItem = reparacion.Estado;
-            nudCostoManoObra.Value = decimal.Parse(reparacion.CostoManoObra.ToString());
-            tbFechaIngreso.Text = reparacion.FechaIngreso.ToString();
-            tbFechaEntrega.Text = reparacion.FechaEntrega.ToString();
-            tbCostoTotal.Text = reparacion.CostoTotal.ToString();
+            nudCostoManoObra.Value = Convert.ToDecimal(reparacion.CostoManoObra);
+            lblFechaIngresoRes.Text = reparacion.FechaIngreso;
+            lblFechaEntregaRes.Text = reparacion.FechaEntrega;
+            lblCostoTotalRes.Text = string.Format("{0:C2}",reparacion.CostoTotal);
         }
 
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
@@ -210,13 +213,14 @@ namespace CWorkShop.Vistas
         private void btnEditar_Click(object sender, EventArgs e)
         {
             DataGridViewRow fila = dgvReparaciones.CurrentRow;
-            string msg = (fila != null && fila.Selected) ? string.Empty : "Debe seleccionar una reparacion.";
-            if (msg.Equals(string.Empty))
-            {
-                msg = (int.Parse(fila.Cells["IdTecnico"].Value.ToString()) == padre.UserLog.Id) ? string.Empty : "No puede editar una reparacion que no le pertenece.";
-                msg = (fila.Cells["Estado"].Value.ToString().Equals("ENTREGADO")) ? "No se puede editar una reparacion concluida." : string.Empty;
+            if(fila != null && fila.Selected) {
+                int idTecnicoFila = Convert.ToInt32(fila.Cells["IdTecnico"].Value);
+                string msg = (idTecnicoFila == padre.UserLog.Id) ? string.Empty : "No puede editar una reparacion que no le pertenece.";
+                if (msg.Equals(string.Empty)) { msg = (fila.Cells["Estado"].Value.ToString().Equals("ENTREGADO")) ? "No se puede editar una reparacion concluida." : string.Empty; }
                 if (msg.Equals(string.Empty))
                 {
+                    //obtengo el id de la orden para referenciar los repuestos
+                    this.idReparacionTemp = Convert.ToInt32(fila.Cells["IdReparacion"].Value);
                     CargarInfoFormulario(fila);
                     btnLimpiar.Hide();
                     spcMain.Panel2Collapsed = false;
@@ -227,7 +231,7 @@ namespace CWorkShop.Vistas
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Debe seleccionar una reparacion.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnDetalle_Click(object sender, EventArgs e)
@@ -240,7 +244,7 @@ namespace CWorkShop.Vistas
                 btnVolver.Visible = true;
                 rtbAccesorios.ReadOnly = true;
                 rtbDiagnostico.ReadOnly = true;
-                cboEstado.Enabled = false;
+                tbCliente.Enabled = false;
                 nudCostoManoObra.Enabled = false;
                 btnGuardar.Hide();
                 btnLimpiar.Hide();
@@ -257,11 +261,11 @@ namespace CWorkShop.Vistas
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             DataGridViewRow fila = dgvReparaciones.CurrentRow;
-            string msg = (fila != null && fila.Selected) ? string.Empty : "Debe seleccionar una reparacion.";
-            if (msg.Equals(string.Empty))
+            if (fila != null && fila.Selected)
             {
-                msg = (int.Parse(fila.Cells["IdTecnico"].Value.ToString()) == padre.UserLog.Id) ? string.Empty : "No puede eliminar una reparacion que no le pertenece.";
-                msg = (fila.Cells["Estado"].Value.ToString().Equals("ENTREGADO")) ? "No se puede eliminar una reparacion concluida." : string.Empty;
+                int idTecnicoFila = Convert.ToInt32(fila.Cells["IdTecnico"].Value);
+                string msg = (idTecnicoFila == padre.UserLog.Id) ? string.Empty : "No puede eliminar una reparacion que no le pertenece.";
+                if (msg.Equals(string.Empty)) { msg = (fila.Cells["Estado"].Value.ToString().Equals("ENTREGADO")) ? "No se puede eliminar una reparacion concluida." : string.Empty; }
                 if (msg.Equals(string.Empty))
                 {
                     if (MessageBox.Show("Esta seguro que desea borrar el registro?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
@@ -279,6 +283,8 @@ namespace CWorkShop.Vistas
                 else
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            else
+                MessageBox.Show("Debe seleccionar una reparacion.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnHistorico_Click(object sender, EventArgs e)
@@ -314,11 +320,19 @@ namespace CWorkShop.Vistas
             DataGridViewRow fila = dgvReparaciones.CurrentRow;
             if (fila != null && fila.Selected)
             {
-                int reparacionSeleccionada = int.Parse(fila.Cells["IdReparacion"].Value.ToString());
+                int reparacionSeleccionada = Convert.ToInt32(fila.Cells["IdReparacion"].Value);
                 dgvRepuestosConfig(reparacionSeleccionada);
             }
             else
                 dgvRepuestos.Rows.Clear();
+        }
+
+        private void RollBackRepuestos()
+        {
+            foreach (DataGridViewRow fila in dgvRepuestos.Rows)
+            {
+                clsRepuestoUtilizado.Eliminar(Convert.ToInt32(fila.Cells["Id"].Value));
+            }
         }
         //------------------------------------
 
@@ -326,46 +340,56 @@ namespace CWorkShop.Vistas
 
 
 
-        //Botonera grilla repuestos ---------
+        //Botonera grilla repuestos ---------------------------------------------------------------------------------
+        private void dgvRepuestos_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            CalcularCostoTotal();
+        }
+
         private void btnAgregarRepuesto_Click(object sender, EventArgs e)
         {
             frmListaRepuestos hijo = new frmListaRepuestos(this, true);
             hijo.ShowDialog();
         }
 
-        public void CargarRepuestos(DataGridViewSelectedRowCollection seleccionadas)
+        public void GuardarRepuesto(DataGridViewRow fila, int cantidad)
         {
-            foreach (DataGridViewRow fila in seleccionadas)
-            {
-                dgvRepuestos.Rows.Add(fila.Cells["Id"].Value, fila.Cells["Codigo"].Value, fila.Cells["Descripcion"].Value, fila.Cells["PrecioCompra"].Value, fila.Cells["PrecioVenta"].Value, 0);
-            }
+            //guardo el repuesto
+            clsRepuestoUtilizado repuesto = new clsRepuestoUtilizado(fila.Cells["Codigo"].Value.ToString(), fila.Cells["Descripcion"].Value.ToString(), Convert.ToDouble(fila.Cells["PrecioCompra"].Value), Convert.ToDouble(fila.Cells["PrecioVenta"].Value), cantidad, this.idReparacionTemp);
+            string msg = repuesto.Guardar();
+            Console.WriteLine(repuesto.Id);
+            //lo agrego a la grilla
+            dgvRepuestos.Rows.Add(repuesto.Id,repuesto.Codigo,repuesto.Descripcion,repuesto.PrecioCompra,repuesto.PrecioVenta,repuesto.Cantidad,repuesto.IdReparacion);
+            
+            if (!msg.Equals(string.Empty)) { MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+            //actualizo lo la grilla
+            dgvRepuestosConfig(this.idReparacionTemp);
         }
 
         private void btnQuitarRepuesto_Click(object sender, EventArgs e)
         {
             DataGridViewRow fila = dgvRepuestos.CurrentRow;
-            string msg = (fila != null && fila.Selected) ? string.Empty : "Debe seleccionar un repuesto.";
-            if (msg.Equals(string.Empty))
+            if (fila != null && fila.Selected)
             {
                 if (MessageBox.Show("Esta seguro que desea quitar el repuesto?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                 {
                     int id = int.Parse(fila.Cells["Id"].Value.ToString());
                     clsRepuestoUtilizado repuesto = clsRepuestoUtilizado.Buscar(id);
-                    if (repuesto != null) { msg = clsRepuestoUtilizado.Eliminar(id); }
-                    if (msg.Equals(string.Empty)) { dgvRepuestos.Rows.Remove(fila); }
+                    string msg = clsRepuestoUtilizado.Eliminar(id);
+                    if (msg.Equals(string.Empty)) { dgvRepuestosConfig(this.idReparacionTemp); }
                     else { MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
                     CalcularCostoTotal();
                 }
             }
             else
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Debe seleccionar un repuesto.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        //------------------------------------
+        //------------------------------------------------------------------------------------------------------------
 
 
 
 
-        //Filtrar grilla de reparaciones ----------------
+        //Filtrar grilla de reparaciones ----------------------------------------------------------------------------------------
         private void Filtrar()
         {
             if (reparaciones != null)
@@ -388,6 +412,7 @@ namespace CWorkShop.Vistas
                 tbBuscar.Clear();
             }            
         }
+
         private void tbBuscar_TextChanged(object sender, EventArgs e)
         {
             foreach (DataGridViewRow fila in dgvReparaciones.Rows)
@@ -395,59 +420,51 @@ namespace CWorkShop.Vistas
                 fila.Visible = (fila.Cells["Busqueda"].Value.ToString().ToUpper().Trim().Contains(tbBuscar.Text));
             }
         }
+
         private void cboTecnico_SelectedIndexChanged(object sender, EventArgs e)
         {
             Filtrar();
         }
+
         private void cboBusquedaEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             Filtrar();
         }
+
         private void dtpDesde_ValueChanged(object sender, EventArgs e)
         {
             if (dtpDesde.Value > dtpHasta.Value) { MessageBox.Show("La fecha de inicio no puede ser superior que la fecha de fin", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             else
                 Filtrar();
         }
+
         private void dtpHasta_ValueChanged(object sender, EventArgs e)
         {
             if (dtpHasta.Value > dtpHasta.Value) { MessageBox.Show("La fecha de fin no puede ser inferior que la fecha de inicio", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             else
                 Filtrar();
         }
+
         private void rbFechaIngreso_CheckedChanged(object sender, EventArgs e)
         {
             Filtrar();
         }
-        //------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------
+
+
 
         //Calculo de costo total
         private double CalcularCostoTotal()
         {
-            double costo = 0;
-            costo += double.Parse(nudCostoManoObra.Value.ToString());
+            double costo = Convert.ToDouble(nudCostoManoObra.Value);
             foreach (DataGridViewRow fila in dgvRepuestos.Rows)
             {
-                costo += double.Parse(fila.Cells["PrecioVenta"].Value.ToString());
+                costo += (Convert.ToDouble(fila.Cells["PrecioVenta"].Value) * Convert.ToInt32(fila.Cells["Cantidad"].Value));
             }
-            tbCostoTotal.Text = string.Format("{0:C2}", costo);
-
+            lblCostoTotalRes.Text = string.Format("{0:C2}", costo);
             return costo;
         }
 
-        //Guardar items repuestos
-        private void GuardarRepuestos(int idReparacion)
-        {
-            clsRepuestoUtilizado aux;
-            foreach(DataGridViewRow fila in dgvRepuestos.Rows)
-            {
-                if (fila != null) {
-                    if (fila.Cells["IdRep"].Value != null) { continue; }//si no posee reparacion asignada es que aun no se ha guardado
-                    aux = new clsRepuestoUtilizado(fila.Cells["Codigo"].Value.ToString(), fila.Cells["Descripcion"].Value.ToString(), double.Parse(fila.Cells["PrecioCompra"].Value.ToString()), double.Parse(fila.Cells["PrecioVenta"].Value.ToString()), idReparacion);
-                    aux.Guardar();
-                }
-            }
-        }
         //Validacion campos form reparacion
         private string Validar()
         {
@@ -465,11 +482,6 @@ namespace CWorkShop.Vistas
             //if (!direccion.IsMatch(tbDireccion.Text)) { return "Campo direccion incorrecto."; }
 
             return string.Empty;
-        }
-
-        private void dgvRepuestos_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            CalcularCostoTotal();
         }
     }
 }

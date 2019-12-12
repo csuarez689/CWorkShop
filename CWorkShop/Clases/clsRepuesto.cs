@@ -232,13 +232,13 @@ namespace CWorkShop.Clases
             }
 
         }
-        //Buscar repuesto por id
-        public static clsReparacion Buscar(int id)
+        //Buscar repuesto por codigo
+        public static clsRepuesto Buscar(string codigo)
         {
-            return clsReparacion.Listar().Find(x => x.Id == id);
+            return clsRepuesto.Listar().Find(x => x.Codigo.Equals(codigo));
         }
         //Obtener id siguiente
-        private static int ObtenerId()
+        private int ObtenerId()
         {
             List<clsRepuesto> lista = clsRepuesto.Listar();
             return (lista.Count > 0) ? lista.Last().Id + 1 : 1;

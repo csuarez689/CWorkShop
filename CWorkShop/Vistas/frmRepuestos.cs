@@ -57,7 +57,7 @@ namespace CWorkShop.Vistas
         private void btnEliminarCliente_Click(object sender, EventArgs e)
         {
             DataGridViewRow fila = ((DataGridView)hijo.Controls["dgvRepuestos"]).CurrentRow;
-            if (fila.Selected)
+            if (fila !=null && fila.Selected)
             {
                 if (MessageBox.Show("¿Esta seguro que desea borrar el repuesto?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                 {
@@ -70,7 +70,7 @@ namespace CWorkShop.Vistas
 
             }
             else
-                MessageBox.Show("Debe seleccionar un cliente.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Debe seleccionar un repuesto.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //------------------------------------

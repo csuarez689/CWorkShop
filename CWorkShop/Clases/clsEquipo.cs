@@ -142,7 +142,7 @@ namespace CWorkShop.Clases
         {
             get
             {
-                this.reparaciones = clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id && x.Estado=="ENTREGADO");
+                this.reparaciones = clsReparacion.Listar().FindAll(x => x.IdEquipo == this.Id);
                 return reparaciones;
             }
         }

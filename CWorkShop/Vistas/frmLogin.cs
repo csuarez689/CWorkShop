@@ -92,6 +92,7 @@ namespace CWorkShop.Vistas
         private void btnRegistrarse_Click(object sender, EventArgs e)
         {
             tbContraseña.Text="CONTRASEÑA";
+            tbContraseña.UseSystemPasswordChar = false;
             tbDni.Text="DNI";
             new frmMisDatos().Show();
         }

@@ -61,14 +61,14 @@
             // 
             this.spcCont.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.spcCont.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.spcCont.Location = new System.Drawing.Point(10, 10);
+            this.spcCont.Location = new System.Drawing.Point(20, 10);
             this.spcCont.Margin = new System.Windows.Forms.Padding(0);
             this.spcCont.Name = "spcCont";
             // 
             // spcCont.Panel1
             // 
             this.spcCont.Panel1.Controls.Add(this.pnlBotonera);
-            this.spcCont.Panel1.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
+            this.spcCont.Panel1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             // 
             // spcCont.Panel2
             // 
@@ -86,8 +86,9 @@
             this.spcCont.Panel2.Controls.Add(this.lbPrecioVenta);
             this.spcCont.Panel2.Controls.Add(this.tbCodigo);
             this.spcCont.Panel2.Controls.Add(this.lblCodigo);
-            this.spcCont.Size = new System.Drawing.Size(1159, 524);
-            this.spcCont.SplitterDistance = 778;
+            this.spcCont.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.spcCont.Size = new System.Drawing.Size(1139, 524);
+            this.spcCont.SplitterDistance = 764;
             this.spcCont.TabIndex = 0;
             // 
             // pnlBotonera
@@ -96,9 +97,9 @@
             this.pnlBotonera.Controls.Add(this.btnEditar);
             this.pnlBotonera.Controls.Add(this.btnAgregar);
             this.pnlBotonera.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotonera.Location = new System.Drawing.Point(10, 473);
+            this.pnlBotonera.Location = new System.Drawing.Point(0, 483);
             this.pnlBotonera.Name = "pnlBotonera";
-            this.pnlBotonera.Size = new System.Drawing.Size(756, 39);
+            this.pnlBotonera.Size = new System.Drawing.Size(762, 39);
             this.pnlBotonera.TabIndex = 1;
             // 
             // btnEliminarCliente
@@ -112,7 +113,7 @@
             this.btnEliminarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarCliente.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminarCliente.ForeColor = System.Drawing.Color.White;
-            this.btnEliminarCliente.Location = new System.Drawing.Point(438, 7);
+            this.btnEliminarCliente.Location = new System.Drawing.Point(441, 7);
             this.btnEliminarCliente.Name = "btnEliminarCliente";
             this.btnEliminarCliente.Size = new System.Drawing.Size(92, 26);
             this.btnEliminarCliente.TabIndex = 2;
@@ -131,7 +132,7 @@
             this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditar.ForeColor = System.Drawing.Color.White;
-            this.btnEditar.Location = new System.Drawing.Point(340, 7);
+            this.btnEditar.Location = new System.Drawing.Point(343, 7);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(92, 26);
             this.btnEditar.TabIndex = 1;
@@ -150,7 +151,7 @@
             this.btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAgregar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregar.ForeColor = System.Drawing.Color.White;
-            this.btnAgregar.Location = new System.Drawing.Point(242, 7);
+            this.btnAgregar.Location = new System.Drawing.Point(245, 7);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(92, 26);
             this.btnAgregar.TabIndex = 0;
@@ -165,7 +166,7 @@
             this.rtbDescripcion.Location = new System.Drawing.Point(135, 311);
             this.rtbDescripcion.MaxLength = 200;
             this.rtbDescripcion.Name = "rtbDescripcion";
-            this.rtbDescripcion.Size = new System.Drawing.Size(214, 82);
+            this.rtbDescripcion.Size = new System.Drawing.Size(198, 82);
             this.rtbDescripcion.TabIndex = 10;
             this.rtbDescripcion.Text = "";
             // 
@@ -187,7 +188,7 @@
             0,
             0});
             this.nudPrecioVenta.Name = "nudPrecioVenta";
-            this.nudPrecioVenta.Size = new System.Drawing.Size(216, 23);
+            this.nudPrecioVenta.Size = new System.Drawing.Size(200, 23);
             this.nudPrecioVenta.TabIndex = 6;
             this.nudPrecioVenta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -209,7 +210,7 @@
             0,
             0});
             this.nudPrecioCompra.Name = "nudPrecioCompra";
-            this.nudPrecioCompra.Size = new System.Drawing.Size(216, 23);
+            this.nudPrecioCompra.Size = new System.Drawing.Size(200, 23);
             this.nudPrecioCompra.TabIndex = 4;
             this.nudPrecioCompra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -225,7 +226,7 @@
             0,
             0});
             this.nudStock.Name = "nudStock";
-            this.nudStock.Size = new System.Drawing.Size(216, 23);
+            this.nudStock.Size = new System.Drawing.Size(200, 23);
             this.nudStock.TabIndex = 8;
             this.nudStock.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -358,7 +359,7 @@
             this.tbCodigo.Location = new System.Drawing.Point(135, 142);
             this.tbCodigo.MaxLength = 20;
             this.tbCodigo.Name = "tbCodigo";
-            this.tbCodigo.Size = new System.Drawing.Size(214, 23);
+            this.tbCodigo.Size = new System.Drawing.Size(198, 23);
             this.tbCodigo.TabIndex = 2;
             // 
             // lblCodigo
@@ -385,7 +386,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmRepuestos";
-            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMisDatos";
             this.spcCont.Panel1.ResumeLayout(false);

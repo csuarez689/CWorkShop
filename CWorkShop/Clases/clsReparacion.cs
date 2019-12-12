@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CWorkShop.Clases
@@ -23,7 +21,7 @@ namespace CWorkShop.Clases
         private int idTecnico;
         private string estado;
 
-        public clsReparacion(string accesorios, string diagnostico, double costoManoObra, int idEquipo, int idTecnico, string estado, string fechaIngreso, string fechaEntrega, bool anulada = false, int id = 0)
+        public clsReparacion(string accesorios, string diagnostico, double costoManoObra, int idEquipo, int idTecnico, string estado, string fechaIngreso, string fechaEntrega, int id = 0, bool anulada = false)
         {
             this.id = id;
             this.anulada = anulada;
@@ -208,7 +206,7 @@ namespace CWorkShop.Clases
                 {
                     foreach (clsRepuestoUtilizado x in this.Repuestos)
                     {
-                        total += x.PrecioVenta;
+                        total += (x.PrecioVenta*x.Cantidad);
                     }
                 }
                 total += this.CostoManoObra;
@@ -230,7 +228,7 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsReparacion(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadInt32(), br.ReadInt32(), br.ReadString(), br.ReadString(), br.ReadString(), br.ReadBoolean(), auxid);
+                        aux = new clsReparacion(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadInt32(), br.ReadInt32(), br.ReadString(), br.ReadString(), br.ReadString(), auxid, br.ReadBoolean());
                         reparacion.Add(aux);
                     }
                 }
@@ -283,7 +281,7 @@ namespace CWorkShop.Clases
             string msg = string.Empty;
             try
             {   //si el equipo ya posee una reparacion sin concluir 
-                msg = (clsReparacion.Listar().Find(x => x.IdEquipo == this.IdEquipo && (this.Estado != "ENTREGADO" && x.Anulada)) != null) ? "Este equipo ya posee una reparación sin concluir." : string.Empty;
+                msg = (clsReparacion.Listar().Find(x => (!x.Anulada) && (x.IdEquipo == this.IdEquipo) && x.fechaEntrega.Equals(string.Empty)) == null) ? string.Empty : "Este equipo ya posee una reparación sin concluir.";
                 if (msg.Equals(string.Empty))
                 {
                     using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Append)))
@@ -299,7 +297,6 @@ namespace CWorkShop.Clases
                         bw.Write(string.Empty);
                         bw.Write(this.Anulada);
                     }
-                    msg = idAux.ToString();
                 }
             }
             catch (Exception ex)
@@ -320,7 +317,7 @@ namespace CWorkShop.Clases
                 {
                     foreach (clsReparacion reparacion in reparaciones)
                     {
-                        if (reparacion.Id == id) { reparacion.Anulada = !reparacion.Anulada; }
+                        if (reparacion.Id == id) { reparacion.Anulada = true; }
                         bw.Write(reparacion.Id);
                         bw.Write(reparacion.Accesorios);
                         bw.Write(reparacion.Diagnostico);
@@ -348,7 +345,7 @@ namespace CWorkShop.Clases
             return res;
         }
         //Obtener id siguiente
-        private static int ObtenerId()
+        public static int ObtenerId()
         {
             List<clsReparacion> lista = clsReparacion.Listar();
             return (lista.Count > 0) ? lista.Last().Id + 1 : 1;

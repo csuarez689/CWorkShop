@@ -17,15 +17,17 @@ namespace CWorkShop.Clases
         private string descripcion;
         private double precioCompra;
         private double precioVenta;
+        private int cantidad;
         private int idReparacion;
 
-        public clsRepuestoUtilizado(string codigo, string descripcion, double precioCompra, double precioVenta, int idReparacion, int id = 0)
+        public clsRepuestoUtilizado(string codigo, string descripcion, double precioCompra, double precioVenta, int cantidad, int idReparacion, int id = 0)
         {
             this.id = id;
             this.codigo = codigo;
             this.descripcion = descripcion;
             this.precioCompra = precioCompra;
             this.precioVenta = precioVenta;
+            this.cantidad = cantidad;
             this.idReparacion = idReparacion;
         }
 
@@ -107,6 +109,19 @@ namespace CWorkShop.Clases
             }
         }
 
+        public int Cantidad
+        {
+            get
+            {
+                return cantidad;
+            }
+
+            set
+            {
+                cantidad = value;
+            }
+        }
+
         //Obtiene listado de repuestos
         public static List<clsRepuestoUtilizado> Listar()
         {
@@ -121,8 +136,7 @@ namespace CWorkShop.Clases
                     while (br.PeekChar() != -1)
                     {
                         auxid = br.ReadInt32();
-                        aux = new clsRepuestoUtilizado(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadDouble(), br.ReadInt32());
-                        aux.Id = auxid;
+                        aux = new clsRepuestoUtilizado(br.ReadString(), br.ReadString(), br.ReadDouble(), br.ReadDouble(), br.ReadInt32(), br.ReadInt32(), auxid);
                         repuestosUtilizados.Add(aux);
                     }
                 }
@@ -155,8 +169,13 @@ namespace CWorkShop.Clases
                     bw.Write(this.Descripcion);
                     bw.Write(this.PrecioCompra);
                     bw.Write(this.PrecioVenta);
+                    bw.Write(this.cantidad);
                     bw.Write(this.IdReparacion);
                 }
+                //Busco el repuesto del inventario y actualizo su stock con la cantidad del repuesto utilizado
+                clsRepuesto repuesto = clsRepuesto.Buscar(this.codigo);
+                repuesto.Stock -= this.cantidad;
+                msg= repuesto.Actualizar();
             }
             catch (Exception ex)
             {
@@ -169,9 +188,11 @@ namespace CWorkShop.Clases
         {
             CheckFiles();
             List<clsRepuestoUtilizado> repuestosUtilizados = clsRepuestoUtilizado.Listar();
+            string msg = string.Empty;
             try
             {
-                string msg = string.Empty;
+                //para actualizar a posterior el stock
+                clsRepuestoUtilizado repEliminado = clsRepuestoUtilizado.Buscar(id);
                 using (BinaryWriter bw = new BinaryWriter(new FileStream(DIR + ARCHIVO, FileMode.Create)))
                 {
                     foreach (clsRepuestoUtilizado repuesto in repuestosUtilizados)
@@ -182,16 +203,27 @@ namespace CWorkShop.Clases
                         bw.Write(repuesto.Descripcion);
                         bw.Write(repuesto.PrecioCompra);
                         bw.Write(repuesto.precioVenta);
+                        bw.Write(repuesto.cantidad);
                         bw.Write(repuesto.IdReparacion);
                     }
                 }
-                return msg;
+                //Busco el repuesto utilizado a eliminar y lo utilizo para actualizar el stock del inventario
+                
+                clsRepuesto rep = clsRepuesto.Buscar(repEliminado.Codigo);
+                rep.Stock += repEliminado.Cantidad;
+                rep.Actualizar();
+                
             }
             catch (Exception ex)
             {
                 return "Ha ocurrido un error. " + ex.Message;
             }
-
+            return msg;
+        }
+        //Buscar repuestos por idReparacion
+        public static List<clsRepuestoUtilizado> BuscarTodos(int idReparacion)
+        {
+            return clsRepuestoUtilizado.Listar().FindAll(x => x.IdReparacion == idReparacion);
         }
         //Obtener id siguiente
         private static int ObtenerId()

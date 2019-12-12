@@ -87,8 +87,8 @@ namespace CWorkShop.Vistas
 
         public void AgregarOrden(int idEquipo)
         {
-            pMarcador.Height = btnRepuestos.Height;
-            pMarcador.Top = btnRepuestos.Top;
+            pMarcador.Height = btnOrdenes.Height;
+            pMarcador.Top = btnOrdenes.Top;
             pMarcador.Show();
             openForm(new frmOrdenes(this,idEquipo));
         }
