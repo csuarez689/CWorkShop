@@ -361,11 +361,7 @@ namespace CWorkShop.Vistas
         {
             //guardo el repuesto
             clsRepuestoUtilizado repuesto = new clsRepuestoUtilizado(fila.Cells["Codigo"].Value.ToString(), fila.Cells["Descripcion"].Value.ToString(), Convert.ToDouble(fila.Cells["PrecioCompra"].Value), Convert.ToDouble(fila.Cells["PrecioVenta"].Value), cantidad, this.idReparacionTemp);
-            string msg = repuesto.Guardar();
-            Console.WriteLine(repuesto.Id);
-            //lo agrego a la grilla
-            dgvRepuestos.Rows.Add(repuesto.Id,repuesto.Codigo,repuesto.Descripcion,repuesto.PrecioCompra,repuesto.PrecioVenta,repuesto.Cantidad,repuesto.IdReparacion);
-            
+            string msg = repuesto.Guardar();       
             if (!msg.Equals(string.Empty)) { MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             //actualizo lo la grilla
             dgvRepuestosConfig(this.idReparacionTemp);
@@ -381,8 +377,8 @@ namespace CWorkShop.Vistas
                     int id = int.Parse(fila.Cells["Id"].Value.ToString());
                     clsRepuestoUtilizado repuesto = clsRepuestoUtilizado.Buscar(id);
                     string msg = clsRepuestoUtilizado.Eliminar(id);
-                    if (msg.Equals(string.Empty)) { dgvRepuestosConfig(this.idReparacionTemp); }
-                    else { MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                    if (!msg.Equals(string.Empty)) { MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                    dgvRepuestosConfig(this.idReparacionTemp);
                     CalcularCostoTotal();
                 }
             }
@@ -422,7 +418,7 @@ namespace CWorkShop.Vistas
         {
             foreach (DataGridViewRow fila in dgvReparaciones.Rows)
             {
-                fila.Visible = (fila.Cells["Busqueda"].Value.ToString().ToUpper().Trim().Contains(tbBuscar.Text));
+                fila.Visible = (fila.Cells["Busqueda"].Value.ToString().Contains(tbBuscar.Text.ToUpper().Trim()));
             }
         }
 

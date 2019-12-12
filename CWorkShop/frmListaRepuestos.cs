@@ -46,7 +46,7 @@ namespace CWorkShop.Vistas
             string texto = tbBuscar.Text.ToUpper().Trim();
             foreach (DataGridViewRow fila in dgvRepuestos.Rows)
             {
-                fila.Visible = (fila.Cells["Busqueda"].Value.ToString().ToUpper().Trim().Contains(texto));
+                fila.Visible = (fila.Cells["Busqueda"].Value.ToString().Contains(texto));
             }
 
             dgvRepuestos.ClearSelection();
