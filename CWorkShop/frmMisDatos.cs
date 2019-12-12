@@ -58,7 +58,9 @@ namespace CWorkShop.Vistas
                 msg = userLog.Actualizar();
                 if (msg.Equals(String.Empty))
                 {
-                    padre.ActualizarBtnDatos(userLog);
+                    //Actualizo datos del usuario logueado hacia el formulario padre
+                    padre.userLog = userLog;
+                    ((Button)((Panel)padre.Controls["pHeader"]).Controls["btnDatos"]).Text= userLog.Nombre + " " + userLog.Apellido;
                     this.Dispose();
                 }
                 else

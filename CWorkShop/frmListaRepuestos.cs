@@ -1,6 +1,8 @@
 ﻿using CWorkShop.Clases;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CWorkShop.Vistas
@@ -28,6 +30,7 @@ namespace CWorkShop.Vistas
         public void dgvRepuestoConfig()
         {
             List<clsRepuesto> lista = clsRepuesto.Listar();
+            lista = lista.OrderByDescending(x => x.Stock).ThenByDescending(x=>x.PrecioVenta).ToList();
             dgvRepuestos.Rows.Clear();
             string busqueda;
             foreach (clsRepuesto repuesto in lista)
@@ -87,5 +90,6 @@ namespace CWorkShop.Vistas
                 }
             }
         }
+
     }
 }

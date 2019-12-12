@@ -1,6 +1,8 @@
 ﻿using CWorkShop.Clases;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CWorkShop.Vistas
@@ -39,6 +41,7 @@ namespace CWorkShop.Vistas
         {
             string busqueda;
             dgvReparaciones.Rows.Clear();
+            lista = lista.OrderByDescending(x => x.FechaIngreso).ThenBy(x => x.Estado).ToList();
             foreach (clsReparacion reparacion in lista)
             {
                 if (reparacion.Anulada) { continue; }
@@ -53,7 +56,9 @@ namespace CWorkShop.Vistas
         private void dgvRepuestosConfig(int reparacionSeleccionada)
         {
            dgvRepuestos.Rows.Clear();
-                foreach (clsRepuestoUtilizado repuestoUtilizado in clsRepuestoUtilizado.BuscarTodos(reparacionSeleccionada))
+            List<clsRepuestoUtilizado> lista = clsRepuestoUtilizado.BuscarTodos(reparacionSeleccionada);
+            lista = lista.OrderByDescending(x => x.Cantidad).ThenByDescending(x => PrecioVenta).ToList();
+                foreach (clsRepuestoUtilizado repuestoUtilizado in lista)
                 {
                     dgvRepuestos.Rows.Add(repuestoUtilizado.Id, repuestoUtilizado.Codigo, repuestoUtilizado.Descripcion, repuestoUtilizado.PrecioCompra, repuestoUtilizado.PrecioVenta,repuestoUtilizado.Cantidad,repuestoUtilizado.IdReparacion);
                 }

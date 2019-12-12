@@ -14,7 +14,7 @@ namespace CWorkShop.Vistas
     public partial class frmMain : Form
     {
         frmLogin login;
-        private clsUsuario userLog;
+        public clsUsuario userLog;
         public int xClick = 0, yClick = 0;
 
         public clsUsuario UserLog
@@ -96,7 +96,6 @@ namespace CWorkShop.Vistas
         {
             if (this.pnlContenedor.Controls.Count > 0)
                 ((Form)this.pnlContenedor.Controls[0]).Dispose();
-                //this.pnlContenedor.Controls.RemoveAt(0);
             Form opcion = frm as Form;
             opcion.TopLevel = false;
             opcion.Dock = DockStyle.Fill;
@@ -133,12 +132,5 @@ namespace CWorkShop.Vistas
         {
             login.Show();
         }
-
-        //Actualizar datos button
-        public void ActualizarBtnDatos(clsUsuario userLog)
-        {
-            this.userLog = userLog;
-            btnDatos.Text = userLog.Nombre + " " + userLog.Apellido;
-        }   
     }
 }

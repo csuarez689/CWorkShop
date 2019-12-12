@@ -896,7 +896,7 @@
             this.lblCostoTotalRes.Location = new System.Drawing.Point(131, 513);
             this.lblCostoTotalRes.Name = "lblCostoTotalRes";
             this.lblCostoTotalRes.Size = new System.Drawing.Size(0, 17);
-            this.lblCostoTotalRes.TabIndex = 32;
+            this.lblCostoTotalRes.TabIndex = 20;
             // 
             // lblFechaEntregaRes
             // 
@@ -905,7 +905,7 @@
             this.lblFechaEntregaRes.Location = new System.Drawing.Point(131, 475);
             this.lblFechaEntregaRes.Name = "lblFechaEntregaRes";
             this.lblFechaEntregaRes.Size = new System.Drawing.Size(0, 17);
-            this.lblFechaEntregaRes.TabIndex = 31;
+            this.lblFechaEntregaRes.TabIndex = 18;
             // 
             // lblFechaIngresoRes
             // 
@@ -914,7 +914,7 @@
             this.lblFechaIngresoRes.Location = new System.Drawing.Point(131, 436);
             this.lblFechaIngresoRes.Name = "lblFechaIngresoRes";
             this.lblFechaIngresoRes.Size = new System.Drawing.Size(0, 17);
-            this.lblFechaIngresoRes.TabIndex = 30;
+            this.lblFechaIngresoRes.TabIndex = 16;
             // 
             // btnVolver
             // 
